@@ -1,5 +1,6 @@
 """
 Follows simple tutorial on how to detect AR tags
+Source: https://www.geeksforgeeks.org/computer-vision/detecting-aruco-markers-with-opencv-and-python-1/
 """
 
 #############
@@ -7,12 +8,13 @@ Follows simple tutorial on how to detect AR tags
 #############
 import cv2 as cv
 import numpy as np
+import time
 
 ##########
 ## Main ##
 ##########
 # Read image
-image = cv.imread("./detect_images/test.jpg")
+image = cv.imread("./detect_images/test6.jpg")
 
 # Step 1: Convert to grayscale
 gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
@@ -25,12 +27,20 @@ parameters = cv.aruco.DetectorParameters()
 detector = cv.aruco.ArucoDetector(aruco_dict, parameters)
 
 # Step 4: Detection
+start = time.time()
 corners, ids, rejected = detector.detectMarkers(gray)
+end = time.time()
 
 # Step 5: Printing
-print("Detected markers: ", ids)
+print("Detected markers: ", ids, "\nTime Elapsed: ", end - start, "s")
+print("Corners: ", corners)
 if ids is not None:
     cv.aruco.drawDetectedMarkers(image, corners, ids)
+    cv.imshow("Detected Markers", image)
+    cv.waitKey(0)
+    cv.destroyAllWindows()
+else:
+    cv.aruco.drawDetectedMarkers(image, rejected, ids)
     cv.imshow("Detected Markers", image)
     cv.waitKey(0)
     cv.destroyAllWindows()

@@ -1,5 +1,6 @@
 """
 Follows a simple tutorial on generating ArUco tags with OpenCV
+Source: https://www.geeksforgeeks.org/computer-vision/detecting-aruco-markers-with-opencv-and-python-1/
 """
 
 #############
@@ -20,7 +21,7 @@ dictionary = cv.aruco.getPredefinedDictionary(cv.aruco.DICT_6X6_250)
 # Generate a marker
 markerImage = np.zeros((200, 200), dtype=np.uint8)
 markerImage_idx = 0 # Valid indices for this dictionary is 0 to 249
-border_width = 1 # The number of bits for the thickness of the border; the markers are 6x6 bits, so adding a border of 1 means a 7x7 image
+border_width = 2 # The number of bits for the thickness of the border; the markers are 6x6 bits, so adding a border of 1 means a 7x7 image
 markerImage = cv.aruco.generateImageMarker(dictionary, markerImage_idx, 200, markerImage, border_width)
 
 # Save the image
