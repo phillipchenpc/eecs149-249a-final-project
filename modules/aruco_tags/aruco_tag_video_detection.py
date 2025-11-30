@@ -53,11 +53,7 @@ while True:
     end = time.time()
     print(f"Time: {end - start}", end='\r')
     # Ends the loop if you press 'q'
-<<<<<<< HEAD
     if cv.waitKey(1) == ord('q'):
-=======
-    if cv.waitKey(33) == ord('q'):
->>>>>>> 5d1a7ac ([AR Tags] Moved to new folder. Video detection)
         break
 
 
