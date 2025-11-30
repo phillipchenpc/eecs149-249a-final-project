@@ -16,7 +16,7 @@ import time
 ##########
 
 # Grab the dictionary and create a detector
-aruco_dict = cv.aruco.getPredefinedDictionary(cv.aruco.DICT_6X6_250)
+aruco_dict = cv.aruco.getPredefinedDictionary(cv.aruco.DICT_4X4_50)
 parameters = cv.aruco.DetectorParameters()
 detector = cv.aruco.ArucoDetector(aruco_dict, parameters)
 
@@ -24,8 +24,8 @@ detector = cv.aruco.ArucoDetector(aruco_dict, parameters)
 print("Opening Camera...", end='\r')
 start = time.time()
 cam = cv.VideoCapture(0)
-# Get width and height
-frame_width, frame_height = int(cam.get(cv.CAP_PROP_FRAME_WIDTH)), int(cam.get(cv.CAP_PROP_FRAME_HEIGHT))
+# Adjusting exposure time
+cam.set(cv.CAP_PROP_EXPOSURE, -2)
 end = time.time()
 print(f"Camera opened in {end - start} s")
 
@@ -52,7 +52,7 @@ while True:
     end = time.time()
     print(f"Time: {end - start}", end='\r')
     # Ends the loop if you press 'q'
-    if cv.waitKey(33) == ord('q'):
+    if cv.waitKey(1) == ord('q'):
         break
 
 
