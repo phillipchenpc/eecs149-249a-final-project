@@ -102,7 +102,25 @@ typedef struct {
     lf_port_internal_t _base;
     uint32_t value;
 
-} robot_side_detect_t;
+} robot_line_left_t;
+typedef struct {
+    token_type_t type;
+    lf_token_t* token;
+    size_t length;
+    bool is_present;
+    lf_port_internal_t _base;
+    uint32_t value;
+
+} robot_line_center_t;
+typedef struct {
+    token_type_t type;
+    lf_token_t* token;
+    size_t length;
+    bool is_present;
+    lf_port_internal_t _base;
+    uint32_t value;
+
+} robot_line_right_t;
 typedef struct {
     token_type_t type;
     lf_token_t* token;

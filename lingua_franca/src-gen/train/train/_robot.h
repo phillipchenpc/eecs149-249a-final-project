@@ -7,6 +7,10 @@
 #ifndef TOP_LEVEL_PREAMBLE_253380088_H
 #define TOP_LEVEL_PREAMBLE_253380088_H
 #include <math.h>
+#define WHEEL_DIAMETER 0.032 // meters
+#define COUNTS_PER_REV 360 //CPR
+#define TICKS_PER_METER (WHEEL_DIAMETER * M_PI) / COUNTS_PER_REV
+#include <math.h>
 #include <hardware/pio.h>
 #include <quadrature_encoder.pio.h>
 
@@ -17,10 +21,6 @@
 #define LEFT_SM 1
 #include <pico/stdlib.h>
 #include <imu.h>
-#include <math.h>
-#define WHEEL_DIAMETER 0.032 // meters
-#define COUNTS_PER_REV 360 //CPR
-#define TICKS_PER_METER (WHEEL_DIAMETER * M_PI) / COUNTS_PER_REV
 #endif
 typedef struct {
     token_type_t type;
@@ -49,7 +49,35 @@ typedef struct {
     #endif
     interval_t physical_time_of_arrival;
     #endif
-} _robot_side_detect_t;
+} _robot_line_left_t;
+typedef struct {
+    token_type_t type;
+    lf_token_t* token;
+    size_t length;
+    bool is_present;
+    lf_port_internal_t _base;
+    uint32_t value;
+    #ifdef FEDERATED
+    #ifdef FEDERATED_DECENTRALIZED
+    tag_t intended_tag;
+    #endif
+    interval_t physical_time_of_arrival;
+    #endif
+} _robot_line_center_t;
+typedef struct {
+    token_type_t type;
+    lf_token_t* token;
+    size_t length;
+    bool is_present;
+    lf_port_internal_t _base;
+    uint32_t value;
+    #ifdef FEDERATED
+    #ifdef FEDERATED_DECENTRALIZED
+    tag_t intended_tag;
+    #endif
+    interval_t physical_time_of_arrival;
+    #endif
+} _robot_line_right_t;
 typedef struct {
     token_type_t type;
     lf_token_t* token;
@@ -111,9 +139,9 @@ typedef struct {
     float prev_left;
     #line 50 "/home/foobar/final/lingua_franca/src/train/train.lf"
     float prev_time;
-    #line 57 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 59 "/home/foobar/final/lingua_franca/src/train/train.lf"
     uint32_t last_detect;
-    #line 63 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 65 "/home/foobar/final/lingua_franca/src/train/train.lf"
     float start_time;
     #line 47 "/home/foobar/final/lingua_franca/src/train/train.lf"
     _robot_start_t* _lf_start;
@@ -126,34 +154,54 @@ typedef struct {
     #line 47 "/home/foobar/final/lingua_franca/src/train/train.lf"
     _robot_start_t _lf_default__start;
     #line 56 "/home/foobar/final/lingua_franca/src/train/train.lf"
-    _robot_side_detect_t* _lf_side_detect;
+    _robot_line_left_t* _lf_line_left;
     #line 56 "/home/foobar/final/lingua_franca/src/train/train.lf"
     // width of -2 indicates that it is not a multiport.
     #line 56 "/home/foobar/final/lingua_franca/src/train/train.lf"
-    int _lf_side_detect_width;
+    int _lf_line_left_width;
     #line 56 "/home/foobar/final/lingua_franca/src/train/train.lf"
     // Default input (in case it does not get connected)
     #line 56 "/home/foobar/final/lingua_franca/src/train/train.lf"
-    _robot_side_detect_t _lf_default__side_detect;
-    #line 62 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    _robot_line_left_t _lf_default__line_left;
+    #line 57 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    _robot_line_center_t* _lf_line_center;
+    #line 57 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    // width of -2 indicates that it is not a multiport.
+    #line 57 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    int _lf_line_center_width;
+    #line 57 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    // Default input (in case it does not get connected)
+    #line 57 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    _robot_line_center_t _lf_default__line_center;
+    #line 58 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    _robot_line_right_t* _lf_line_right;
+    #line 58 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    // width of -2 indicates that it is not a multiport.
+    #line 58 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    int _lf_line_right_width;
+    #line 58 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    // Default input (in case it does not get connected)
+    #line 58 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    _robot_line_right_t _lf_default__line_right;
+    #line 64 "/home/foobar/final/lingua_franca/src/train/train.lf"
     _robot_stop_t* _lf_stop;
-    #line 62 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 64 "/home/foobar/final/lingua_franca/src/train/train.lf"
     // width of -2 indicates that it is not a multiport.
-    #line 62 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 64 "/home/foobar/final/lingua_franca/src/train/train.lf"
     int _lf_stop_width;
-    #line 62 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 64 "/home/foobar/final/lingua_franca/src/train/train.lf"
     // Default input (in case it does not get connected)
-    #line 62 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 64 "/home/foobar/final/lingua_franca/src/train/train.lf"
     _robot_stop_t _lf_default__stop;
-    #line 64 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 66 "/home/foobar/final/lingua_franca/src/train/train.lf"
     _robot_cont_t* _lf_cont;
-    #line 64 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 66 "/home/foobar/final/lingua_franca/src/train/train.lf"
     // width of -2 indicates that it is not a multiport.
-    #line 64 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 66 "/home/foobar/final/lingua_franca/src/train/train.lf"
     int _lf_cont_width;
-    #line 64 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 66 "/home/foobar/final/lingua_franca/src/train/train.lf"
     // Default input (in case it does not get connected)
-    #line 64 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 66 "/home/foobar/final/lingua_franca/src/train/train.lf"
     _robot_cont_t _lf_default__cont;
     #line 51 "/home/foobar/final/lingua_franca/src/train/train.lf"
     _robot_speed_t _lf_speed;
@@ -192,29 +240,31 @@ typedef struct {
         _motorswithfeedback_right_speed_t right_speed;
     } _lf_m;
     int _lf_m_width;
-    #line 70 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 72 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t _lf__reaction_0;
-    #line 77 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 79 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t _lf__reaction_1;
-    #line 88 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 90 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t _lf__reaction_2;
-    #line 94 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 96 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t _lf__reaction_3;
-    #line 105 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 107 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t _lf__reaction_4;
-    #line 111 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 113 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t _lf__reaction_5;
-    #line 120 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 118 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t _lf__reaction_6;
-    #line 131 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 127 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t _lf__reaction_7;
-    #line 59 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 138 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    reaction_t _lf__reaction_8;
+    #line 61 "/home/foobar/final/lingua_franca/src/train/train.lf"
     trigger_t _lf__t;
-    #line 59 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 61 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t* _lf__t_reactions[1];
-    #line 118 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 125 "/home/foobar/final/lingua_franca/src/train/train.lf"
     trigger_t _lf__update;
-    #line 118 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 125 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t* _lf__update_reactions[1];
     trigger_t _lf__startup;
     reaction_t* _lf__startup_reactions[1];
@@ -226,20 +276,36 @@ typedef struct {
     
     #endif // FEDERATED
     #line 56 "/home/foobar/final/lingua_franca/src/train/train.lf"
-    trigger_t _lf__side_detect;
+    trigger_t _lf__line_left;
+    #line 56 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    reaction_t* _lf__line_left_reactions[1];
     #ifdef FEDERATED
     
     #endif // FEDERATED
-    #line 62 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 57 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    trigger_t _lf__line_center;
+    #line 57 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    reaction_t* _lf__line_center_reactions[1];
+    #ifdef FEDERATED
+    
+    #endif // FEDERATED
+    #line 58 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    trigger_t _lf__line_right;
+    #line 58 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    reaction_t* _lf__line_right_reactions[1];
+    #ifdef FEDERATED
+    
+    #endif // FEDERATED
+    #line 64 "/home/foobar/final/lingua_franca/src/train/train.lf"
     trigger_t _lf__stop;
-    #line 62 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 64 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t* _lf__stop_reactions[1];
     #ifdef FEDERATED
     
     #endif // FEDERATED
-    #line 64 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 66 "/home/foobar/final/lingua_franca/src/train/train.lf"
     trigger_t _lf__cont;
-    #line 64 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 66 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t* _lf__cont_reactions[1];
     #ifdef FEDERATED
     
