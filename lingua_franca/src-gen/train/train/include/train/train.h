@@ -18,6 +18,7 @@ typedef struct train_self_t{
     self_base_t base; // This field is only to be used by the runtime, not the user.
     interval_t calibration_time;
     interval_t sample_period;
+    interval_t end_time;
     int count;
     int end[0]; // placeholder; MSVC does not compile empty structs
 } train_self_t;
@@ -102,6 +103,24 @@ typedef struct {
     uint32_t value;
 
 } robot_side_detect_t;
+typedef struct {
+    token_type_t type;
+    lf_token_t* token;
+    size_t length;
+    bool is_present;
+    lf_port_internal_t _base;
+    bool value;
+
+} robot_stop_t;
+typedef struct {
+    token_type_t type;
+    lf_token_t* token;
+    size_t length;
+    bool is_present;
+    lf_port_internal_t _base;
+    bool value;
+
+} robot_cont_t;
 typedef struct {
     token_type_t type;
     lf_token_t* token;

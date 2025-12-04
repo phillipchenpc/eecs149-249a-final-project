@@ -1,8 +1,8 @@
 #ifndef _PICONTROL_H
 #define _PICONTROL_H
 #include "include/core/reactor.h"
-#ifndef TOP_LEVEL_PREAMBLE_1134894336_H
-#define TOP_LEVEL_PREAMBLE_1134894336_H
+#ifndef TOP_LEVEL_PREAMBLE_1694239102_H
+#define TOP_LEVEL_PREAMBLE_1694239102_H
 #include <math.h>
 #define WHEEL_DIAMETER 0.032 // meters
 #define COUNTS_PER_REV 360 //CPR
@@ -38,31 +38,31 @@ typedef struct {
 } _picontrol_ctrl_t;
 typedef struct {
     struct self_base_t base;
-    #line 80 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
+    #line 82 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
     float p_gain;
-    #line 80 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
+    #line 82 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
     float i_gain;
-    #line 83 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
-    float acum_err;
-    #line 81 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
-    _picontrol_err_t* _lf_err;
-    #line 81 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
-    // width of -2 indicates that it is not a multiport.
-    #line 81 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
-    int _lf_err_width;
-    #line 81 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
-    // Default input (in case it does not get connected)
-    #line 81 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
-    _picontrol_err_t _lf_default__err;
-    #line 82 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
-    _picontrol_ctrl_t _lf_ctrl;
-    #line 82 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
-    int _lf_ctrl_width;
     #line 85 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
+    float acum_err;
+    #line 83 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
+    _picontrol_err_t* _lf_err;
+    #line 83 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
+    // width of -2 indicates that it is not a multiport.
+    #line 83 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
+    int _lf_err_width;
+    #line 83 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
+    // Default input (in case it does not get connected)
+    #line 83 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
+    _picontrol_err_t _lf_default__err;
+    #line 84 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
+    _picontrol_ctrl_t _lf_ctrl;
+    #line 84 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
+    int _lf_ctrl_width;
+    #line 87 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
     reaction_t _lf__reaction_0;
-    #line 81 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
+    #line 83 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
     trigger_t _lf__err;
-    #line 81 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
+    #line 83 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
     reaction_t* _lf__err_reactions[1];
     #ifdef FEDERATED
     

@@ -3,8 +3,8 @@
 #include "include/core/reactor.h"
 #include "_picontrol.h"
 #include "_motors.h"
-#ifndef TOP_LEVEL_PREAMBLE_1134894336_H
-#define TOP_LEVEL_PREAMBLE_1134894336_H
+#ifndef TOP_LEVEL_PREAMBLE_1694239102_H
+#define TOP_LEVEL_PREAMBLE_1694239102_H
 #include <math.h>
 #define WHEEL_DIAMETER 0.032 // meters
 #define COUNTS_PER_REV 360 //CPR
@@ -125,12 +125,12 @@ typedef struct {
     #line 33 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
     _motorswithfeedback_right_t _lf_default__right;
     struct {
-        #line 81 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
+        #line 83 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
         _picontrol_err_t err;
     } _lf_control_left;
     int _lf_control_left_width;
     struct {
-        #line 81 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
+        #line 83 "/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf"
         _picontrol_err_t err;
     } _lf_control_right;
     int _lf_control_right_width;

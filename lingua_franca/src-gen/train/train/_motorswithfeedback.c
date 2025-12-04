@@ -49,6 +49,8 @@ void _motorswithfeedbackreaction_function_2(void* instance_args) {
         float est_speed_left = ((left->value - self->prev_left) * TICKS_PER_METER) / (interval * 1e-9f);
         float est_speed_right = ((right->value - self->prev_right) * TICKS_PER_METER) / (interval * 1e-9f);
     
+        // printf("%f\n", est_speed_left);
+    
         self->prev_left = left->value;
         self->prev_right = right->value;
     

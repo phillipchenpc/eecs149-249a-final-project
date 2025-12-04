@@ -18,6 +18,7 @@ import Accelerometer from "../lib/IMU.lf"
 
 reactor Robot {
   preamble {=
+    #include <math.h>
     #define WHEEL_DIAMETER 0.032 // meters
     #define COUNTS_PER_REV 360 //CPR
     #define TICKS_PER_METER (WHEEL_DIAMETER * M_PI) / COUNTS_PER_REV
@@ -30,7 +31,7 @@ reactor Robot {
       *   target: The real value in m
       *   scale : the number of meters one cm will represent in our experiment
       */
-      return target / scale * 100; // 100 cm in 1 m
+      return target / scale / 100; // 100 cm in 1 m
     }
   =}
 
@@ -38,7 +39,7 @@ reactor Robot {
   state target_speed: float = 11.67 // in m/s
   state decceleration: float = 1.6 // in m/s**2
   
-  state scale: float = 2 // How many meters in 1 cm
+  state scale: float = 1 // How many meters in 1 cm
   state target_speed_scaled: float // Will be calculated on initialization
   state target_deccel_scaled: float
   
@@ -57,6 +58,11 @@ reactor Robot {
 
   timer t(0, 10 ms) // Timer for triggering gyro
 
+  // External commands
+  input stop: bool
+  state start_time: float // When the stop command was given. Help with decceleration timing
+  input cont: bool
+
   // Reading tilt from accelerometer
   a = new Accelerometer();
 
@@ -74,7 +80,7 @@ reactor Robot {
     // Calculate speed
     // float now = lf_time_logical();
     // float time_elapsed = now - self->prev_time;
-    // lf_set(speed, ((e.left->value - self->prev_left) / time_elapsed) / 100 * self->scale); // In m/s unscaled
+    // lf_set(speed, ((e.left->value - self->prev_left) / time_elapsed) * 100 * self->scale); // In m/s unscaled
 
     // self->prev_time = now;
     // self->prev_left = e.left->value;
@@ -87,8 +93,8 @@ reactor Robot {
     // Robot waits for calibration before switching to driving mode
     reaction(start) -> m.left_speed, m.right_speed, reset(DRIVING) {=
       lf_set_mode(DRIVING);
-      // self->target_speed_scaled = scale_values_exp(self->target_speed, self->scale);
-      // self->target_deccel_scaled = scale_values_exp(self->decceleration, self->scale);
+      self->target_speed_scaled = scale_values_exp(self->target_speed, self->scale);
+      self->target_deccel_scaled = scale_values_exp(self->decceleration, self->scale);
       lf_set(m.left_speed, self->target_speed_scaled);
       lf_set(m.right_speed, self->target_speed_scaled * self->motor_calibrate);
     =}
@@ -100,30 +106,38 @@ reactor Robot {
       lf_set(m.left_speed, self->target_speed_scaled);
       lf_set(m.right_speed, self->target_speed_scaled * self->motor_calibrate);
     =}
+
+    // Changing mode
+    reaction(stop) -> reset(STOPPING) {=
+      lf_set_mode(STOPPING);
+      self->start_time = lf_time_logical_elapsed() / (pow(10, 9));
+    =}
   }
 
   mode STOPPING {
-      state start_time: float; // Marks when the stop command was given
-      reaction(startup) {=
-        self->start_time = lf_time_physical_elapsed();
-      =}
+      timer update(0, 5 ms);
 
-      reaction(t) -> m.left_speed, m.right_speed {=
-          if (self->target_speed_scaled == 0) {
-            // Get new target speed IF speed is not 0
-            float curr_time = lf_time_physical_elapsed();
-            float new_speed = self->target_deccel_scaled * (curr_time - self->start_time);
-
-            // Set speed
+      reaction(update) -> m.left_speed, m.right_speed {=
+          float curr_time = lf_time_logical_elapsed() / (pow(10, 9));
+          // v - at
+          float new_speed = self->target_speed_scaled - self->target_deccel_scaled * (curr_time - self->start_time);
+          if (new_speed > 0) {
+            // Set new target speed IF speed is not 0
             lf_set(m.left_speed, new_speed);
             lf_set(m.right_speed, new_speed * self->motor_calibrate);
           }
+      =}
+
+      reaction(cont) -> m.left_speed, m.right_speed, reset(DRIVING) {=
+        lf_set_mode(DRIVING);
+        lf_set(m.left_speed, self->target_speed_scaled);
+        lf_set(m.right_speed, self->target_speed_scaled * self->motor_calibrate);
       =}
   }
 
 }
 
-main reactor(calibration_time: time = 5 s, sample_period: time = 100 ms) {
+main reactor(calibration_time: time = 5 s, sample_period: time = 100 ms, end_time: time = 20 s) {
   line = new Line()
   disp = new Display()
   robot = new Robot()
@@ -133,7 +147,9 @@ main reactor(calibration_time: time = 5 s, sample_period: time = 100 ms) {
   timer end_calibration(calibration_time)
   state count: int = 0
 
-  //timer end(0, end_time) // TESTING PURPOSES, STOP AFTER 20 s
+
+  timer end(0, end_time) // TESTING PURPOSES
+  timer start_again(10 s, end_time);
 
   reaction(startup) -> disp.line0, disp.line1, disp.line2 {=
     lf_set(disp.line0, "CALIBRATING");
@@ -152,47 +168,56 @@ main reactor(calibration_time: time = 5 s, sample_period: time = 100 ms) {
   //   lf_set(disp.line3, buf);
   // =}
 
-  reaction(end_calibration) -> line.calibrate, disp.line0, robot.start {=
-    static char buf[17];
-    snprintf(buf, 17, "IM HERE");
-    lf_set(disp.line0, buf);
-
+  reaction(end_calibration) -> line.calibrate, robot.start {=
     lf_set(line.calibrate, false);
     lf_set(robot.start, true);
+  =}
+
+  reaction(end) -> robot.stop, disp.line0 {=
+    static char buf[17];
+    snprintf(buf, 17, "slowing");
+    lf_set(disp.line0, buf);
+    lf_set(robot.stop, true);
+  =}
+  reaction(start_again) -> robot.cont, disp.line0 {=
+    static char buf[17];
+    snprintf(buf, 17, "starting");
+    lf_set(disp.line0, buf);
+    lf_set(robot.cont, true);
   =}
 
   reaction(t) -> line.trigger {=
     lf_set(line.trigger, true);
   =}
 
-  reaction(line.reflect) -> disp.line0, disp.line1, disp.line2, robot.side_detect {=
-    static char buf0[17];
-    static char buf1[17];
-    static char buf2[17];
-    bool right = line.reflect->value[4] > 800; 
-    bool center = line.reflect->value[1] > 800 || line.reflect->value[2] > 800 || line.reflect->value[3] > 800;
-    bool left = line.reflect->value[0] > 800;
-    if (left && center && right) {
-      lf_set(robot.side_detect, 2);
-    } else if(left && center) {
-      lf_set(robot.side_detect, 1);
-    } else if (right && center) {
-      lf_set(robot.side_detect, 3);
-    } else if (center) {
-      lf_set(robot.side_detect, 2);
-    } else if (left) {
-      lf_set(robot.side_detect, 0);
-    } else if (right) {
-      lf_set(robot.side_detect, 4);
-    } else {
-      lf_set(robot.side_detect, 5);
-    }
+  // reaction(line.reflect) -> disp.line0, disp.line1, disp.line2 {=
+  //   static char buf0[17];
+  //   static char buf1[17];
+  //   static char buf2[17];
+  //   bool right = line.reflect->value[4] > 800; 
+  //   bool center = line.reflect->value[1] > 800 || line.reflect->value[2] > 800 || line.reflect->value[3] > 800;
+  //   bool left = line.reflect->value[0] > 800;
+  //   // if (left && center && right) {
+  //   //   lf_set(robot.side_detect, 2);
+  //   // } else if(left && center) {
+  //   //   lf_set(robot.side_detect, 1);
+  //   // } else if (right && center) {
+  //   //   lf_set(robot.side_detect, 3);
+  //   // } else if (center) {
+  //   //   lf_set(robot.side_detect, 2);
+  //   // } else if (left) {
+  //   //   lf_set(robot.side_detect, 0);
+  //   // } else if (right) {
+  //   //   lf_set(robot.side_detect, 4);
+  //   // } else {
+  //   //   lf_set(robot.side_detect, 5);
+  //   // }
 
-    snprintf(buf0, 17, "Right: %d", right);
-    snprintf(buf1, 17, "Center: %d", center);
-    snprintf(buf2, 17, "Left: %d", left);
-    lf_set(disp.line0, buf0);
-    lf_set(disp.line1, buf1);
-    lf_set(disp.line2, buf2);
-  =}
+  //   snprintf(buf0, 17, "Right: %d", right);
+  //   snprintf(buf1, 17, "Center: %d", center);
+  //   snprintf(buf2, 17, "Left: %d", left);
+  //   lf_set(disp.line0, buf0);
+  //   lf_set(disp.line1, buf1);
+  //   lf_set(disp.line2, buf2);
+  // =}
 }
