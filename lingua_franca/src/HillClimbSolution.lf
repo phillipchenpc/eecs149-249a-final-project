@@ -1,0 +1,241 @@
+ target C {
+    platform: {
+      name: "rp2040",
+      board: "pololu_3pi_2040_robot"
+    },
+    single-threaded: true
+  }
+  
+  import Line from "lib/Line.lf"
+  import Display from "lib/Display.lf"
+  import MotorsWithFeedback from "lib/MotorsWithFeedback.lf"
+  import Encoders from "lib/Encoders.lf"
+  import GyroAngle, Accelerometer from "lib/IMU.lf"
+  import Tilt from "lib/Tilt.lf"
+
+  reactor Robot {
+    m = new MotorsWithFeedback();
+    state speed: float = 0.15 // The percentage of the full power of motor
+    state motor_calibrate: float = 0.95 // Scale the right motor input to match the left motors
+    input start: bool // True if the line calibrators are done with calibration and robot can start driving
+    // Encoder to ensure constant speed
+    e = new Encoders();
+    
+    // Input from line detector
+    input side_detect: uint32_t // 0: Left, 1: Left + Center, 2: Center, 3: Right + Center, 4: Right
+    state last_detect: uint32_t // Stores value of side_detect
+
+    // States for helping the robot turn a desired number of degrees
+    state turning_angles: float[] = {20, 45, 180, 45, 20} // Degrees to turn for each of the possibel side_detects
+    state last_angle: float // Keeps track of current orientation
+    timer t(0, 10 ms) // Timer for triggering gyro
+    g = new GyroAngle();
+
+    // Reading tilt from accelerometer
+    a = new Accelerometer();
+    tilt = new Tilt();
+    state direction_up: bool = true
+    state roll_max: float = 1.5 // Max roll we can tolerate
+    state pitch_max: float = 1.5  /// Max pitch that will trigger direction switch
+
+    // Read from the gyro and encoders and accelerometer
+    reaction(t) -> g.trigger, e.trigger, a.trigger {=
+      lf_set(g.trigger, true);
+      lf_set(e.trigger, true);
+      lf_set(a.trigger, true);
+    =}
+
+    // Update motor encoder values
+    reaction(e.left) -> m.left {=
+      lf_set(m.left, e.left->value);
+    =}
+    reaction(e.right) -> m.right {=
+      lf_set(m.right, e.right->value);
+    =}
+
+    // Tilt
+    reaction(a.x, a.y, a.z) -> tilt.x, tilt.y, tilt.z {=
+      lf_set(tilt.x, a.x->value);
+      lf_set(tilt.y, a.y->value);
+      lf_set(tilt.z, a.z->value);
+    =}
+
+    reaction(tilt.roll, tilt.pitch) {=
+      printf("Pitch: %f, Roll: %f \n", tilt.pitch->value, tilt.roll->value);
+    =}
+    
+
+    initial mode CALIBRATING {
+      // Robot waits for calibration before switching to driving mode
+      reaction(start) -> m.left_speed, m.right_speed, reset(DRIVING) {=
+        lf_set_mode(DRIVING);
+        lf_set(m.left_speed, self->speed);
+        lf_set(m.right_speed, self->speed * self->motor_calibrate);
+      =}
+    }
+
+    mode DRIVING {
+      // Robot always driving forward on startup
+      reaction(startup) -> m.left_speed, m.right_speed {=
+        lf_set(m.left_speed, self->speed);
+        lf_set(m.right_speed, self->speed * self->motor_calibrate);
+      =}
+
+      // Update last angle seen only while driving
+      reaction(g.z) {=
+        self->last_angle = g.z->value;
+      =}
+
+      // Make sure that we are going up or down the hill with roll == 0
+      reaction(tilt.roll) -> m.left_speed, m.right_speed {=
+        int direction = self->direction_up ? 1 : -1;
+        float gain = 0.005;
+        float left_feedback = -tilt.roll->value * gain * direction;
+        float right_feedback = tilt.roll->value * gain * direction;
+        // Turn left
+        lf_set(m.left_speed, (self->speed + left_feedback));
+        lf_set(m.right_speed, (self->speed + right_feedback) * self->motor_calibrate);
+      =}
+
+      // React to pitch (reaching the top of the hill)
+      reaction(tilt.pitch, g.z) -> m.left_speed, m.right_speed, reset(MANEUVER) {=
+        // Check which direction we're going
+        if (self->direction_up && abs(tilt.pitch->value) < self->pitch_max) {
+          // Change directions
+          self->direction_up = !self->direction_up;
+          // Turn 180 degrees
+          self->last_angle = g.z->value;
+          // Start robot turning
+          lf_set(m.left_speed, -self->speed);
+          lf_set(m.right_speed, self->speed * self->motor_calibrate);
+          // Switch over to MANEUVER with correct mode
+          self->last_detect = 2; // Turn 180 degrees
+          lf_set_mode(MANEUVER);
+        }
+      =}
+
+      reaction(side_detect) -> m.left_speed, m.right_speed, reset(BACKUP) {=
+        if (side_detect->value != 5){
+          // Start backing up
+          lf_set(m.left_speed, -self->speed);
+          lf_set(m.right_speed, -self->speed * self->motor_calibrate);
+
+          self->last_detect = side_detect->value; // Make sure this value doesn't change as we maneuver
+          
+          lf_set_mode(BACKUP);
+        }
+      =}
+    }
+
+    // mode ADJ_ROLL {
+    //   reaction(tilt.roll) -> m.left_speed, m.right_speed, reset(DRIVING) {=
+    //     if (abs(tilt.roll->value) < self->roll_max) {
+    //       // Keep going forward
+    //       lf_set_mode(DRIVING);
+    //       lf_set(m.left_speed, self->speed);
+    //       lf_set(m.right_speed, self->speed * self->motor_calibrate);
+    //     }
+    //   =}
+    // }
+
+    mode BACKUP {
+      reaction(side_detect) -> m.left_speed, m.right_speed, reset(MANEUVER){=
+          if (side_detect->value == 5) {
+            // Start turn only if we don't detect anything anymore
+            if (self->last_detect <= 2) {
+              // Turning right
+              lf_set(m.left_speed, self->speed);
+              lf_set(m.right_speed, -self->speed * self->motor_calibrate);
+            } else {
+              // Turning Left
+              lf_set(m.left_speed, -self->speed);
+              lf_set(m.right_speed, self->speed * self->motor_calibrate);
+            }
+            
+            // Change mode
+            lf_set_mode(MANEUVER);
+          }
+      =}
+    }
+
+    mode MANEUVER {
+        reaction(g.z) -> m.left_speed, m.right_speed, reset(DRIVING) {=
+            float turned_angle = abs(g.z->value - self->last_angle);
+
+            int target = self->turning_angles[self->last_detect];
+            if (turned_angle >= target) {
+              // Done executing maneuver
+              lf_set_mode(DRIVING);
+              lf_set(m.left_speed, self->speed);
+              lf_set(m.right_speed, self->speed * self->motor_calibrate);
+            }
+        =}
+    }
+
+  }
+  
+  main reactor(calibration_time: time = 10 s, sample_period: time = 100 ms) {
+    line = new Line()
+    disp = new Display()
+    robot = new Robot()
+  
+    timer t(0, sample_period)
+    timer seconds(0, 1 s)  // Timer used to display seconds.
+    timer end_calibration(calibration_time)
+    state count: int = 0
+  
+    reaction(startup) -> disp.line0, disp.line1, disp.line2 {=
+      lf_set(disp.line0, "CALIBRATING");
+      lf_set(disp.line1, "Roll robot over");
+      lf_set(disp.line2, "light and dark.");
+    =}
+  
+    reaction(seconds) -> disp.line3 {=
+      static char buf[17];
+      snprintf(buf, 17, "time:%8d s", self->count++);
+      lf_set(disp.line3, buf);
+    =}
+  
+    reaction(end_calibration) -> line.calibrate, robot.start {=
+      lf_set(line.calibrate, false);
+      lf_set(robot.start, true);
+    =}
+  
+    reaction(t) -> line.trigger {=
+      lf_set(line.trigger, true);
+    =}
+  
+    reaction(line.reflect) -> disp.line0, disp.line1, disp.line2, robot.side_detect {=
+      static char buf0[17];
+      static char buf1[17];
+      static char buf2[17];
+      bool right = line.reflect->value[4] > 800; 
+      bool center = line.reflect->value[1] > 800 || line.reflect->value[2] > 800 || line.reflect->value[3] > 800;
+      bool left = line.reflect->value[0] > 800;
+      if (left && center && right) {
+        lf_set(robot.side_detect, 2);
+      } else if(left && center) {
+        lf_set(robot.side_detect, 1);
+      } else if (right && center) {
+        lf_set(robot.side_detect, 3);
+      } else if (center) {
+        lf_set(robot.side_detect, 2);
+      } else if (left) {
+        lf_set(robot.side_detect, 0);
+      } else if (right) {
+        lf_set(robot.side_detect, 4);
+      } else {
+        lf_set(robot.side_detect, 5);
+      }
+    //   snprintf(buf0, 17, "0:%4d 1:%4d", line.reflect->value[0], line.reflect->value[1]);
+    //   snprintf(buf1, 17, "2:%4d 3:%4d", line.reflect->value[2], line.reflect->value[3]);
+    //   snprintf(buf2, 17, "4:%4d Line:%d", line.reflect->value[4], on_line);
+      snprintf(buf0, 17, "Right: %d", right);
+      snprintf(buf1, 17, "Center: %d", center);
+      snprintf(buf2, 17, "Left: %d", left);
+      lf_set(disp.line0, buf0);
+      lf_set(disp.line1, buf1);
+      lf_set(disp.line2, buf2);
+    =}
+  }
+  
