@@ -1,0 +1,42 @@
+/**
+ * Display three dimensions of accelerometer measurements on the LCD display of the
+ * <a href="https://www.pololu.com/docs/0J86">Pololu 3pi+ 2040 robot</a>. To run this program, first
+ * put the robot in BOOTSEL mode (hold button B while resetting). Then the sequence of commands is
+ * something like this:
+ * ```
+ *     $ cd ~/lf-pico
+ *     $ lfc src/AccelerometerDisplay.lf
+ *     ...
+ *     $ picotool load -x bin/AccelerometerDisplay.elf
+ * ```
+
+ *
+ * This compiles the program, loads it into flash memory on the robot, and begins executing it.
+ *
+ * @author Edward A. Lee
+ */
+ target C {
+    platform: "RP2040",
+    single-threaded: true
+  }
+  
+  preamble {=
+    #include <math.h>
+  =}
+
+ reactor Tilt {
+    input x: float
+    input y: float
+    input z: float
+    output pitch: float
+    output roll: float
+
+    // Returning in degrees
+    reaction(x, y, z) -> pitch {=
+        lf_set(pitch, atan2f(x->value, sqrtf(powf(y->value, 2) + powf(z->value, 2))) * 180 / M_PI);
+    =}
+
+    reaction(x, y, z) -> roll {=
+        lf_set(roll, atan2f(y->value, sqrtf(powf(x->value, 2) + powf(z->value, 2))) * 180 / M_PI);
+    =}
+ }
