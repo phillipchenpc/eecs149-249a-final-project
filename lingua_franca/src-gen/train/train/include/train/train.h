@@ -84,4 +84,31 @@ typedef struct {
     string value;
 
 } display_line3_t;
+typedef struct {
+    token_type_t type;
+    lf_token_t* token;
+    size_t length;
+    bool is_present;
+    lf_port_internal_t _base;
+    bool value;
+
+} robot_start_t;
+typedef struct {
+    token_type_t type;
+    lf_token_t* token;
+    size_t length;
+    bool is_present;
+    lf_port_internal_t _base;
+    uint32_t value;
+
+} robot_side_detect_t;
+typedef struct {
+    token_type_t type;
+    lf_token_t* token;
+    size_t length;
+    bool is_present;
+    lf_port_internal_t _base;
+    float value;
+
+} robot_speed_t;
 #endif

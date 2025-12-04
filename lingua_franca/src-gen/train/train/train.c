@@ -18,6 +18,12 @@ int main(void) {
 void _lf_set_default_command_line_options() {}
 #include "_line.h"
 #include "_display.h"
+#include "_motors.h"
+#include "_picontrol.h"
+#include "_motorswithfeedback.h"
+#include "_encoders.h"
+#include "_accelerometer.h"
+#include "_robot.h"
 #include "_train_main.h"
 typedef enum {
     train_main,
@@ -27,7 +33,7 @@ typedef enum {
 environment_t envs[_num_enclaves];
 // 'Create' and initialize the environments in the program
 void _lf_create_environments() {
-    environment_init(&envs[train_main],train_main,_lf_number_of_workers,3,2,0,0,7,0,0,NULL);
+    environment_init(&envs[train_main],train_main,_lf_number_of_workers,4,7,0,0,25,1,0,NULL);
 }
 // Update the pointer argument to point to the beginning of the environment array
 // and return the size of that array
@@ -56,6 +62,20 @@ void _lf_initialize_trigger_objects() {
     SUPPRESS_UNUSED_WARNING(train_line_self);
     _display_self_t* train_disp_self[1];
     SUPPRESS_UNUSED_WARNING(train_disp_self);
+    _robot_self_t* train_robot_self[1];
+    SUPPRESS_UNUSED_WARNING(train_robot_self);
+    _motorswithfeedback_self_t* train_robot_m_self[1];
+    SUPPRESS_UNUSED_WARNING(train_robot_m_self);
+    _motors_self_t* train_robot_m_motors_self[1];
+    SUPPRESS_UNUSED_WARNING(train_robot_m_motors_self);
+    _picontrol_self_t* train_robot_m_control_left_self[1];
+    SUPPRESS_UNUSED_WARNING(train_robot_m_control_left_self);
+    _picontrol_self_t* train_robot_m_control_right_self[1];
+    SUPPRESS_UNUSED_WARNING(train_robot_m_control_right_self);
+    _encoders_self_t* train_robot_e_self[1];
+    SUPPRESS_UNUSED_WARNING(train_robot_e_self);
+    _accelerometer_self_t* train_robot_a_self[1];
+    SUPPRESS_UNUSED_WARNING(train_robot_a_self);
     // ***** Start initializing train of class train
     train_main_self[0] = new__train_main();
     train_main_self[0]->base.environment = &envs[train_main];
@@ -91,6 +111,7 @@ void _lf_initialize_trigger_objects() {
     train_main_self[0]->_lf__reaction_1.deadline = NEVER;
     train_main_self[0]->_lf__reaction_2.deadline = NEVER;
     train_main_self[0]->_lf__reaction_3.deadline = NEVER;
+    train_main_self[0]->_lf__reaction_4.deadline = NEVER;
     {
         // ***** Start initializing train.line of class Line
         train_line_self[0] = new__line();
@@ -135,6 +156,196 @@ void _lf_initialize_trigger_objects() {
         train_disp_self[0]->_lf__reaction_0.deadline = NEVER;
         train_disp_self[0]->_lf__reaction_1.deadline = NEVER;
         //***** End initializing train.disp
+    }
+    {
+        // ***** Start initializing train.robot of class Robot
+        train_robot_self[0] = new__robot();
+        train_robot_self[0]->base.environment = &envs[train_main];
+        bank_index = 0; SUPPRESS_UNUSED_WARNING(bank_index);
+        // width of -2 indicates that it is not a multiport.
+        train_robot_self[0]->_lf_speed_width = -2;
+        // width of -2 indicates that it is not a multiport.
+        train_robot_self[0]->_lf_start_width = -2;
+        // width of -2 indicates that it is not a multiport.
+        train_robot_self[0]->_lf_side_detect_width = -2;
+        envs[train_main].startup_reactions[startup_reaction_count[train_main]++] = &train_robot_self[0]->_lf__reaction_4;
+        envs[train_main].startup_reactions[startup_reaction_count[train_main]++] = &train_robot_self[0]->_lf__reaction_5;
+        SUPPRESS_UNUSED_WARNING(_lf_watchdog_count);
+        { // For scoping
+            static float _initial = 11.67;
+            train_robot_self[0]->target_speed = _initial;
+        } // End scoping.
+        { // For scoping
+            static float _initial = 1.6;
+            train_robot_self[0]->decceleration = _initial;
+        } // End scoping.
+        { // For scoping
+            static float _initial = 2;
+            train_robot_self[0]->scale = _initial;
+        } // End scoping.
+        { // For scoping
+            static float _initial = 0.95;
+            train_robot_self[0]->motor_calibrate = _initial;
+        } // End scoping.
+        { // For scoping
+            static float _initial = 0;
+            train_robot_self[0]->prev_left = _initial;
+        } // End scoping.
+        { // For scoping
+            static float _initial = 0;
+            train_robot_self[0]->prev_time = _initial;
+        } // End scoping.
+        // Initiaizing timer train.robot.t.
+        train_robot_self[0]->_lf__t.offset = 0;
+        train_robot_self[0]->_lf__t.period = MSEC(10);
+        // Associate timer with the environment of its parent
+        envs[train_main].timer_triggers[timer_triggers_count[train_main]++] = &train_robot_self[0]->_lf__t;
+        train_robot_self[0]->_lf__t.mode = NULL;
+    
+        train_robot_self[0]->_lf__reaction_0.deadline = NEVER;
+        train_robot_self[0]->_lf__reaction_1.deadline = NEVER;
+        train_robot_self[0]->_lf__reaction_2.deadline = NEVER;
+        train_robot_self[0]->_lf__reaction_3.deadline = NEVER;
+        train_robot_self[0]->_lf__reaction_4.deadline = NEVER;
+        train_robot_self[0]->_lf__reaction_5.deadline = NEVER;
+        train_robot_self[0]->_lf__reaction_6.deadline = NEVER;
+        // Register for transition handling
+        envs[train_main].modes->modal_reactor_states[modal_reactor_count[train_main]++] = &((self_base_t*)train_robot_self[0])->_lf__mode_state;
+        {
+            // ***** Start initializing train.robot.m of class MotorsWithFeedback
+            train_robot_m_self[0] = new__motorswithfeedback();
+            train_robot_m_self[0]->base.environment = &envs[train_main];
+            bank_index = 0; SUPPRESS_UNUSED_WARNING(bank_index);
+            train_robot_m_self[0]->p_gain = 0.5;
+            train_robot_m_self[0]->i_gain = 0.25;
+            // width of -2 indicates that it is not a multiport.
+            train_robot_m_self[0]->_lf_left_speed_width = -2;
+            // width of -2 indicates that it is not a multiport.
+            train_robot_m_self[0]->_lf_right_speed_width = -2;
+            // width of -2 indicates that it is not a multiport.
+            train_robot_m_self[0]->_lf_left_width = -2;
+            // width of -2 indicates that it is not a multiport.
+            train_robot_m_self[0]->_lf_right_width = -2;
+            SUPPRESS_UNUSED_WARNING(_lf_watchdog_count);
+            train_robot_m_self[0]->prev_time = 0;
+            { // For scoping
+                static int32_t _initial = 0;
+                train_robot_m_self[0]->prev_left = _initial;
+            } // End scoping.
+            { // For scoping
+                static int32_t _initial = 0;
+                train_robot_m_self[0]->prev_right = _initial;
+            } // End scoping.
+            { // For scoping
+                static float _initial = 0;
+                train_robot_m_self[0]->target_speed_left = _initial;
+            } // End scoping.
+            { // For scoping
+                static float _initial = 0;
+                train_robot_m_self[0]->target_speed_right = _initial;
+            } // End scoping.
+    
+            train_robot_m_self[0]->_lf__reaction_0.deadline = NEVER;
+            train_robot_m_self[0]->_lf__reaction_1.deadline = NEVER;
+            train_robot_m_self[0]->_lf__reaction_2.deadline = NEVER;
+            {
+                // ***** Start initializing train.robot.m.motors of class Motors
+                train_robot_m_motors_self[0] = new__motors();
+                train_robot_m_motors_self[0]->base.environment = &envs[train_main];
+                bank_index = 0; SUPPRESS_UNUSED_WARNING(bank_index);
+                // width of -2 indicates that it is not a multiport.
+                train_robot_m_motors_self[0]->_lf_left_power_width = -2;
+                // width of -2 indicates that it is not a multiport.
+                train_robot_m_motors_self[0]->_lf_right_power_width = -2;
+                envs[train_main].startup_reactions[startup_reaction_count[train_main]++] = &train_robot_m_motors_self[0]->_lf__reaction_0;
+                SUPPRESS_UNUSED_WARNING(_lf_watchdog_count);
+    
+                train_robot_m_motors_self[0]->_lf__reaction_0.deadline = NEVER;
+                train_robot_m_motors_self[0]->_lf__reaction_1.deadline = NEVER;
+                train_robot_m_motors_self[0]->_lf__reaction_2.deadline = NEVER;
+                //***** End initializing train.robot.m.motors
+            }
+            {
+                // ***** Start initializing train.robot.m.control_left of class PIControl
+                train_robot_m_control_left_self[0] = new__picontrol();
+                train_robot_m_control_left_self[0]->base.environment = &envs[train_main];
+                bank_index = 0; SUPPRESS_UNUSED_WARNING(bank_index);
+                train_robot_m_control_left_self[0]->p_gain = train_robot_m_self[0]->p_gain;
+                train_robot_m_control_left_self[0]->i_gain = train_robot_m_self[0]->i_gain;
+                // width of -2 indicates that it is not a multiport.
+                train_robot_m_control_left_self[0]->_lf_ctrl_width = -2;
+                // width of -2 indicates that it is not a multiport.
+                train_robot_m_control_left_self[0]->_lf_err_width = -2;
+                SUPPRESS_UNUSED_WARNING(_lf_watchdog_count);
+                { // For scoping
+                    static float _initial = 0;
+                    train_robot_m_control_left_self[0]->acum_err = _initial;
+                } // End scoping.
+    
+                train_robot_m_control_left_self[0]->_lf__reaction_0.deadline = NEVER;
+                //***** End initializing train.robot.m.control_left
+            }
+            {
+                // ***** Start initializing train.robot.m.control_right of class PIControl
+                train_robot_m_control_right_self[0] = new__picontrol();
+                train_robot_m_control_right_self[0]->base.environment = &envs[train_main];
+                bank_index = 0; SUPPRESS_UNUSED_WARNING(bank_index);
+                train_robot_m_control_right_self[0]->p_gain = train_robot_m_self[0]->p_gain;
+                train_robot_m_control_right_self[0]->i_gain = train_robot_m_self[0]->i_gain;
+                // width of -2 indicates that it is not a multiport.
+                train_robot_m_control_right_self[0]->_lf_ctrl_width = -2;
+                // width of -2 indicates that it is not a multiport.
+                train_robot_m_control_right_self[0]->_lf_err_width = -2;
+                SUPPRESS_UNUSED_WARNING(_lf_watchdog_count);
+                { // For scoping
+                    static float _initial = 0;
+                    train_robot_m_control_right_self[0]->acum_err = _initial;
+                } // End scoping.
+    
+                train_robot_m_control_right_self[0]->_lf__reaction_0.deadline = NEVER;
+                //***** End initializing train.robot.m.control_right
+            }
+            //***** End initializing train.robot.m
+        }
+        {
+            // ***** Start initializing train.robot.e of class Encoders
+            train_robot_e_self[0] = new__encoders();
+            train_robot_e_self[0]->base.environment = &envs[train_main];
+            bank_index = 0; SUPPRESS_UNUSED_WARNING(bank_index);
+            // width of -2 indicates that it is not a multiport.
+            train_robot_e_self[0]->_lf_right_width = -2;
+            // width of -2 indicates that it is not a multiport.
+            train_robot_e_self[0]->_lf_left_width = -2;
+            // width of -2 indicates that it is not a multiport.
+            train_robot_e_self[0]->_lf_trigger_width = -2;
+            envs[train_main].startup_reactions[startup_reaction_count[train_main]++] = &train_robot_e_self[0]->_lf__reaction_0;
+            SUPPRESS_UNUSED_WARNING(_lf_watchdog_count);
+    
+            train_robot_e_self[0]->_lf__reaction_0.deadline = NEVER;
+            train_robot_e_self[0]->_lf__reaction_1.deadline = NEVER;
+            //***** End initializing train.robot.e
+        }
+        {
+            // ***** Start initializing train.robot.a of class Accelerometer
+            train_robot_a_self[0] = new__accelerometer();
+            train_robot_a_self[0]->base.environment = &envs[train_main];
+            bank_index = 0; SUPPRESS_UNUSED_WARNING(bank_index);
+            // width of -2 indicates that it is not a multiport.
+            train_robot_a_self[0]->_lf_x_width = -2;
+            // width of -2 indicates that it is not a multiport.
+            train_robot_a_self[0]->_lf_y_width = -2;
+            // width of -2 indicates that it is not a multiport.
+            train_robot_a_self[0]->_lf_z_width = -2;
+            // width of -2 indicates that it is not a multiport.
+            train_robot_a_self[0]->_lf_trigger_width = -2;
+            envs[train_main].startup_reactions[startup_reaction_count[train_main]++] = &train_robot_a_self[0]->_lf__reaction_0;
+            SUPPRESS_UNUSED_WARNING(_lf_watchdog_count);
+    
+            train_robot_a_self[0]->_lf__reaction_0.deadline = NEVER;
+            train_robot_a_self[0]->_lf__reaction_1.deadline = NEVER;
+            //***** End initializing train.robot.a
+        }
+        //***** End initializing train.robot
     }
     //***** End initializing train
     // **** Start deferred initialize for train
@@ -196,17 +407,17 @@ void _lf_initialize_trigger_objects() {
         // ** End initialization for reaction 1 of train
         // Total number of outputs (single ports and multiport channels)
         // produced by reaction_2 of train.
-        train_main_self[0]->_lf__reaction_2.num_outputs = 2;
+        train_main_self[0]->_lf__reaction_2.num_outputs = 3;
         // Allocate memory for triggers[] and triggered_sizes[] on the reaction_t
         // struct for this reaction.
         train_main_self[0]->_lf__reaction_2.triggers = (trigger_t***)_lf_allocate(
-                2, sizeof(trigger_t**),
+                3, sizeof(trigger_t**),
                 &train_main_self[0]->base.allocations);
         train_main_self[0]->_lf__reaction_2.triggered_sizes = (int*)_lf_allocate(
-                2, sizeof(int),
+                3, sizeof(int),
                 &train_main_self[0]->base.allocations);
         train_main_self[0]->_lf__reaction_2.output_produced = (bool**)_lf_allocate(
-                2, sizeof(bool*),
+                3, sizeof(bool*),
                 &train_main_self[0]->base.allocations);
         {
             int count = 0; SUPPRESS_UNUSED_WARNING(count);
@@ -216,7 +427,11 @@ void _lf_initialize_trigger_objects() {
             }
             // Reaction writes to an input of a contained reactor.
             {
-                train_main_self[0]->_lf__reaction_2.output_produced[count++] = &train_main_self[0]->_lf_disp.line1.is_present;
+                train_main_self[0]->_lf__reaction_2.output_produced[count++] = &train_main_self[0]->_lf_disp.line0.is_present;
+            }
+            // Reaction writes to an input of a contained reactor.
+            {
+                train_main_self[0]->_lf__reaction_2.output_produced[count++] = &train_main_self[0]->_lf_robot.start.is_present;
             }
         }
         
@@ -244,6 +459,41 @@ void _lf_initialize_trigger_objects() {
         }
         
         // ** End initialization for reaction 3 of train
+        // Total number of outputs (single ports and multiport channels)
+        // produced by reaction_4 of train.
+        train_main_self[0]->_lf__reaction_4.num_outputs = 4;
+        // Allocate memory for triggers[] and triggered_sizes[] on the reaction_t
+        // struct for this reaction.
+        train_main_self[0]->_lf__reaction_4.triggers = (trigger_t***)_lf_allocate(
+                4, sizeof(trigger_t**),
+                &train_main_self[0]->base.allocations);
+        train_main_self[0]->_lf__reaction_4.triggered_sizes = (int*)_lf_allocate(
+                4, sizeof(int),
+                &train_main_self[0]->base.allocations);
+        train_main_self[0]->_lf__reaction_4.output_produced = (bool**)_lf_allocate(
+                4, sizeof(bool*),
+                &train_main_self[0]->base.allocations);
+        {
+            int count = 0; SUPPRESS_UNUSED_WARNING(count);
+            // Reaction writes to an input of a contained reactor.
+            {
+                train_main_self[0]->_lf__reaction_4.output_produced[count++] = &train_main_self[0]->_lf_disp.line0.is_present;
+            }
+            // Reaction writes to an input of a contained reactor.
+            {
+                train_main_self[0]->_lf__reaction_4.output_produced[count++] = &train_main_self[0]->_lf_disp.line1.is_present;
+            }
+            // Reaction writes to an input of a contained reactor.
+            {
+                train_main_self[0]->_lf__reaction_4.output_produced[count++] = &train_main_self[0]->_lf_disp.line2.is_present;
+            }
+            // Reaction writes to an input of a contained reactor.
+            {
+                train_main_self[0]->_lf__reaction_4.output_produced[count++] = &train_main_self[0]->_lf_robot.side_detect.is_present;
+            }
+        }
+        
+        // ** End initialization for reaction 4 of train
     
         // **** Start deferred initialize for train.line
         {
@@ -303,6 +553,393 @@ void _lf_initialize_trigger_objects() {
         
         }
         // **** End of deferred initialize for train.disp
+        // **** Start deferred initialize for train.robot
+        {
+        
+            // Total number of outputs (single ports and multiport channels)
+            // produced by reaction_0 of train.robot.
+            train_robot_self[0]->_lf__reaction_0.num_outputs = 2;
+            // Allocate memory for triggers[] and triggered_sizes[] on the reaction_t
+            // struct for this reaction.
+            train_robot_self[0]->_lf__reaction_0.triggers = (trigger_t***)_lf_allocate(
+                    2, sizeof(trigger_t**),
+                    &train_robot_self[0]->base.allocations);
+            train_robot_self[0]->_lf__reaction_0.triggered_sizes = (int*)_lf_allocate(
+                    2, sizeof(int),
+                    &train_robot_self[0]->base.allocations);
+            train_robot_self[0]->_lf__reaction_0.output_produced = (bool**)_lf_allocate(
+                    2, sizeof(bool*),
+                    &train_robot_self[0]->base.allocations);
+            {
+                int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                // Reaction writes to an input of a contained reactor.
+                {
+                    train_robot_self[0]->_lf__reaction_0.output_produced[count++] = &train_robot_self[0]->_lf_e.trigger.is_present;
+                }
+                // Reaction writes to an input of a contained reactor.
+                {
+                    train_robot_self[0]->_lf__reaction_0.output_produced[count++] = &train_robot_self[0]->_lf_a.trigger.is_present;
+                }
+            }
+            
+            // ** End initialization for reaction 0 of train.robot
+            // Total number of outputs (single ports and multiport channels)
+            // produced by reaction_1 of train.robot.
+            train_robot_self[0]->_lf__reaction_1.num_outputs = 2;
+            // Allocate memory for triggers[] and triggered_sizes[] on the reaction_t
+            // struct for this reaction.
+            train_robot_self[0]->_lf__reaction_1.triggers = (trigger_t***)_lf_allocate(
+                    2, sizeof(trigger_t**),
+                    &train_robot_self[0]->base.allocations);
+            train_robot_self[0]->_lf__reaction_1.triggered_sizes = (int*)_lf_allocate(
+                    2, sizeof(int),
+                    &train_robot_self[0]->base.allocations);
+            train_robot_self[0]->_lf__reaction_1.output_produced = (bool**)_lf_allocate(
+                    2, sizeof(bool*),
+                    &train_robot_self[0]->base.allocations);
+            {
+                int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                // Reaction writes to an input of a contained reactor.
+                {
+                    train_robot_self[0]->_lf__reaction_1.output_produced[count++] = &train_robot_self[0]->_lf_m.left.is_present;
+                }
+                {
+                    train_robot_self[0]->_lf__reaction_1.output_produced[count++] = &train_robot_self[0]->_lf_speed.is_present;
+                }
+            }
+            
+            // ** End initialization for reaction 1 of train.robot
+            // Total number of outputs (single ports and multiport channels)
+            // produced by reaction_2 of train.robot.
+            train_robot_self[0]->_lf__reaction_2.num_outputs = 1;
+            // Allocate memory for triggers[] and triggered_sizes[] on the reaction_t
+            // struct for this reaction.
+            train_robot_self[0]->_lf__reaction_2.triggers = (trigger_t***)_lf_allocate(
+                    1, sizeof(trigger_t**),
+                    &train_robot_self[0]->base.allocations);
+            train_robot_self[0]->_lf__reaction_2.triggered_sizes = (int*)_lf_allocate(
+                    1, sizeof(int),
+                    &train_robot_self[0]->base.allocations);
+            train_robot_self[0]->_lf__reaction_2.output_produced = (bool**)_lf_allocate(
+                    1, sizeof(bool*),
+                    &train_robot_self[0]->base.allocations);
+            {
+                int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                // Reaction writes to an input of a contained reactor.
+                {
+                    train_robot_self[0]->_lf__reaction_2.output_produced[count++] = &train_robot_self[0]->_lf_m.right.is_present;
+                }
+            }
+            
+            // ** End initialization for reaction 2 of train.robot
+            // Total number of outputs (single ports and multiport channels)
+            // produced by reaction_3 of train.robot.
+            train_robot_self[0]->_lf__reaction_3.num_outputs = 2;
+            // Allocate memory for triggers[] and triggered_sizes[] on the reaction_t
+            // struct for this reaction.
+            train_robot_self[0]->_lf__reaction_3.triggers = (trigger_t***)_lf_allocate(
+                    2, sizeof(trigger_t**),
+                    &train_robot_self[0]->base.allocations);
+            train_robot_self[0]->_lf__reaction_3.triggered_sizes = (int*)_lf_allocate(
+                    2, sizeof(int),
+                    &train_robot_self[0]->base.allocations);
+            train_robot_self[0]->_lf__reaction_3.output_produced = (bool**)_lf_allocate(
+                    2, sizeof(bool*),
+                    &train_robot_self[0]->base.allocations);
+            {
+                int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                // Reaction writes to an input of a contained reactor.
+                {
+                    train_robot_self[0]->_lf__reaction_3.output_produced[count++] = &train_robot_self[0]->_lf_m.left_speed.is_present;
+                }
+                // Reaction writes to an input of a contained reactor.
+                {
+                    train_robot_self[0]->_lf__reaction_3.output_produced[count++] = &train_robot_self[0]->_lf_m.right_speed.is_present;
+                }
+            }
+            
+            // ** End initialization for reaction 3 of train.robot
+            // Total number of outputs (single ports and multiport channels)
+            // produced by reaction_4 of train.robot.
+            train_robot_self[0]->_lf__reaction_4.num_outputs = 2;
+            // Allocate memory for triggers[] and triggered_sizes[] on the reaction_t
+            // struct for this reaction.
+            train_robot_self[0]->_lf__reaction_4.triggers = (trigger_t***)_lf_allocate(
+                    2, sizeof(trigger_t**),
+                    &train_robot_self[0]->base.allocations);
+            train_robot_self[0]->_lf__reaction_4.triggered_sizes = (int*)_lf_allocate(
+                    2, sizeof(int),
+                    &train_robot_self[0]->base.allocations);
+            train_robot_self[0]->_lf__reaction_4.output_produced = (bool**)_lf_allocate(
+                    2, sizeof(bool*),
+                    &train_robot_self[0]->base.allocations);
+            {
+                int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                // Reaction writes to an input of a contained reactor.
+                {
+                    train_robot_self[0]->_lf__reaction_4.output_produced[count++] = &train_robot_self[0]->_lf_m.left_speed.is_present;
+                }
+                // Reaction writes to an input of a contained reactor.
+                {
+                    train_robot_self[0]->_lf__reaction_4.output_produced[count++] = &train_robot_self[0]->_lf_m.right_speed.is_present;
+                }
+            }
+            
+            // ** End initialization for reaction 4 of train.robot
+            // Total number of outputs (single ports and multiport channels)
+            // produced by reaction_5 of train.robot.
+            train_robot_self[0]->_lf__reaction_5.num_outputs = 0;
+            {
+                int count = 0; SUPPRESS_UNUSED_WARNING(count);
+            }
+            
+            // ** End initialization for reaction 5 of train.robot
+            // Total number of outputs (single ports and multiport channels)
+            // produced by reaction_6 of train.robot.
+            train_robot_self[0]->_lf__reaction_6.num_outputs = 2;
+            // Allocate memory for triggers[] and triggered_sizes[] on the reaction_t
+            // struct for this reaction.
+            train_robot_self[0]->_lf__reaction_6.triggers = (trigger_t***)_lf_allocate(
+                    2, sizeof(trigger_t**),
+                    &train_robot_self[0]->base.allocations);
+            train_robot_self[0]->_lf__reaction_6.triggered_sizes = (int*)_lf_allocate(
+                    2, sizeof(int),
+                    &train_robot_self[0]->base.allocations);
+            train_robot_self[0]->_lf__reaction_6.output_produced = (bool**)_lf_allocate(
+                    2, sizeof(bool*),
+                    &train_robot_self[0]->base.allocations);
+            {
+                int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                // Reaction writes to an input of a contained reactor.
+                {
+                    train_robot_self[0]->_lf__reaction_6.output_produced[count++] = &train_robot_self[0]->_lf_m.left_speed.is_present;
+                }
+                // Reaction writes to an input of a contained reactor.
+                {
+                    train_robot_self[0]->_lf__reaction_6.output_produced[count++] = &train_robot_self[0]->_lf_m.right_speed.is_present;
+                }
+            }
+            
+            // ** End initialization for reaction 6 of train.robot
+        
+            // **** Start deferred initialize for train.robot.m
+            {
+            
+                // Total number of outputs (single ports and multiport channels)
+                // produced by reaction_0 of train.robot.m.
+                train_robot_m_self[0]->_lf__reaction_0.num_outputs = 0;
+                {
+                    int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                }
+                
+                // ** End initialization for reaction 0 of train.robot.m
+                // Total number of outputs (single ports and multiport channels)
+                // produced by reaction_1 of train.robot.m.
+                train_robot_m_self[0]->_lf__reaction_1.num_outputs = 0;
+                {
+                    int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                }
+                
+                // ** End initialization for reaction 1 of train.robot.m
+                // Total number of outputs (single ports and multiport channels)
+                // produced by reaction_2 of train.robot.m.
+                train_robot_m_self[0]->_lf__reaction_2.num_outputs = 2;
+                // Allocate memory for triggers[] and triggered_sizes[] on the reaction_t
+                // struct for this reaction.
+                train_robot_m_self[0]->_lf__reaction_2.triggers = (trigger_t***)_lf_allocate(
+                        2, sizeof(trigger_t**),
+                        &train_robot_m_self[0]->base.allocations);
+                train_robot_m_self[0]->_lf__reaction_2.triggered_sizes = (int*)_lf_allocate(
+                        2, sizeof(int),
+                        &train_robot_m_self[0]->base.allocations);
+                train_robot_m_self[0]->_lf__reaction_2.output_produced = (bool**)_lf_allocate(
+                        2, sizeof(bool*),
+                        &train_robot_m_self[0]->base.allocations);
+                {
+                    int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                    // Reaction writes to an input of a contained reactor.
+                    {
+                        train_robot_m_self[0]->_lf__reaction_2.output_produced[count++] = &train_robot_m_self[0]->_lf_control_left.err.is_present;
+                    }
+                    // Reaction writes to an input of a contained reactor.
+                    {
+                        train_robot_m_self[0]->_lf__reaction_2.output_produced[count++] = &train_robot_m_self[0]->_lf_control_right.err.is_present;
+                    }
+                }
+                
+                // ** End initialization for reaction 2 of train.robot.m
+            
+                // **** Start deferred initialize for train.robot.m.motors
+                {
+                
+                    // Total number of outputs (single ports and multiport channels)
+                    // produced by reaction_0 of train.robot.m.motors.
+                    train_robot_m_motors_self[0]->_lf__reaction_0.num_outputs = 0;
+                    {
+                        int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                    }
+                    
+                    // ** End initialization for reaction 0 of train.robot.m.motors
+                    // Total number of outputs (single ports and multiport channels)
+                    // produced by reaction_1 of train.robot.m.motors.
+                    train_robot_m_motors_self[0]->_lf__reaction_1.num_outputs = 0;
+                    {
+                        int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                    }
+                    
+                    // ** End initialization for reaction 1 of train.robot.m.motors
+                    // Total number of outputs (single ports and multiport channels)
+                    // produced by reaction_2 of train.robot.m.motors.
+                    train_robot_m_motors_self[0]->_lf__reaction_2.num_outputs = 0;
+                    {
+                        int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                    }
+                    
+                    // ** End initialization for reaction 2 of train.robot.m.motors
+                
+                }
+                // **** End of deferred initialize for train.robot.m.motors
+                // **** Start deferred initialize for train.robot.m.control_left
+                {
+                
+                    // Total number of outputs (single ports and multiport channels)
+                    // produced by reaction_0 of train.robot.m.control_left.
+                    train_robot_m_control_left_self[0]->_lf__reaction_0.num_outputs = 1;
+                    // Allocate memory for triggers[] and triggered_sizes[] on the reaction_t
+                    // struct for this reaction.
+                    train_robot_m_control_left_self[0]->_lf__reaction_0.triggers = (trigger_t***)_lf_allocate(
+                            1, sizeof(trigger_t**),
+                            &train_robot_m_control_left_self[0]->base.allocations);
+                    train_robot_m_control_left_self[0]->_lf__reaction_0.triggered_sizes = (int*)_lf_allocate(
+                            1, sizeof(int),
+                            &train_robot_m_control_left_self[0]->base.allocations);
+                    train_robot_m_control_left_self[0]->_lf__reaction_0.output_produced = (bool**)_lf_allocate(
+                            1, sizeof(bool*),
+                            &train_robot_m_control_left_self[0]->base.allocations);
+                    {
+                        int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                        {
+                            train_robot_m_control_left_self[0]->_lf__reaction_0.output_produced[count++] = &train_robot_m_control_left_self[0]->_lf_ctrl.is_present;
+                        }
+                    }
+                    
+                    // ** End initialization for reaction 0 of train.robot.m.control_left
+                
+                }
+                // **** End of deferred initialize for train.robot.m.control_left
+                // **** Start deferred initialize for train.robot.m.control_right
+                {
+                
+                    // Total number of outputs (single ports and multiport channels)
+                    // produced by reaction_0 of train.robot.m.control_right.
+                    train_robot_m_control_right_self[0]->_lf__reaction_0.num_outputs = 1;
+                    // Allocate memory for triggers[] and triggered_sizes[] on the reaction_t
+                    // struct for this reaction.
+                    train_robot_m_control_right_self[0]->_lf__reaction_0.triggers = (trigger_t***)_lf_allocate(
+                            1, sizeof(trigger_t**),
+                            &train_robot_m_control_right_self[0]->base.allocations);
+                    train_robot_m_control_right_self[0]->_lf__reaction_0.triggered_sizes = (int*)_lf_allocate(
+                            1, sizeof(int),
+                            &train_robot_m_control_right_self[0]->base.allocations);
+                    train_robot_m_control_right_self[0]->_lf__reaction_0.output_produced = (bool**)_lf_allocate(
+                            1, sizeof(bool*),
+                            &train_robot_m_control_right_self[0]->base.allocations);
+                    {
+                        int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                        {
+                            train_robot_m_control_right_self[0]->_lf__reaction_0.output_produced[count++] = &train_robot_m_control_right_self[0]->_lf_ctrl.is_present;
+                        }
+                    }
+                    
+                    // ** End initialization for reaction 0 of train.robot.m.control_right
+                
+                }
+                // **** End of deferred initialize for train.robot.m.control_right
+            }
+            // **** End of deferred initialize for train.robot.m
+            // **** Start deferred initialize for train.robot.e
+            {
+            
+                // Total number of outputs (single ports and multiport channels)
+                // produced by reaction_0 of train.robot.e.
+                train_robot_e_self[0]->_lf__reaction_0.num_outputs = 0;
+                {
+                    int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                }
+                
+                // ** End initialization for reaction 0 of train.robot.e
+                // Total number of outputs (single ports and multiport channels)
+                // produced by reaction_1 of train.robot.e.
+                train_robot_e_self[0]->_lf__reaction_1.num_outputs = 2;
+                // Allocate memory for triggers[] and triggered_sizes[] on the reaction_t
+                // struct for this reaction.
+                train_robot_e_self[0]->_lf__reaction_1.triggers = (trigger_t***)_lf_allocate(
+                        2, sizeof(trigger_t**),
+                        &train_robot_e_self[0]->base.allocations);
+                train_robot_e_self[0]->_lf__reaction_1.triggered_sizes = (int*)_lf_allocate(
+                        2, sizeof(int),
+                        &train_robot_e_self[0]->base.allocations);
+                train_robot_e_self[0]->_lf__reaction_1.output_produced = (bool**)_lf_allocate(
+                        2, sizeof(bool*),
+                        &train_robot_e_self[0]->base.allocations);
+                {
+                    int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                    {
+                        train_robot_e_self[0]->_lf__reaction_1.output_produced[count++] = &train_robot_e_self[0]->_lf_left.is_present;
+                    }
+                    {
+                        train_robot_e_self[0]->_lf__reaction_1.output_produced[count++] = &train_robot_e_self[0]->_lf_right.is_present;
+                    }
+                }
+                
+                // ** End initialization for reaction 1 of train.robot.e
+            
+            }
+            // **** End of deferred initialize for train.robot.e
+            // **** Start deferred initialize for train.robot.a
+            {
+            
+                // Total number of outputs (single ports and multiport channels)
+                // produced by reaction_0 of train.robot.a.
+                train_robot_a_self[0]->_lf__reaction_0.num_outputs = 0;
+                {
+                    int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                }
+                
+                // ** End initialization for reaction 0 of train.robot.a
+                // Total number of outputs (single ports and multiport channels)
+                // produced by reaction_1 of train.robot.a.
+                train_robot_a_self[0]->_lf__reaction_1.num_outputs = 3;
+                // Allocate memory for triggers[] and triggered_sizes[] on the reaction_t
+                // struct for this reaction.
+                train_robot_a_self[0]->_lf__reaction_1.triggers = (trigger_t***)_lf_allocate(
+                        3, sizeof(trigger_t**),
+                        &train_robot_a_self[0]->base.allocations);
+                train_robot_a_self[0]->_lf__reaction_1.triggered_sizes = (int*)_lf_allocate(
+                        3, sizeof(int),
+                        &train_robot_a_self[0]->base.allocations);
+                train_robot_a_self[0]->_lf__reaction_1.output_produced = (bool**)_lf_allocate(
+                        3, sizeof(bool*),
+                        &train_robot_a_self[0]->base.allocations);
+                {
+                    int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                    {
+                        train_robot_a_self[0]->_lf__reaction_1.output_produced[count++] = &train_robot_a_self[0]->_lf_x.is_present;
+                    }
+                    {
+                        train_robot_a_self[0]->_lf__reaction_1.output_produced[count++] = &train_robot_a_self[0]->_lf_y.is_present;
+                    }
+                    {
+                        train_robot_a_self[0]->_lf__reaction_1.output_produced[count++] = &train_robot_a_self[0]->_lf_z.is_present;
+                    }
+                }
+                
+                // ** End initialization for reaction 1 of train.robot.a
+            
+            }
+            // **** End of deferred initialize for train.robot.a
+        }
+        // **** End of deferred initialize for train.robot
     }
     // **** End of deferred initialize for train
     // **** Start non-nested deferred initialize for train
@@ -356,6 +993,16 @@ void _lf_initialize_trigger_objects() {
         train_main_self[src_runtime]->_lf_line.calibrate._base.num_destinations = 1;
         train_main_self[src_runtime]->_lf_line.calibrate._base.source_reactor = (self_base_t*)train_main_self[src_runtime];
     }
+    // Set number of destination reactors for port robot.start.
+    // Iterate over range train.robot.start(0,1)->[train.robot.start(0,1)].
+    {
+        int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+        int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+        int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+        int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+        train_main_self[src_runtime]->_lf_robot.start._base.num_destinations = 1;
+        train_main_self[src_runtime]->_lf_robot.start._base.source_reactor = (self_base_t*)train_main_self[src_runtime];
+    }
     // Set number of destination reactors for port line.trigger.
     // Iterate over range train.line.trigger(0,1)->[train.line.trigger(0,1)].
     {
@@ -366,6 +1013,7 @@ void _lf_initialize_trigger_objects() {
         train_main_self[src_runtime]->_lf_line.trigger._base.num_destinations = 1;
         train_main_self[src_runtime]->_lf_line.trigger._base.source_reactor = (self_base_t*)train_main_self[src_runtime];
     }
+    // Set number of destination reactors for port robot.side_detect.
     {
         int triggers_index[1] = { 0 }; // Number of bank members with the reaction.
         // Iterate over range train.disp.line0(0,1)->[train.disp.line0(0,1)].
@@ -530,17 +1178,33 @@ void _lf_initialize_trigger_objects() {
                     &train_main_self[src_runtime]->base.allocations); 
             train_main_self[src_runtime]->_lf__reaction_2.triggers[triggers_index[src_runtime]++] = trigger_array;
         }
-        // Iterate over range train.disp.line1(0,1)->[train.disp.line1(0,1)].
+        // Iterate over range train.disp.line0(0,1)->[train.disp.line0(0,1)].
         {
             int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
             int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
             int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
             int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
             // Reaction 2 of train triggers 1 downstream reactions
-            // through port train.disp.line1.
+            // through port train.disp.line0.
             train_main_self[src_runtime]->_lf__reaction_2.triggered_sizes[triggers_index[src_runtime]] = 1;
             // For reaction 2 of train, allocate an
-            // array of trigger pointers for downstream reactions through port train.disp.line1
+            // array of trigger pointers for downstream reactions through port train.disp.line0
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &train_main_self[src_runtime]->base.allocations); 
+            train_main_self[src_runtime]->_lf__reaction_2.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        // Iterate over range train.robot.start(0,1)->[train.robot.start(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 2 of train triggers 1 downstream reactions
+            // through port train.robot.start.
+            train_main_self[src_runtime]->_lf__reaction_2.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 2 of train, allocate an
+            // array of trigger pointers for downstream reactions through port train.robot.start
             trigger_t** trigger_array = (trigger_t**)_lf_allocate(
                     1, sizeof(trigger_t*),
                     &train_main_self[src_runtime]->base.allocations); 
@@ -566,7 +1230,7 @@ void _lf_initialize_trigger_objects() {
             }
         }
         for (int i = 0; i < 1; i++) triggers_index[i] = 1;
-        // Iterate over ranges train.disp.line1(0,1)->[train.disp.line1(0,1)] and train.disp.line1(0,1).
+        // Iterate over ranges train.disp.line0(0,1)->[train.disp.line0(0,1)] and train.disp.line0(0,1).
         {
             int src_runtime = 0; // Runtime index.
             SUPPRESS_UNUSED_WARNING(src_runtime);
@@ -574,14 +1238,33 @@ void _lf_initialize_trigger_objects() {
             SUPPRESS_UNUSED_WARNING(src_channel);
             int src_bank = 0; // Bank index.
             SUPPRESS_UNUSED_WARNING(src_bank);
-            // Iterate over range train.disp.line1(0,1).
+            // Iterate over range train.disp.line0(0,1).
             {
                 int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
                 int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
                 int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
                 int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
-                // Point to destination port train.disp.line1's trigger struct.
-                train_main_self[src_runtime]->_lf__reaction_2.triggers[triggers_index[src_runtime] + src_channel][0] = &train_disp_self[dst_runtime]->_lf__line1;
+                // Point to destination port train.disp.line0's trigger struct.
+                train_main_self[src_runtime]->_lf__reaction_2.triggers[triggers_index[src_runtime] + src_channel][0] = &train_disp_self[dst_runtime]->_lf__line0;
+            }
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 2;
+        // Iterate over ranges train.robot.start(0,1)->[train.robot.start(0,1)] and train.robot.start(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range train.robot.start(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Point to destination port train.robot.start's trigger struct.
+                train_main_self[src_runtime]->_lf__reaction_2.triggers[triggers_index[src_runtime] + src_channel][0] = &train_robot_self[dst_runtime]->_lf__start;
             }
         }
     }
@@ -623,12 +1306,165 @@ void _lf_initialize_trigger_objects() {
             }
         }
     }
+    {
+        int triggers_index[1] = { 0 }; // Number of bank members with the reaction.
+        // Iterate over range train.disp.line0(0,1)->[train.disp.line0(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 4 of train triggers 1 downstream reactions
+            // through port train.disp.line0.
+            train_main_self[src_runtime]->_lf__reaction_4.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 4 of train, allocate an
+            // array of trigger pointers for downstream reactions through port train.disp.line0
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &train_main_self[src_runtime]->base.allocations); 
+            train_main_self[src_runtime]->_lf__reaction_4.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        // Iterate over range train.disp.line1(0,1)->[train.disp.line1(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 4 of train triggers 1 downstream reactions
+            // through port train.disp.line1.
+            train_main_self[src_runtime]->_lf__reaction_4.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 4 of train, allocate an
+            // array of trigger pointers for downstream reactions through port train.disp.line1
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &train_main_self[src_runtime]->base.allocations); 
+            train_main_self[src_runtime]->_lf__reaction_4.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        // Iterate over range train.disp.line2(0,1)->[train.disp.line2(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 4 of train triggers 1 downstream reactions
+            // through port train.disp.line2.
+            train_main_self[src_runtime]->_lf__reaction_4.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 4 of train, allocate an
+            // array of trigger pointers for downstream reactions through port train.disp.line2
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &train_main_self[src_runtime]->base.allocations); 
+            train_main_self[src_runtime]->_lf__reaction_4.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 0;
+        // Iterate over ranges train.disp.line0(0,1)->[train.disp.line0(0,1)] and train.disp.line0(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range train.disp.line0(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Point to destination port train.disp.line0's trigger struct.
+                train_main_self[src_runtime]->_lf__reaction_4.triggers[triggers_index[src_runtime] + src_channel][0] = &train_disp_self[dst_runtime]->_lf__line0;
+            }
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 1;
+        // Iterate over ranges train.disp.line1(0,1)->[train.disp.line1(0,1)] and train.disp.line1(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range train.disp.line1(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Point to destination port train.disp.line1's trigger struct.
+                train_main_self[src_runtime]->_lf__reaction_4.triggers[triggers_index[src_runtime] + src_channel][0] = &train_disp_self[dst_runtime]->_lf__line1;
+            }
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 2;
+        // Iterate over ranges train.disp.line2(0,1)->[train.disp.line2(0,1)] and train.disp.line2(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range train.disp.line2(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Point to destination port train.disp.line2's trigger struct.
+                train_main_self[src_runtime]->_lf__reaction_4.triggers[triggers_index[src_runtime] + src_channel][0] = &train_disp_self[dst_runtime]->_lf__line2;
+            }
+        }
+    }
     
     // **** Start non-nested deferred initialize for train.line
     
-    train_line_self[0]->_lf_reflect._base.source_reactor = (self_base_t*)train_line_self[0];
+    // For reference counting, set num_destinations for port train.line.reflect.
+    // Iterate over range train.line.reflect(0,1)->[train.line.reflect(0,1)].
+    {
+        int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+        int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+        int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+        int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+        train_line_self[src_runtime]->_lf_reflect._base.num_destinations = 1;
+        train_line_self[src_runtime]->_lf_reflect._base.source_reactor = (self_base_t*)train_line_self[src_runtime];
+    }
     {
         int triggers_index[1] = { 0 }; // Number of bank members with the reaction.
+        // Iterate over range train.line.reflect(0,1)->[train.line.reflect(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 1 of train.line triggers 1 downstream reactions
+            // through port train.line.reflect.
+            train_line_self[src_runtime]->_lf__reaction_1.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 1 of train.line, allocate an
+            // array of trigger pointers for downstream reactions through port train.line.reflect
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &train_line_self[src_runtime]->base.allocations); 
+            train_line_self[src_runtime]->_lf__reaction_1.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 0;
+        // Iterate over ranges train.line.reflect(0,1)->[train.line.reflect(0,1)] and train.line.reflect(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range train.line.reflect(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Port train.line.reflect has reactions in its parent's parent.
+                // Point to the trigger struct for those reactions.
+                train_line_self[src_runtime]->_lf__reaction_1.triggers[triggers_index[src_runtime] + src_channel][0] = &train_main_self[dst_runtime]->_lf_line.reflect_trigger;
+            }
+        }
     }
     
     // **** End of non-nested deferred initialize for train.line
@@ -638,6 +1474,754 @@ void _lf_initialize_trigger_objects() {
     
     
     // **** End of non-nested deferred initialize for train.disp
+    // **** Start non-nested deferred initialize for train.robot
+    // Set number of destination reactors for port e.trigger.
+    // Iterate over range train.robot.e.trigger(0,1)->[train.robot.e.trigger(0,1)].
+    {
+        int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+        int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+        int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+        int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+        train_robot_self[src_runtime]->_lf_e.trigger._base.num_destinations = 1;
+        train_robot_self[src_runtime]->_lf_e.trigger._base.source_reactor = (self_base_t*)train_robot_self[src_runtime];
+    }
+    // Set number of destination reactors for port a.trigger.
+    // Iterate over range train.robot.a.trigger(0,1)->[train.robot.a.trigger(0,1)].
+    {
+        int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+        int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+        int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+        int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+        train_robot_self[src_runtime]->_lf_a.trigger._base.num_destinations = 1;
+        train_robot_self[src_runtime]->_lf_a.trigger._base.source_reactor = (self_base_t*)train_robot_self[src_runtime];
+    }
+    // Set number of destination reactors for port m.left.
+    // Iterate over range train.robot.m.left(0,1)->[train.robot.m.left(0,1)].
+    {
+        int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+        int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+        int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+        int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+        train_robot_self[src_runtime]->_lf_m.left._base.num_destinations = 1;
+        train_robot_self[src_runtime]->_lf_m.left._base.source_reactor = (self_base_t*)train_robot_self[src_runtime];
+    }
+    // Set number of destination reactors for port m.right.
+    // Iterate over range train.robot.m.right(0,1)->[train.robot.m.right(0,1)].
+    {
+        int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+        int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+        int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+        int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+        train_robot_self[src_runtime]->_lf_m.right._base.num_destinations = 1;
+        train_robot_self[src_runtime]->_lf_m.right._base.source_reactor = (self_base_t*)train_robot_self[src_runtime];
+    }
+    // Set number of destination reactors for port m.left_speed.
+    // Iterate over range train.robot.m.left_speed(0,1)->[train.robot.m.left_speed(0,1)].
+    {
+        int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+        int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+        int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+        int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+        train_robot_self[src_runtime]->_lf_m.left_speed._base.num_destinations = 1;
+        train_robot_self[src_runtime]->_lf_m.left_speed._base.source_reactor = (self_base_t*)train_robot_self[src_runtime];
+    }
+    // Set number of destination reactors for port m.right_speed.
+    // Iterate over range train.robot.m.right_speed(0,1)->[train.robot.m.right_speed(0,1)].
+    {
+        int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+        int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+        int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+        int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+        train_robot_self[src_runtime]->_lf_m.right_speed._base.num_destinations = 1;
+        train_robot_self[src_runtime]->_lf_m.right_speed._base.source_reactor = (self_base_t*)train_robot_self[src_runtime];
+    }
+    train_robot_self[0]->_lf_speed._base.source_reactor = (self_base_t*)train_robot_self[0];
+    {
+        int triggers_index[1] = { 0 }; // Number of bank members with the reaction.
+        // Iterate over range train.robot.e.trigger(0,1)->[train.robot.e.trigger(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 0 of train.robot triggers 1 downstream reactions
+            // through port train.robot.e.trigger.
+            train_robot_self[src_runtime]->_lf__reaction_0.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 0 of train.robot, allocate an
+            // array of trigger pointers for downstream reactions through port train.robot.e.trigger
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &train_robot_self[src_runtime]->base.allocations); 
+            train_robot_self[src_runtime]->_lf__reaction_0.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        // Iterate over range train.robot.a.trigger(0,1)->[train.robot.a.trigger(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 0 of train.robot triggers 1 downstream reactions
+            // through port train.robot.a.trigger.
+            train_robot_self[src_runtime]->_lf__reaction_0.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 0 of train.robot, allocate an
+            // array of trigger pointers for downstream reactions through port train.robot.a.trigger
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &train_robot_self[src_runtime]->base.allocations); 
+            train_robot_self[src_runtime]->_lf__reaction_0.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 0;
+        // Iterate over ranges train.robot.e.trigger(0,1)->[train.robot.e.trigger(0,1)] and train.robot.e.trigger(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range train.robot.e.trigger(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Point to destination port train.robot.e.trigger's trigger struct.
+                train_robot_self[src_runtime]->_lf__reaction_0.triggers[triggers_index[src_runtime] + src_channel][0] = &train_robot_e_self[dst_runtime]->_lf__trigger;
+            }
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 1;
+        // Iterate over ranges train.robot.a.trigger(0,1)->[train.robot.a.trigger(0,1)] and train.robot.a.trigger(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range train.robot.a.trigger(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Point to destination port train.robot.a.trigger's trigger struct.
+                train_robot_self[src_runtime]->_lf__reaction_0.triggers[triggers_index[src_runtime] + src_channel][0] = &train_robot_a_self[dst_runtime]->_lf__trigger;
+            }
+        }
+    }
+    {
+        int triggers_index[1] = { 0 }; // Number of bank members with the reaction.
+        // Iterate over range train.robot.m.left(0,1)->[train.robot.m.left(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 1 of train.robot triggers 1 downstream reactions
+            // through port train.robot.m.left.
+            train_robot_self[src_runtime]->_lf__reaction_1.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 1 of train.robot, allocate an
+            // array of trigger pointers for downstream reactions through port train.robot.m.left
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &train_robot_self[src_runtime]->base.allocations); 
+            train_robot_self[src_runtime]->_lf__reaction_1.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 0;
+        // Iterate over ranges train.robot.m.left(0,1)->[train.robot.m.left(0,1)] and train.robot.m.left(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range train.robot.m.left(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Point to destination port train.robot.m.left's trigger struct.
+                train_robot_self[src_runtime]->_lf__reaction_1.triggers[triggers_index[src_runtime] + src_channel][0] = &train_robot_m_self[dst_runtime]->_lf__left;
+            }
+        }
+    }
+    {
+        int triggers_index[1] = { 0 }; // Number of bank members with the reaction.
+        // Iterate over range train.robot.m.right(0,1)->[train.robot.m.right(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 2 of train.robot triggers 1 downstream reactions
+            // through port train.robot.m.right.
+            train_robot_self[src_runtime]->_lf__reaction_2.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 2 of train.robot, allocate an
+            // array of trigger pointers for downstream reactions through port train.robot.m.right
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &train_robot_self[src_runtime]->base.allocations); 
+            train_robot_self[src_runtime]->_lf__reaction_2.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 0;
+        // Iterate over ranges train.robot.m.right(0,1)->[train.robot.m.right(0,1)] and train.robot.m.right(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range train.robot.m.right(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Point to destination port train.robot.m.right's trigger struct.
+                train_robot_self[src_runtime]->_lf__reaction_2.triggers[triggers_index[src_runtime] + src_channel][0] = &train_robot_m_self[dst_runtime]->_lf__right;
+            }
+        }
+    }
+    {
+        int triggers_index[1] = { 0 }; // Number of bank members with the reaction.
+        // Iterate over range train.robot.m.left_speed(0,1)->[train.robot.m.left_speed(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 3 of train.robot triggers 1 downstream reactions
+            // through port train.robot.m.left_speed.
+            train_robot_self[src_runtime]->_lf__reaction_3.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 3 of train.robot, allocate an
+            // array of trigger pointers for downstream reactions through port train.robot.m.left_speed
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &train_robot_self[src_runtime]->base.allocations); 
+            train_robot_self[src_runtime]->_lf__reaction_3.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        // Iterate over range train.robot.m.right_speed(0,1)->[train.robot.m.right_speed(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 3 of train.robot triggers 1 downstream reactions
+            // through port train.robot.m.right_speed.
+            train_robot_self[src_runtime]->_lf__reaction_3.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 3 of train.robot, allocate an
+            // array of trigger pointers for downstream reactions through port train.robot.m.right_speed
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &train_robot_self[src_runtime]->base.allocations); 
+            train_robot_self[src_runtime]->_lf__reaction_3.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 0;
+        // Iterate over ranges train.robot.m.left_speed(0,1)->[train.robot.m.left_speed(0,1)] and train.robot.m.left_speed(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range train.robot.m.left_speed(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Point to destination port train.robot.m.left_speed's trigger struct.
+                train_robot_self[src_runtime]->_lf__reaction_3.triggers[triggers_index[src_runtime] + src_channel][0] = &train_robot_m_self[dst_runtime]->_lf__left_speed;
+            }
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 1;
+        // Iterate over ranges train.robot.m.right_speed(0,1)->[train.robot.m.right_speed(0,1)] and train.robot.m.right_speed(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range train.robot.m.right_speed(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Point to destination port train.robot.m.right_speed's trigger struct.
+                train_robot_self[src_runtime]->_lf__reaction_3.triggers[triggers_index[src_runtime] + src_channel][0] = &train_robot_m_self[dst_runtime]->_lf__right_speed;
+            }
+        }
+    }
+    {
+        int triggers_index[1] = { 0 }; // Number of bank members with the reaction.
+        // Iterate over range train.robot.m.left_speed(0,1)->[train.robot.m.left_speed(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 4 of train.robot triggers 1 downstream reactions
+            // through port train.robot.m.left_speed.
+            train_robot_self[src_runtime]->_lf__reaction_4.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 4 of train.robot, allocate an
+            // array of trigger pointers for downstream reactions through port train.robot.m.left_speed
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &train_robot_self[src_runtime]->base.allocations); 
+            train_robot_self[src_runtime]->_lf__reaction_4.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        // Iterate over range train.robot.m.right_speed(0,1)->[train.robot.m.right_speed(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 4 of train.robot triggers 1 downstream reactions
+            // through port train.robot.m.right_speed.
+            train_robot_self[src_runtime]->_lf__reaction_4.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 4 of train.robot, allocate an
+            // array of trigger pointers for downstream reactions through port train.robot.m.right_speed
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &train_robot_self[src_runtime]->base.allocations); 
+            train_robot_self[src_runtime]->_lf__reaction_4.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 0;
+        // Iterate over ranges train.robot.m.left_speed(0,1)->[train.robot.m.left_speed(0,1)] and train.robot.m.left_speed(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range train.robot.m.left_speed(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Point to destination port train.robot.m.left_speed's trigger struct.
+                train_robot_self[src_runtime]->_lf__reaction_4.triggers[triggers_index[src_runtime] + src_channel][0] = &train_robot_m_self[dst_runtime]->_lf__left_speed;
+            }
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 1;
+        // Iterate over ranges train.robot.m.right_speed(0,1)->[train.robot.m.right_speed(0,1)] and train.robot.m.right_speed(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range train.robot.m.right_speed(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Point to destination port train.robot.m.right_speed's trigger struct.
+                train_robot_self[src_runtime]->_lf__reaction_4.triggers[triggers_index[src_runtime] + src_channel][0] = &train_robot_m_self[dst_runtime]->_lf__right_speed;
+            }
+        }
+    }
+    {
+        int triggers_index[1] = { 0 }; // Number of bank members with the reaction.
+        // Iterate over range train.robot.m.left_speed(0,1)->[train.robot.m.left_speed(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 6 of train.robot triggers 1 downstream reactions
+            // through port train.robot.m.left_speed.
+            train_robot_self[src_runtime]->_lf__reaction_6.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 6 of train.robot, allocate an
+            // array of trigger pointers for downstream reactions through port train.robot.m.left_speed
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &train_robot_self[src_runtime]->base.allocations); 
+            train_robot_self[src_runtime]->_lf__reaction_6.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        // Iterate over range train.robot.m.right_speed(0,1)->[train.robot.m.right_speed(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 6 of train.robot triggers 1 downstream reactions
+            // through port train.robot.m.right_speed.
+            train_robot_self[src_runtime]->_lf__reaction_6.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 6 of train.robot, allocate an
+            // array of trigger pointers for downstream reactions through port train.robot.m.right_speed
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &train_robot_self[src_runtime]->base.allocations); 
+            train_robot_self[src_runtime]->_lf__reaction_6.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 0;
+        // Iterate over ranges train.robot.m.left_speed(0,1)->[train.robot.m.left_speed(0,1)] and train.robot.m.left_speed(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range train.robot.m.left_speed(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Point to destination port train.robot.m.left_speed's trigger struct.
+                train_robot_self[src_runtime]->_lf__reaction_6.triggers[triggers_index[src_runtime] + src_channel][0] = &train_robot_m_self[dst_runtime]->_lf__left_speed;
+            }
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 1;
+        // Iterate over ranges train.robot.m.right_speed(0,1)->[train.robot.m.right_speed(0,1)] and train.robot.m.right_speed(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range train.robot.m.right_speed(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Point to destination port train.robot.m.right_speed's trigger struct.
+                train_robot_self[src_runtime]->_lf__reaction_6.triggers[triggers_index[src_runtime] + src_channel][0] = &train_robot_m_self[dst_runtime]->_lf__right_speed;
+            }
+        }
+    }
+    
+    // **** Start non-nested deferred initialize for train.robot.m
+    // Set number of destination reactors for port control_left.err.
+    // Iterate over range train.robot.m.control_left.err(0,1)->[train.robot.m.control_left.err(0,1)].
+    {
+        int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+        int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+        int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+        int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+        train_robot_m_self[src_runtime]->_lf_control_left.err._base.num_destinations = 1;
+        train_robot_m_self[src_runtime]->_lf_control_left.err._base.source_reactor = (self_base_t*)train_robot_m_self[src_runtime];
+    }
+    // Set number of destination reactors for port control_right.err.
+    // Iterate over range train.robot.m.control_right.err(0,1)->[train.robot.m.control_right.err(0,1)].
+    {
+        int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+        int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+        int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+        int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+        train_robot_m_self[src_runtime]->_lf_control_right.err._base.num_destinations = 1;
+        train_robot_m_self[src_runtime]->_lf_control_right.err._base.source_reactor = (self_base_t*)train_robot_m_self[src_runtime];
+    }
+    
+    {
+        int triggers_index[1] = { 0 }; // Number of bank members with the reaction.
+        // Iterate over range train.robot.m.control_left.err(0,1)->[train.robot.m.control_left.err(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 2 of train.robot.m triggers 1 downstream reactions
+            // through port train.robot.m.control_left.err.
+            train_robot_m_self[src_runtime]->_lf__reaction_2.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 2 of train.robot.m, allocate an
+            // array of trigger pointers for downstream reactions through port train.robot.m.control_left.err
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &train_robot_m_self[src_runtime]->base.allocations); 
+            train_robot_m_self[src_runtime]->_lf__reaction_2.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        // Iterate over range train.robot.m.control_right.err(0,1)->[train.robot.m.control_right.err(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 2 of train.robot.m triggers 1 downstream reactions
+            // through port train.robot.m.control_right.err.
+            train_robot_m_self[src_runtime]->_lf__reaction_2.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 2 of train.robot.m, allocate an
+            // array of trigger pointers for downstream reactions through port train.robot.m.control_right.err
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &train_robot_m_self[src_runtime]->base.allocations); 
+            train_robot_m_self[src_runtime]->_lf__reaction_2.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 0;
+        // Iterate over ranges train.robot.m.control_left.err(0,1)->[train.robot.m.control_left.err(0,1)] and train.robot.m.control_left.err(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range train.robot.m.control_left.err(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Point to destination port train.robot.m.control_left.err's trigger struct.
+                train_robot_m_self[src_runtime]->_lf__reaction_2.triggers[triggers_index[src_runtime] + src_channel][0] = &train_robot_m_control_left_self[dst_runtime]->_lf__err;
+            }
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 1;
+        // Iterate over ranges train.robot.m.control_right.err(0,1)->[train.robot.m.control_right.err(0,1)] and train.robot.m.control_right.err(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range train.robot.m.control_right.err(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Point to destination port train.robot.m.control_right.err's trigger struct.
+                train_robot_m_self[src_runtime]->_lf__reaction_2.triggers[triggers_index[src_runtime] + src_channel][0] = &train_robot_m_control_right_self[dst_runtime]->_lf__err;
+            }
+        }
+    }
+    
+    // **** Start non-nested deferred initialize for train.robot.m.motors
+    
+    
+    
+    
+    // **** End of non-nested deferred initialize for train.robot.m.motors
+    // **** Start non-nested deferred initialize for train.robot.m.control_left
+    
+    // For reference counting, set num_destinations for port train.robot.m.control_left.ctrl.
+    // Iterate over range train.robot.m.control_left.ctrl(0,1)->[train.robot.m.motors.left_power(0,1)].
+    {
+        int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+        int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+        int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+        int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+        train_robot_m_control_left_self[src_runtime]->_lf_ctrl._base.num_destinations = 1;
+        train_robot_m_control_left_self[src_runtime]->_lf_ctrl._base.source_reactor = (self_base_t*)train_robot_m_control_left_self[src_runtime];
+    }
+    {
+        int triggers_index[1] = { 0 }; // Number of bank members with the reaction.
+        // Iterate over range train.robot.m.control_left.ctrl(0,1)->[train.robot.m.motors.left_power(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 0 of train.robot.m.control_left triggers 1 downstream reactions
+            // through port train.robot.m.control_left.ctrl.
+            train_robot_m_control_left_self[src_runtime]->_lf__reaction_0.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 0 of train.robot.m.control_left, allocate an
+            // array of trigger pointers for downstream reactions through port train.robot.m.control_left.ctrl
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &train_robot_m_control_left_self[src_runtime]->base.allocations); 
+            train_robot_m_control_left_self[src_runtime]->_lf__reaction_0.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 0;
+        // Iterate over ranges train.robot.m.control_left.ctrl(0,1)->[train.robot.m.motors.left_power(0,1)] and train.robot.m.motors.left_power(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range train.robot.m.motors.left_power(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Point to destination port train.robot.m.motors.left_power's trigger struct.
+                train_robot_m_control_left_self[src_runtime]->_lf__reaction_0.triggers[triggers_index[src_runtime] + src_channel][0] = &train_robot_m_motors_self[dst_runtime]->_lf__left_power;
+            }
+        }
+    }
+    
+    // **** End of non-nested deferred initialize for train.robot.m.control_left
+    // **** Start non-nested deferred initialize for train.robot.m.control_right
+    
+    // For reference counting, set num_destinations for port train.robot.m.control_right.ctrl.
+    // Iterate over range train.robot.m.control_right.ctrl(0,1)->[train.robot.m.motors.right_power(0,1)].
+    {
+        int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+        int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+        int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+        int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+        train_robot_m_control_right_self[src_runtime]->_lf_ctrl._base.num_destinations = 1;
+        train_robot_m_control_right_self[src_runtime]->_lf_ctrl._base.source_reactor = (self_base_t*)train_robot_m_control_right_self[src_runtime];
+    }
+    {
+        int triggers_index[1] = { 0 }; // Number of bank members with the reaction.
+        // Iterate over range train.robot.m.control_right.ctrl(0,1)->[train.robot.m.motors.right_power(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 0 of train.robot.m.control_right triggers 1 downstream reactions
+            // through port train.robot.m.control_right.ctrl.
+            train_robot_m_control_right_self[src_runtime]->_lf__reaction_0.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 0 of train.robot.m.control_right, allocate an
+            // array of trigger pointers for downstream reactions through port train.robot.m.control_right.ctrl
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &train_robot_m_control_right_self[src_runtime]->base.allocations); 
+            train_robot_m_control_right_self[src_runtime]->_lf__reaction_0.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 0;
+        // Iterate over ranges train.robot.m.control_right.ctrl(0,1)->[train.robot.m.motors.right_power(0,1)] and train.robot.m.motors.right_power(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range train.robot.m.motors.right_power(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Point to destination port train.robot.m.motors.right_power's trigger struct.
+                train_robot_m_control_right_self[src_runtime]->_lf__reaction_0.triggers[triggers_index[src_runtime] + src_channel][0] = &train_robot_m_motors_self[dst_runtime]->_lf__right_power;
+            }
+        }
+    }
+    
+    // **** End of non-nested deferred initialize for train.robot.m.control_right
+    // **** End of non-nested deferred initialize for train.robot.m
+    // **** Start non-nested deferred initialize for train.robot.e
+    
+    // For reference counting, set num_destinations for port train.robot.e.right.
+    // Iterate over range train.robot.e.right(0,1)->[train.robot.e.right(0,1)].
+    {
+        int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+        int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+        int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+        int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+        train_robot_e_self[src_runtime]->_lf_right._base.num_destinations = 1;
+        train_robot_e_self[src_runtime]->_lf_right._base.source_reactor = (self_base_t*)train_robot_e_self[src_runtime];
+    }
+    // For reference counting, set num_destinations for port train.robot.e.left.
+    // Iterate over range train.robot.e.left(0,1)->[train.robot.e.left(0,1)].
+    {
+        int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+        int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+        int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+        int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+        train_robot_e_self[src_runtime]->_lf_left._base.num_destinations = 1;
+        train_robot_e_self[src_runtime]->_lf_left._base.source_reactor = (self_base_t*)train_robot_e_self[src_runtime];
+    }
+    {
+        int triggers_index[1] = { 0 }; // Number of bank members with the reaction.
+        // Iterate over range train.robot.e.left(0,1)->[train.robot.e.left(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 1 of train.robot.e triggers 1 downstream reactions
+            // through port train.robot.e.left.
+            train_robot_e_self[src_runtime]->_lf__reaction_1.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 1 of train.robot.e, allocate an
+            // array of trigger pointers for downstream reactions through port train.robot.e.left
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &train_robot_e_self[src_runtime]->base.allocations); 
+            train_robot_e_self[src_runtime]->_lf__reaction_1.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        // Iterate over range train.robot.e.right(0,1)->[train.robot.e.right(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 1 of train.robot.e triggers 1 downstream reactions
+            // through port train.robot.e.right.
+            train_robot_e_self[src_runtime]->_lf__reaction_1.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 1 of train.robot.e, allocate an
+            // array of trigger pointers for downstream reactions through port train.robot.e.right
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &train_robot_e_self[src_runtime]->base.allocations); 
+            train_robot_e_self[src_runtime]->_lf__reaction_1.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 0;
+        // Iterate over ranges train.robot.e.left(0,1)->[train.robot.e.left(0,1)] and train.robot.e.left(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range train.robot.e.left(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Port train.robot.e.left has reactions in its parent's parent.
+                // Point to the trigger struct for those reactions.
+                train_robot_e_self[src_runtime]->_lf__reaction_1.triggers[triggers_index[src_runtime] + src_channel][0] = &train_robot_self[dst_runtime]->_lf_e.left_trigger;
+            }
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 1;
+        // Iterate over ranges train.robot.e.right(0,1)->[train.robot.e.right(0,1)] and train.robot.e.right(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range train.robot.e.right(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Port train.robot.e.right has reactions in its parent's parent.
+                // Point to the trigger struct for those reactions.
+                train_robot_e_self[src_runtime]->_lf__reaction_1.triggers[triggers_index[src_runtime] + src_channel][0] = &train_robot_self[dst_runtime]->_lf_e.right_trigger;
+            }
+        }
+    }
+    
+    // **** End of non-nested deferred initialize for train.robot.e
+    // **** Start non-nested deferred initialize for train.robot.a
+    
+    train_robot_a_self[0]->_lf_x._base.source_reactor = (self_base_t*)train_robot_a_self[0];
+    train_robot_a_self[0]->_lf_y._base.source_reactor = (self_base_t*)train_robot_a_self[0];
+    train_robot_a_self[0]->_lf_z._base.source_reactor = (self_base_t*)train_robot_a_self[0];
+    {
+        int triggers_index[1] = { 0 }; // Number of bank members with the reaction.
+    }
+    
+    // **** End of non-nested deferred initialize for train.robot.a
+    // **** End of non-nested deferred initialize for train.robot
     // **** End of non-nested deferred initialize for train
     // Connect inputs and outputs for reactor train.
     // Connect inputs and outputs for reactor train.line.
@@ -677,7 +2261,24 @@ void _lf_initialize_trigger_objects() {
             train_line_self[dst_runtime]->_lf_trigger = (_line_trigger_t*)&train_main_self[src_runtime]->_lf_line.trigger;
         }
     }
-    
+    // Connect train.line.reflect(0,1)->[train.line.reflect(0,1)] to port train.line.reflect(0,1)
+    // Iterate over ranges train.line.reflect(0,1)->[train.line.reflect(0,1)] and train.line.reflect(0,1).
+    {
+        int src_runtime = 0; // Runtime index.
+        SUPPRESS_UNUSED_WARNING(src_runtime);
+        int src_channel = 0; // Channel index.
+        SUPPRESS_UNUSED_WARNING(src_channel);
+        int src_bank = 0; // Bank index.
+        SUPPRESS_UNUSED_WARNING(src_bank);
+        // Iterate over range train.line.reflect(0,1).
+        {
+            int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+            int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+            int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            train_main_self[dst_runtime]->_lf_line.reflect = (_line_reflect_t*)&train_line_self[src_runtime]->_lf_reflect;
+        }
+    }
     // Connect inputs and outputs for reactor train.disp.
     // Connect train.disp.line0(0,1)->[train.disp.line0(0,1)] to port train.disp.line0(0,1)
     // Iterate over ranges train.disp.line0(0,1)->[train.disp.line0(0,1)] and train.disp.line0(0,1).
@@ -751,18 +2352,451 @@ void _lf_initialize_trigger_objects() {
             train_disp_self[dst_runtime]->_lf_line3 = (_display_line3_t*)&train_main_self[src_runtime]->_lf_disp.line3;
         }
     }
+    // Connect inputs and outputs for reactor train.robot.
+    // Connect train.robot.start(0,1)->[train.robot.start(0,1)] to port train.robot.start(0,1)
+    // Iterate over ranges train.robot.start(0,1)->[train.robot.start(0,1)] and train.robot.start(0,1).
+    {
+        int src_runtime = 0; // Runtime index.
+        SUPPRESS_UNUSED_WARNING(src_runtime);
+        int src_channel = 0; // Channel index.
+        SUPPRESS_UNUSED_WARNING(src_channel);
+        int src_bank = 0; // Bank index.
+        SUPPRESS_UNUSED_WARNING(src_bank);
+        // Iterate over range train.robot.start(0,1).
+        {
+            int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+            int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+            int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            train_robot_self[dst_runtime]->_lf_start = (_robot_start_t*)&train_main_self[src_runtime]->_lf_robot.start;
+        }
+    }
+    
+    
+    // Connect inputs and outputs for reactor train.robot.m.
+    // Connect train.robot.m.left_speed(0,1)->[train.robot.m.left_speed(0,1)] to port train.robot.m.left_speed(0,1)
+    // Iterate over ranges train.robot.m.left_speed(0,1)->[train.robot.m.left_speed(0,1)] and train.robot.m.left_speed(0,1).
+    {
+        int src_runtime = 0; // Runtime index.
+        SUPPRESS_UNUSED_WARNING(src_runtime);
+        int src_channel = 0; // Channel index.
+        SUPPRESS_UNUSED_WARNING(src_channel);
+        int src_bank = 0; // Bank index.
+        SUPPRESS_UNUSED_WARNING(src_bank);
+        // Iterate over range train.robot.m.left_speed(0,1).
+        {
+            int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+            int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+            int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            train_robot_m_self[dst_runtime]->_lf_left_speed = (_motorswithfeedback_left_speed_t*)&train_robot_self[src_runtime]->_lf_m.left_speed;
+        }
+    }
+    // Connect train.robot.m.right_speed(0,1)->[train.robot.m.right_speed(0,1)] to port train.robot.m.right_speed(0,1)
+    // Iterate over ranges train.robot.m.right_speed(0,1)->[train.robot.m.right_speed(0,1)] and train.robot.m.right_speed(0,1).
+    {
+        int src_runtime = 0; // Runtime index.
+        SUPPRESS_UNUSED_WARNING(src_runtime);
+        int src_channel = 0; // Channel index.
+        SUPPRESS_UNUSED_WARNING(src_channel);
+        int src_bank = 0; // Bank index.
+        SUPPRESS_UNUSED_WARNING(src_bank);
+        // Iterate over range train.robot.m.right_speed(0,1).
+        {
+            int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+            int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+            int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            train_robot_m_self[dst_runtime]->_lf_right_speed = (_motorswithfeedback_right_speed_t*)&train_robot_self[src_runtime]->_lf_m.right_speed;
+        }
+    }
+    // Connect train.robot.m.left(0,1)->[train.robot.m.left(0,1)] to port train.robot.m.left(0,1)
+    // Iterate over ranges train.robot.m.left(0,1)->[train.robot.m.left(0,1)] and train.robot.m.left(0,1).
+    {
+        int src_runtime = 0; // Runtime index.
+        SUPPRESS_UNUSED_WARNING(src_runtime);
+        int src_channel = 0; // Channel index.
+        SUPPRESS_UNUSED_WARNING(src_channel);
+        int src_bank = 0; // Bank index.
+        SUPPRESS_UNUSED_WARNING(src_bank);
+        // Iterate over range train.robot.m.left(0,1).
+        {
+            int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+            int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+            int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            train_robot_m_self[dst_runtime]->_lf_left = (_motorswithfeedback_left_t*)&train_robot_self[src_runtime]->_lf_m.left;
+        }
+    }
+    // Connect train.robot.m.right(0,1)->[train.robot.m.right(0,1)] to port train.robot.m.right(0,1)
+    // Iterate over ranges train.robot.m.right(0,1)->[train.robot.m.right(0,1)] and train.robot.m.right(0,1).
+    {
+        int src_runtime = 0; // Runtime index.
+        SUPPRESS_UNUSED_WARNING(src_runtime);
+        int src_channel = 0; // Channel index.
+        SUPPRESS_UNUSED_WARNING(src_channel);
+        int src_bank = 0; // Bank index.
+        SUPPRESS_UNUSED_WARNING(src_bank);
+        // Iterate over range train.robot.m.right(0,1).
+        {
+            int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+            int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+            int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            train_robot_m_self[dst_runtime]->_lf_right = (_motorswithfeedback_right_t*)&train_robot_self[src_runtime]->_lf_m.right;
+        }
+    }
+    // Connect inputs and outputs for reactor train.robot.m.motors.
+    // Connect inputs and outputs for reactor train.robot.m.control_left.
+    // Connect train.robot.m.control_left.err(0,1)->[train.robot.m.control_left.err(0,1)] to port train.robot.m.control_left.err(0,1)
+    // Iterate over ranges train.robot.m.control_left.err(0,1)->[train.robot.m.control_left.err(0,1)] and train.robot.m.control_left.err(0,1).
+    {
+        int src_runtime = 0; // Runtime index.
+        SUPPRESS_UNUSED_WARNING(src_runtime);
+        int src_channel = 0; // Channel index.
+        SUPPRESS_UNUSED_WARNING(src_channel);
+        int src_bank = 0; // Bank index.
+        SUPPRESS_UNUSED_WARNING(src_bank);
+        // Iterate over range train.robot.m.control_left.err(0,1).
+        {
+            int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+            int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+            int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            train_robot_m_control_left_self[dst_runtime]->_lf_err = (_picontrol_err_t*)&train_robot_m_self[src_runtime]->_lf_control_left.err;
+        }
+    }
+    // Connect train.robot.m.control_left.ctrl(0,1)->[train.robot.m.motors.left_power(0,1)] to port train.robot.m.motors.left_power(0,1)
+    // Iterate over ranges train.robot.m.control_left.ctrl(0,1)->[train.robot.m.motors.left_power(0,1)] and train.robot.m.motors.left_power(0,1).
+    {
+        int src_runtime = 0; // Runtime index.
+        SUPPRESS_UNUSED_WARNING(src_runtime);
+        int src_channel = 0; // Channel index.
+        SUPPRESS_UNUSED_WARNING(src_channel);
+        int src_bank = 0; // Bank index.
+        SUPPRESS_UNUSED_WARNING(src_bank);
+        // Iterate over range train.robot.m.motors.left_power(0,1).
+        {
+            int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+            int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+            int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            train_robot_m_motors_self[dst_runtime]->_lf_left_power = (_motors_left_power_t*)&train_robot_m_control_left_self[src_runtime]->_lf_ctrl;
+        }
+    }
+    // Connect inputs and outputs for reactor train.robot.m.control_right.
+    // Connect train.robot.m.control_right.err(0,1)->[train.robot.m.control_right.err(0,1)] to port train.robot.m.control_right.err(0,1)
+    // Iterate over ranges train.robot.m.control_right.err(0,1)->[train.robot.m.control_right.err(0,1)] and train.robot.m.control_right.err(0,1).
+    {
+        int src_runtime = 0; // Runtime index.
+        SUPPRESS_UNUSED_WARNING(src_runtime);
+        int src_channel = 0; // Channel index.
+        SUPPRESS_UNUSED_WARNING(src_channel);
+        int src_bank = 0; // Bank index.
+        SUPPRESS_UNUSED_WARNING(src_bank);
+        // Iterate over range train.robot.m.control_right.err(0,1).
+        {
+            int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+            int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+            int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            train_robot_m_control_right_self[dst_runtime]->_lf_err = (_picontrol_err_t*)&train_robot_m_self[src_runtime]->_lf_control_right.err;
+        }
+    }
+    // Connect train.robot.m.control_right.ctrl(0,1)->[train.robot.m.motors.right_power(0,1)] to port train.robot.m.motors.right_power(0,1)
+    // Iterate over ranges train.robot.m.control_right.ctrl(0,1)->[train.robot.m.motors.right_power(0,1)] and train.robot.m.motors.right_power(0,1).
+    {
+        int src_runtime = 0; // Runtime index.
+        SUPPRESS_UNUSED_WARNING(src_runtime);
+        int src_channel = 0; // Channel index.
+        SUPPRESS_UNUSED_WARNING(src_channel);
+        int src_bank = 0; // Bank index.
+        SUPPRESS_UNUSED_WARNING(src_bank);
+        // Iterate over range train.robot.m.motors.right_power(0,1).
+        {
+            int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+            int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+            int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            train_robot_m_motors_self[dst_runtime]->_lf_right_power = (_motors_right_power_t*)&train_robot_m_control_right_self[src_runtime]->_lf_ctrl;
+        }
+    }
+    // Connect inputs and outputs for reactor train.robot.e.
+    // Connect train.robot.e.trigger(0,1)->[train.robot.e.trigger(0,1)] to port train.robot.e.trigger(0,1)
+    // Iterate over ranges train.robot.e.trigger(0,1)->[train.robot.e.trigger(0,1)] and train.robot.e.trigger(0,1).
+    {
+        int src_runtime = 0; // Runtime index.
+        SUPPRESS_UNUSED_WARNING(src_runtime);
+        int src_channel = 0; // Channel index.
+        SUPPRESS_UNUSED_WARNING(src_channel);
+        int src_bank = 0; // Bank index.
+        SUPPRESS_UNUSED_WARNING(src_bank);
+        // Iterate over range train.robot.e.trigger(0,1).
+        {
+            int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+            int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+            int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            train_robot_e_self[dst_runtime]->_lf_trigger = (_encoders_trigger_t*)&train_robot_self[src_runtime]->_lf_e.trigger;
+        }
+    }
+    // Connect train.robot.e.right(0,1)->[train.robot.e.right(0,1)] to port train.robot.e.right(0,1)
+    // Iterate over ranges train.robot.e.right(0,1)->[train.robot.e.right(0,1)] and train.robot.e.right(0,1).
+    {
+        int src_runtime = 0; // Runtime index.
+        SUPPRESS_UNUSED_WARNING(src_runtime);
+        int src_channel = 0; // Channel index.
+        SUPPRESS_UNUSED_WARNING(src_channel);
+        int src_bank = 0; // Bank index.
+        SUPPRESS_UNUSED_WARNING(src_bank);
+        // Iterate over range train.robot.e.right(0,1).
+        {
+            int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+            int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+            int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            train_robot_self[dst_runtime]->_lf_e.right = (_encoders_right_t*)&train_robot_e_self[src_runtime]->_lf_right;
+        }
+    }
+    // Connect train.robot.e.left(0,1)->[train.robot.e.left(0,1)] to port train.robot.e.left(0,1)
+    // Iterate over ranges train.robot.e.left(0,1)->[train.robot.e.left(0,1)] and train.robot.e.left(0,1).
+    {
+        int src_runtime = 0; // Runtime index.
+        SUPPRESS_UNUSED_WARNING(src_runtime);
+        int src_channel = 0; // Channel index.
+        SUPPRESS_UNUSED_WARNING(src_channel);
+        int src_bank = 0; // Bank index.
+        SUPPRESS_UNUSED_WARNING(src_bank);
+        // Iterate over range train.robot.e.left(0,1).
+        {
+            int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+            int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+            int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            train_robot_self[dst_runtime]->_lf_e.left = (_encoders_left_t*)&train_robot_e_self[src_runtime]->_lf_left;
+        }
+    }
+    // Connect inputs and outputs for reactor train.robot.a.
+    // Connect train.robot.a.trigger(0,1)->[train.robot.a.trigger(0,1)] to port train.robot.a.trigger(0,1)
+    // Iterate over ranges train.robot.a.trigger(0,1)->[train.robot.a.trigger(0,1)] and train.robot.a.trigger(0,1).
+    {
+        int src_runtime = 0; // Runtime index.
+        SUPPRESS_UNUSED_WARNING(src_runtime);
+        int src_channel = 0; // Channel index.
+        SUPPRESS_UNUSED_WARNING(src_channel);
+        int src_bank = 0; // Bank index.
+        SUPPRESS_UNUSED_WARNING(src_bank);
+        // Iterate over range train.robot.a.trigger(0,1).
+        {
+            int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+            int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+            int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            train_robot_a_self[dst_runtime]->_lf_trigger = (_accelerometer_trigger_t*)&train_robot_self[src_runtime]->_lf_a.trigger;
+        }
+    }
+    
+    
+    
     {
     }
     {
+    }
+    {
+        {
+            {
+            }
+            {
+            }
+            {
+            }
+            // Add port train.robot.m.control_left.err to array of is_present fields.
+            {
+                int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                {
+                    {
+                        envs[train_main].is_present_fields[0 + count] = &train_robot_m_self[0]->_lf_control_left.err.is_present;
+                        #ifdef FEDERATED_DECENTRALIZED
+                        envs[train_main]._lf_intended_tag_fields[0 + count] = &train_robot_m_self[0]->_lf_control_left.err.intended_tag;
+                        #endif // FEDERATED_DECENTRALIZED
+                        count++;
+                    }
+                }
+            }
+            // Add port train.robot.m.control_right.err to array of is_present fields.
+            {
+                int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                {
+                    {
+                        envs[train_main].is_present_fields[1 + count] = &train_robot_m_self[0]->_lf_control_right.err.is_present;
+                        #ifdef FEDERATED_DECENTRALIZED
+                        envs[train_main]._lf_intended_tag_fields[1 + count] = &train_robot_m_self[0]->_lf_control_right.err.intended_tag;
+                        #endif // FEDERATED_DECENTRALIZED
+                        count++;
+                    }
+                }
+            }
+            {
+                int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                {
+                    // Add port train.robot.m.control_left.ctrl to array of is_present fields.
+                    envs[train_main].is_present_fields[2 + count] = &train_robot_m_control_left_self[0]->_lf_ctrl.is_present;
+                    #ifdef FEDERATED_DECENTRALIZED
+                    // Add port train.robot.m.control_left.ctrl to array of intended_tag fields.
+                    envs[train_main]._lf_intended_tag_fields[2 + count] = &train_robot_m_control_left_self[0]->_lf_ctrl.intended_tag;
+                    #endif // FEDERATED_DECENTRALIZED
+                    count++;
+                }
+            }
+            {
+                int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                {
+                    // Add port train.robot.m.control_right.ctrl to array of is_present fields.
+                    envs[train_main].is_present_fields[3 + count] = &train_robot_m_control_right_self[0]->_lf_ctrl.is_present;
+                    #ifdef FEDERATED_DECENTRALIZED
+                    // Add port train.robot.m.control_right.ctrl to array of intended_tag fields.
+                    envs[train_main]._lf_intended_tag_fields[3 + count] = &train_robot_m_control_right_self[0]->_lf_ctrl.intended_tag;
+                    #endif // FEDERATED_DECENTRALIZED
+                    count++;
+                }
+            }
+        }
+        {
+        }
+        {
+        }
+        // Add port train.robot.e.trigger to array of is_present fields.
+        {
+            int count = 0; SUPPRESS_UNUSED_WARNING(count);
+            {
+                {
+                    envs[train_main].is_present_fields[4 + count] = &train_robot_self[0]->_lf_e.trigger.is_present;
+                    #ifdef FEDERATED_DECENTRALIZED
+                    envs[train_main]._lf_intended_tag_fields[4 + count] = &train_robot_self[0]->_lf_e.trigger.intended_tag;
+                    #endif // FEDERATED_DECENTRALIZED
+                    count++;
+                }
+            }
+        }
+        // Add port train.robot.a.trigger to array of is_present fields.
+        {
+            int count = 0; SUPPRESS_UNUSED_WARNING(count);
+            {
+                {
+                    envs[train_main].is_present_fields[5 + count] = &train_robot_self[0]->_lf_a.trigger.is_present;
+                    #ifdef FEDERATED_DECENTRALIZED
+                    envs[train_main]._lf_intended_tag_fields[5 + count] = &train_robot_self[0]->_lf_a.trigger.intended_tag;
+                    #endif // FEDERATED_DECENTRALIZED
+                    count++;
+                }
+            }
+        }
+        // Add port train.robot.m.left to array of is_present fields.
+        {
+            int count = 0; SUPPRESS_UNUSED_WARNING(count);
+            {
+                {
+                    envs[train_main].is_present_fields[6 + count] = &train_robot_self[0]->_lf_m.left.is_present;
+                    #ifdef FEDERATED_DECENTRALIZED
+                    envs[train_main]._lf_intended_tag_fields[6 + count] = &train_robot_self[0]->_lf_m.left.intended_tag;
+                    #endif // FEDERATED_DECENTRALIZED
+                    count++;
+                }
+            }
+        }
+        // Add port train.robot.m.right to array of is_present fields.
+        {
+            int count = 0; SUPPRESS_UNUSED_WARNING(count);
+            {
+                {
+                    envs[train_main].is_present_fields[7 + count] = &train_robot_self[0]->_lf_m.right.is_present;
+                    #ifdef FEDERATED_DECENTRALIZED
+                    envs[train_main]._lf_intended_tag_fields[7 + count] = &train_robot_self[0]->_lf_m.right.intended_tag;
+                    #endif // FEDERATED_DECENTRALIZED
+                    count++;
+                }
+            }
+        }
+        // Add port train.robot.m.left_speed to array of is_present fields.
+        {
+            int count = 0; SUPPRESS_UNUSED_WARNING(count);
+            {
+                {
+                    envs[train_main].is_present_fields[8 + count] = &train_robot_self[0]->_lf_m.left_speed.is_present;
+                    #ifdef FEDERATED_DECENTRALIZED
+                    envs[train_main]._lf_intended_tag_fields[8 + count] = &train_robot_self[0]->_lf_m.left_speed.intended_tag;
+                    #endif // FEDERATED_DECENTRALIZED
+                    count++;
+                }
+            }
+        }
+        // Add port train.robot.m.right_speed to array of is_present fields.
+        {
+            int count = 0; SUPPRESS_UNUSED_WARNING(count);
+            {
+                {
+                    envs[train_main].is_present_fields[9 + count] = &train_robot_self[0]->_lf_m.right_speed.is_present;
+                    #ifdef FEDERATED_DECENTRALIZED
+                    envs[train_main]._lf_intended_tag_fields[9 + count] = &train_robot_self[0]->_lf_m.right_speed.intended_tag;
+                    #endif // FEDERATED_DECENTRALIZED
+                    count++;
+                }
+            }
+        }
+        {
+            int count = 0; SUPPRESS_UNUSED_WARNING(count);
+            {
+                // Add port train.robot.e.right to array of is_present fields.
+                envs[train_main].is_present_fields[10 + count] = &train_robot_e_self[0]->_lf_right.is_present;
+                #ifdef FEDERATED_DECENTRALIZED
+                // Add port train.robot.e.right to array of intended_tag fields.
+                envs[train_main]._lf_intended_tag_fields[10 + count] = &train_robot_e_self[0]->_lf_right.intended_tag;
+                #endif // FEDERATED_DECENTRALIZED
+                count++;
+                // Add port train.robot.e.left to array of is_present fields.
+                envs[train_main].is_present_fields[10 + count] = &train_robot_e_self[0]->_lf_left.is_present;
+                #ifdef FEDERATED_DECENTRALIZED
+                // Add port train.robot.e.left to array of intended_tag fields.
+                envs[train_main]._lf_intended_tag_fields[10 + count] = &train_robot_e_self[0]->_lf_left.intended_tag;
+                #endif // FEDERATED_DECENTRALIZED
+                count++;
+            }
+        }
+        {
+            int count = 0; SUPPRESS_UNUSED_WARNING(count);
+            {
+                // Add port train.robot.a.x to array of is_present fields.
+                envs[train_main].is_present_fields[12 + count] = &train_robot_a_self[0]->_lf_x.is_present;
+                #ifdef FEDERATED_DECENTRALIZED
+                // Add port train.robot.a.x to array of intended_tag fields.
+                envs[train_main]._lf_intended_tag_fields[12 + count] = &train_robot_a_self[0]->_lf_x.intended_tag;
+                #endif // FEDERATED_DECENTRALIZED
+                count++;
+                // Add port train.robot.a.y to array of is_present fields.
+                envs[train_main].is_present_fields[12 + count] = &train_robot_a_self[0]->_lf_y.is_present;
+                #ifdef FEDERATED_DECENTRALIZED
+                // Add port train.robot.a.y to array of intended_tag fields.
+                envs[train_main]._lf_intended_tag_fields[12 + count] = &train_robot_a_self[0]->_lf_y.intended_tag;
+                #endif // FEDERATED_DECENTRALIZED
+                count++;
+                // Add port train.robot.a.z to array of is_present fields.
+                envs[train_main].is_present_fields[12 + count] = &train_robot_a_self[0]->_lf_z.is_present;
+                #ifdef FEDERATED_DECENTRALIZED
+                // Add port train.robot.a.z to array of intended_tag fields.
+                envs[train_main]._lf_intended_tag_fields[12 + count] = &train_robot_a_self[0]->_lf_z.intended_tag;
+                #endif // FEDERATED_DECENTRALIZED
+                count++;
+            }
+        }
     }
     // Add port train.disp.line0 to array of is_present fields.
     {
         int count = 0; SUPPRESS_UNUSED_WARNING(count);
         {
             {
-                envs[train_main].is_present_fields[0 + count] = &train_main_self[0]->_lf_disp.line0.is_present;
+                envs[train_main].is_present_fields[15 + count] = &train_main_self[0]->_lf_disp.line0.is_present;
                 #ifdef FEDERATED_DECENTRALIZED
-                envs[train_main]._lf_intended_tag_fields[0 + count] = &train_main_self[0]->_lf_disp.line0.intended_tag;
+                envs[train_main]._lf_intended_tag_fields[15 + count] = &train_main_self[0]->_lf_disp.line0.intended_tag;
                 #endif // FEDERATED_DECENTRALIZED
                 count++;
             }
@@ -773,9 +2807,9 @@ void _lf_initialize_trigger_objects() {
         int count = 0; SUPPRESS_UNUSED_WARNING(count);
         {
             {
-                envs[train_main].is_present_fields[1 + count] = &train_main_self[0]->_lf_disp.line1.is_present;
+                envs[train_main].is_present_fields[16 + count] = &train_main_self[0]->_lf_disp.line1.is_present;
                 #ifdef FEDERATED_DECENTRALIZED
-                envs[train_main]._lf_intended_tag_fields[1 + count] = &train_main_self[0]->_lf_disp.line1.intended_tag;
+                envs[train_main]._lf_intended_tag_fields[16 + count] = &train_main_self[0]->_lf_disp.line1.intended_tag;
                 #endif // FEDERATED_DECENTRALIZED
                 count++;
             }
@@ -786,9 +2820,9 @@ void _lf_initialize_trigger_objects() {
         int count = 0; SUPPRESS_UNUSED_WARNING(count);
         {
             {
-                envs[train_main].is_present_fields[2 + count] = &train_main_self[0]->_lf_disp.line2.is_present;
+                envs[train_main].is_present_fields[17 + count] = &train_main_self[0]->_lf_disp.line2.is_present;
                 #ifdef FEDERATED_DECENTRALIZED
-                envs[train_main]._lf_intended_tag_fields[2 + count] = &train_main_self[0]->_lf_disp.line2.intended_tag;
+                envs[train_main]._lf_intended_tag_fields[17 + count] = &train_main_self[0]->_lf_disp.line2.intended_tag;
                 #endif // FEDERATED_DECENTRALIZED
                 count++;
             }
@@ -799,9 +2833,9 @@ void _lf_initialize_trigger_objects() {
         int count = 0; SUPPRESS_UNUSED_WARNING(count);
         {
             {
-                envs[train_main].is_present_fields[3 + count] = &train_main_self[0]->_lf_disp.line3.is_present;
+                envs[train_main].is_present_fields[18 + count] = &train_main_self[0]->_lf_disp.line3.is_present;
                 #ifdef FEDERATED_DECENTRALIZED
-                envs[train_main]._lf_intended_tag_fields[3 + count] = &train_main_self[0]->_lf_disp.line3.intended_tag;
+                envs[train_main]._lf_intended_tag_fields[18 + count] = &train_main_self[0]->_lf_disp.line3.intended_tag;
                 #endif // FEDERATED_DECENTRALIZED
                 count++;
             }
@@ -812,9 +2846,22 @@ void _lf_initialize_trigger_objects() {
         int count = 0; SUPPRESS_UNUSED_WARNING(count);
         {
             {
-                envs[train_main].is_present_fields[4 + count] = &train_main_self[0]->_lf_line.calibrate.is_present;
+                envs[train_main].is_present_fields[19 + count] = &train_main_self[0]->_lf_line.calibrate.is_present;
                 #ifdef FEDERATED_DECENTRALIZED
-                envs[train_main]._lf_intended_tag_fields[4 + count] = &train_main_self[0]->_lf_line.calibrate.intended_tag;
+                envs[train_main]._lf_intended_tag_fields[19 + count] = &train_main_self[0]->_lf_line.calibrate.intended_tag;
+                #endif // FEDERATED_DECENTRALIZED
+                count++;
+            }
+        }
+    }
+    // Add port train.robot.start to array of is_present fields.
+    {
+        int count = 0; SUPPRESS_UNUSED_WARNING(count);
+        {
+            {
+                envs[train_main].is_present_fields[20 + count] = &train_main_self[0]->_lf_robot.start.is_present;
+                #ifdef FEDERATED_DECENTRALIZED
+                envs[train_main]._lf_intended_tag_fields[20 + count] = &train_main_self[0]->_lf_robot.start.intended_tag;
                 #endif // FEDERATED_DECENTRALIZED
                 count++;
             }
@@ -825,9 +2872,22 @@ void _lf_initialize_trigger_objects() {
         int count = 0; SUPPRESS_UNUSED_WARNING(count);
         {
             {
-                envs[train_main].is_present_fields[5 + count] = &train_main_self[0]->_lf_line.trigger.is_present;
+                envs[train_main].is_present_fields[21 + count] = &train_main_self[0]->_lf_line.trigger.is_present;
                 #ifdef FEDERATED_DECENTRALIZED
-                envs[train_main]._lf_intended_tag_fields[5 + count] = &train_main_self[0]->_lf_line.trigger.intended_tag;
+                envs[train_main]._lf_intended_tag_fields[21 + count] = &train_main_self[0]->_lf_line.trigger.intended_tag;
+                #endif // FEDERATED_DECENTRALIZED
+                count++;
+            }
+        }
+    }
+    // Add port train.robot.side_detect to array of is_present fields.
+    {
+        int count = 0; SUPPRESS_UNUSED_WARNING(count);
+        {
+            {
+                envs[train_main].is_present_fields[22 + count] = &train_main_self[0]->_lf_robot.side_detect.is_present;
+                #ifdef FEDERATED_DECENTRALIZED
+                envs[train_main]._lf_intended_tag_fields[22 + count] = &train_main_self[0]->_lf_robot.side_detect.intended_tag;
                 #endif // FEDERATED_DECENTRALIZED
                 count++;
             }
@@ -837,10 +2897,22 @@ void _lf_initialize_trigger_objects() {
         int count = 0; SUPPRESS_UNUSED_WARNING(count);
         {
             // Add port train.line.reflect to array of is_present fields.
-            envs[train_main].is_present_fields[6 + count] = &train_line_self[0]->_lf_reflect.is_present;
+            envs[train_main].is_present_fields[23 + count] = &train_line_self[0]->_lf_reflect.is_present;
             #ifdef FEDERATED_DECENTRALIZED
             // Add port train.line.reflect to array of intended_tag fields.
-            envs[train_main]._lf_intended_tag_fields[6 + count] = &train_line_self[0]->_lf_reflect.intended_tag;
+            envs[train_main]._lf_intended_tag_fields[23 + count] = &train_line_self[0]->_lf_reflect.intended_tag;
+            #endif // FEDERATED_DECENTRALIZED
+            count++;
+        }
+    }
+    {
+        int count = 0; SUPPRESS_UNUSED_WARNING(count);
+        {
+            // Add port train.robot.speed to array of is_present fields.
+            envs[train_main].is_present_fields[24 + count] = &train_robot_self[0]->_lf_speed.is_present;
+            #ifdef FEDERATED_DECENTRALIZED
+            // Add port train.robot.speed to array of intended_tag fields.
+            envs[train_main]._lf_intended_tag_fields[24 + count] = &train_robot_self[0]->_lf_speed.intended_tag;
             #endif // FEDERATED_DECENTRALIZED
             count++;
         }
@@ -864,6 +2936,10 @@ void _lf_initialize_trigger_objects() {
         // index is the OR of level 3 and 
         // deadline 9223372036854775807 shifted left 16 bits.
         train_main_self[0]->_lf__reaction_3.index = 0xffffffffffff0003LL;
+        train_main_self[0]->_lf__reaction_4.chain_id = 1;
+        // index is the OR of level 5 and 
+        // deadline 9223372036854775807 shifted left 16 bits.
+        train_main_self[0]->_lf__reaction_4.index = 0xffffffffffff0005LL;
     
         // Set reaction priorities for ReactorInstance train.line
         {
@@ -885,9 +2961,120 @@ void _lf_initialize_trigger_objects() {
             // deadline 9223372036854775807 shifted left 16 bits.
             train_disp_self[0]->_lf__reaction_0.index = 0xffffffffffff0000LL;
             train_disp_self[0]->_lf__reaction_1.chain_id = 1;
+            // index is the OR of level 6 and 
+            // deadline 9223372036854775807 shifted left 16 bits.
+            train_disp_self[0]->_lf__reaction_1.index = 0xffffffffffff0006LL;
+        }
+    
+    
+        // Set reaction priorities for ReactorInstance train.robot
+        {
+            train_robot_self[0]->_lf__reaction_0.chain_id = 1;
+            // index is the OR of level 0 and 
+            // deadline 9223372036854775807 shifted left 16 bits.
+            train_robot_self[0]->_lf__reaction_0.index = 0xffffffffffff0000LL;
+            train_robot_self[0]->_lf__reaction_1.chain_id = 1;
+            // index is the OR of level 2 and 
+            // deadline 9223372036854775807 shifted left 16 bits.
+            train_robot_self[0]->_lf__reaction_1.index = 0xffffffffffff0002LL;
+            train_robot_self[0]->_lf__reaction_2.chain_id = 1;
             // index is the OR of level 3 and 
             // deadline 9223372036854775807 shifted left 16 bits.
-            train_disp_self[0]->_lf__reaction_1.index = 0xffffffffffff0003LL;
+            train_robot_self[0]->_lf__reaction_2.index = 0xffffffffffff0003LL;
+            train_robot_self[0]->_lf__reaction_3.chain_id = 1;
+            // index is the OR of level 4 and 
+            // deadline 9223372036854775807 shifted left 16 bits.
+            train_robot_self[0]->_lf__reaction_3.index = 0xffffffffffff0004LL;
+            train_robot_self[0]->_lf__reaction_4.chain_id = 1;
+            // index is the OR of level 5 and 
+            // deadline 9223372036854775807 shifted left 16 bits.
+            train_robot_self[0]->_lf__reaction_4.index = 0xffffffffffff0005LL;
+            train_robot_self[0]->_lf__reaction_5.chain_id = 1;
+            // index is the OR of level 6 and 
+            // deadline 9223372036854775807 shifted left 16 bits.
+            train_robot_self[0]->_lf__reaction_5.index = 0xffffffffffff0006LL;
+            train_robot_self[0]->_lf__reaction_6.chain_id = 1;
+            // index is the OR of level 7 and 
+            // deadline 9223372036854775807 shifted left 16 bits.
+            train_robot_self[0]->_lf__reaction_6.index = 0xffffffffffff0007LL;
+        
+            // Set reaction priorities for ReactorInstance train.robot.m
+            {
+                train_robot_m_self[0]->_lf__reaction_0.chain_id = 1;
+                // index is the OR of level 8 and 
+                // deadline 9223372036854775807 shifted left 16 bits.
+                train_robot_m_self[0]->_lf__reaction_0.index = 0xffffffffffff0008LL;
+                train_robot_m_self[0]->_lf__reaction_1.chain_id = 1;
+                // index is the OR of level 9 and 
+                // deadline 9223372036854775807 shifted left 16 bits.
+                train_robot_m_self[0]->_lf__reaction_1.index = 0xffffffffffff0009LL;
+                train_robot_m_self[0]->_lf__reaction_2.chain_id = 1;
+                // index is the OR of level 10 and 
+                // deadline 9223372036854775807 shifted left 16 bits.
+                train_robot_m_self[0]->_lf__reaction_2.index = 0xffffffffffff000aLL;
+            
+                // Set reaction priorities for ReactorInstance train.robot.m.motors
+                {
+                    train_robot_m_motors_self[0]->_lf__reaction_0.chain_id = 1;
+                    // index is the OR of level 0 and 
+                    // deadline 9223372036854775807 shifted left 16 bits.
+                    train_robot_m_motors_self[0]->_lf__reaction_0.index = 0xffffffffffff0000LL;
+                    train_robot_m_motors_self[0]->_lf__reaction_1.chain_id = 1;
+                    // index is the OR of level 12 and 
+                    // deadline 9223372036854775807 shifted left 16 bits.
+                    train_robot_m_motors_self[0]->_lf__reaction_1.index = 0xffffffffffff000cLL;
+                    train_robot_m_motors_self[0]->_lf__reaction_2.chain_id = 1;
+                    // index is the OR of level 13 and 
+                    // deadline 9223372036854775807 shifted left 16 bits.
+                    train_robot_m_motors_self[0]->_lf__reaction_2.index = 0xffffffffffff000dLL;
+                }
+            
+            
+                // Set reaction priorities for ReactorInstance train.robot.m.control_left
+                {
+                    train_robot_m_control_left_self[0]->_lf__reaction_0.chain_id = 1;
+                    // index is the OR of level 11 and 
+                    // deadline 9223372036854775807 shifted left 16 bits.
+                    train_robot_m_control_left_self[0]->_lf__reaction_0.index = 0xffffffffffff000bLL;
+                }
+            
+            
+                // Set reaction priorities for ReactorInstance train.robot.m.control_right
+                {
+                    train_robot_m_control_right_self[0]->_lf__reaction_0.chain_id = 1;
+                    // index is the OR of level 11 and 
+                    // deadline 9223372036854775807 shifted left 16 bits.
+                    train_robot_m_control_right_self[0]->_lf__reaction_0.index = 0xffffffffffff000bLL;
+                }
+            
+            }
+        
+        
+            // Set reaction priorities for ReactorInstance train.robot.e
+            {
+                train_robot_e_self[0]->_lf__reaction_0.chain_id = 1;
+                // index is the OR of level 0 and 
+                // deadline 9223372036854775807 shifted left 16 bits.
+                train_robot_e_self[0]->_lf__reaction_0.index = 0xffffffffffff0000LL;
+                train_robot_e_self[0]->_lf__reaction_1.chain_id = 1;
+                // index is the OR of level 1 and 
+                // deadline 9223372036854775807 shifted left 16 bits.
+                train_robot_e_self[0]->_lf__reaction_1.index = 0xffffffffffff0001LL;
+            }
+        
+        
+            // Set reaction priorities for ReactorInstance train.robot.a
+            {
+                train_robot_a_self[0]->_lf__reaction_0.chain_id = 1;
+                // index is the OR of level 0 and 
+                // deadline 9223372036854775807 shifted left 16 bits.
+                train_robot_a_self[0]->_lf__reaction_0.index = 0xffffffffffff0000LL;
+                train_robot_a_self[0]->_lf__reaction_1.chain_id = 1;
+                // index is the OR of level 1 and 
+                // deadline 9223372036854775807 shifted left 16 bits.
+                train_robot_a_self[0]->_lf__reaction_1.index = 0xffffffffffff0001LL;
+            }
+        
         }
     
     }

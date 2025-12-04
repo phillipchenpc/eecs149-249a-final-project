@@ -2,6 +2,7 @@
 #define _TRAIN_MAIN_H
 #include "include/core/reactor.h"
 #include "_display.h"
+#include "_robot.h"
 #include "_line.h"
 #ifndef TOP_LEVEL_PREAMBLE_253380088_H
 #define TOP_LEVEL_PREAMBLE_253380088_H
@@ -33,8 +34,21 @@ typedef struct {
         _line_calibrate_t calibrate;
         #line 39 "/home/foobar/final/lingua_franca/src/lib/Line.lf"
         _line_trigger_t trigger;
+        #line 40 "/home/foobar/final/lingua_franca/src/lib/Line.lf"
+        _line_reflect_t* reflect;
+        #line 40 "/home/foobar/final/lingua_franca/src/lib/Line.lf"
+        trigger_t reflect_trigger;
+        #line 40 "/home/foobar/final/lingua_franca/src/lib/Line.lf"
+        reaction_t* reflect_reactions[1];
     } _lf_line;
     int _lf_line_width;
+    struct {
+        #line 46 "/home/foobar/final/lingua_franca/src/train/train.lf"
+        _robot_start_t start;
+        #line 55 "/home/foobar/final/lingua_franca/src/train/train.lf"
+        _robot_side_detect_t side_detect;
+    } _lf_robot;
+    int _lf_robot_width;
     #line 138 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t _lf__reaction_0;
     #line 144 "/home/foobar/final/lingua_franca/src/train/train.lf"
@@ -43,6 +57,8 @@ typedef struct {
     reaction_t _lf__reaction_2;
     #line 164 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t _lf__reaction_3;
+    #line 168 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    reaction_t _lf__reaction_4;
     #line 131 "/home/foobar/final/lingua_franca/src/train/train.lf"
     trigger_t _lf__t;
     #line 131 "/home/foobar/final/lingua_franca/src/train/train.lf"

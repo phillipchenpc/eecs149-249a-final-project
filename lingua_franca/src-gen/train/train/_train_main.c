@@ -43,18 +43,23 @@ void _train_mainreaction_function_2(void* instance_args) {
     
     } line;
     struct disp {
-        _display_line1_t* line1;
+        _display_line0_t* line0;
     
     } disp;
+    struct robot {
+        _robot_start_t* start;
+    
+    } robot;
     line.calibrate = &(self->_lf_line.calibrate);
-    disp.line1 = &(self->_lf_disp.line1);
+    disp.line0 = &(self->_lf_disp.line0);
+    robot.start = &(self->_lf_robot.start);
     #line 156 "/home/foobar/final/lingua_franca/src/train/train.lf"
     static char buf[17];
     snprintf(buf, 17, "IM HERE");
-    lf_set(disp.line1, buf);
+    lf_set(disp.line0, buf);
     
     lf_set(line.calibrate, false);
-    // lf_set(robot.start, true);
+    lf_set(robot.start, true);
 }
 #include "include/api/set_undef.h"
 #include "include/api/set.h"
@@ -69,6 +74,59 @@ void _train_mainreaction_function_3(void* instance_args) {
     lf_set(line.trigger, true);
 }
 #include "include/api/set_undef.h"
+#include "include/api/set.h"
+void _train_mainreaction_function_4(void* instance_args) {
+    _train_main_main_self_t* self = (_train_main_main_self_t*)instance_args; SUPPRESS_UNUSED_WARNING(self);
+    struct line {
+        _line_reflect_t* reflect;
+    
+    } line;
+    struct disp {
+        _display_line0_t* line0;
+    _display_line1_t* line1;
+    _display_line2_t* line2;
+    
+    } disp;
+    struct robot {
+        _robot_side_detect_t* side_detect;
+    
+    } robot;
+    line.reflect = self->_lf_line.reflect;
+    disp.line0 = &(self->_lf_disp.line0);
+    disp.line1 = &(self->_lf_disp.line1);
+    disp.line2 = &(self->_lf_disp.line2);
+    robot.side_detect = &(self->_lf_robot.side_detect);
+    #line 169 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    static char buf0[17];
+    static char buf1[17];
+    static char buf2[17];
+    bool right = line.reflect->value[4] > 800; 
+    bool center = line.reflect->value[1] > 800 || line.reflect->value[2] > 800 || line.reflect->value[3] > 800;
+    bool left = line.reflect->value[0] > 800;
+    if (left && center && right) {
+      lf_set(robot.side_detect, 2);
+    } else if(left && center) {
+      lf_set(robot.side_detect, 1);
+    } else if (right && center) {
+      lf_set(robot.side_detect, 3);
+    } else if (center) {
+      lf_set(robot.side_detect, 2);
+    } else if (left) {
+      lf_set(robot.side_detect, 0);
+    } else if (right) {
+      lf_set(robot.side_detect, 4);
+    } else {
+      lf_set(robot.side_detect, 5);
+    }
+    
+    snprintf(buf0, 17, "Right: %d", right);
+    snprintf(buf1, 17, "Center: %d", center);
+    snprintf(buf2, 17, "Left: %d", left);
+    lf_set(disp.line0, buf0);
+    lf_set(disp.line1, buf1);
+    lf_set(disp.line2, buf2);
+}
+#include "include/api/set_undef.h"
 _train_main_main_self_t* new__train_main() {
     _train_main_main_self_t* self = (_train_main_main_self_t*)_lf_new_reactor(sizeof(_train_main_main_self_t));
     // Set the _width variable for all cases. This will be -2
@@ -77,6 +135,29 @@ _train_main_main_self_t* new__train_main() {
     // Set the _width variable for all cases. This will be -2
     // if the reactor is not a bank of reactors.
     self->_lf_line_width = -2;
+    #line 40 "/home/foobar/final/lingua_franca/src/lib/Line.lf"
+    #ifdef FEDERATED_DECENTRALIZED
+    #line 40 "/home/foobar/final/lingua_franca/src/lib/Line.lf"
+    self->_lf_line.reflect_trigger.intended_tag = (tag_t) { .time = NEVER, .microstep = 0u};
+    #line 40 "/home/foobar/final/lingua_franca/src/lib/Line.lf"
+    #endif // FEDERATED_DECENTRALIZED
+    #line 40 "/home/foobar/final/lingua_franca/src/lib/Line.lf"
+    self->_lf_line.reflect_reactions[0] = &self->_lf__reaction_4;
+    #line 40 "/home/foobar/final/lingua_franca/src/lib/Line.lf"
+    self->_lf_line.reflect_trigger.reactions = self->_lf_line.reflect_reactions;
+    #line 40 "/home/foobar/final/lingua_franca/src/lib/Line.lf"
+    self->_lf_line.reflect_trigger.last = NULL;
+    #line 40 "/home/foobar/final/lingua_franca/src/lib/Line.lf"
+    self->_lf_line.reflect_trigger.number_of_reactions = 1;
+    #line 40 "/home/foobar/final/lingua_franca/src/lib/Line.lf"
+    #ifdef FEDERATED
+    #line 40 "/home/foobar/final/lingua_franca/src/lib/Line.lf"
+    self->_lf_line.reflect_trigger.physical_time_of_arrival = NEVER;
+    #line 40 "/home/foobar/final/lingua_franca/src/lib/Line.lf"
+    #endif // FEDERATED
+    // Set the _width variable for all cases. This will be -2
+    // if the reactor is not a bank of reactors.
+    self->_lf_robot_width = -2;
     #line 138 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_0.number = 0;
     #line 138 "/home/foobar/final/lingua_franca/src/train/train.lf"
@@ -133,6 +214,20 @@ _train_main_main_self_t* new__train_main() {
     self->_lf__reaction_3.name = "?";
     #line 164 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_3.mode = NULL;
+    #line 168 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__reaction_4.number = 4;
+    #line 168 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__reaction_4.function = _train_mainreaction_function_4;
+    #line 168 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__reaction_4.self = self;
+    #line 168 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__reaction_4.deadline_violation_handler = NULL;
+    #line 168 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__reaction_4.STP_handler = NULL;
+    #line 168 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__reaction_4.name = "?";
+    #line 168 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__reaction_4.mode = NULL;
     #line 131 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__t.last = NULL;
     #line 131 "/home/foobar/final/lingua_franca/src/train/train.lf"

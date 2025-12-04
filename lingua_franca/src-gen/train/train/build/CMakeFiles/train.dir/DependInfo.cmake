@@ -28,7 +28,7 @@ set(CMAKE_TARGET_DEFINITIONS_ASM
   "CFG_TUSB_OS=OPT_OS_PICO"
   "LF_FILE_SEPARATOR=\"/\""
   "LF_PACKAGE_DIRECTORY=\"/home/foobar/final/lingua_franca\""
-  "LF_REACTION_GRAPH_BREADTH=3"
+  "LF_REACTION_GRAPH_BREADTH=6"
   "LF_SOURCE_DIRECTORY=\"/home/foobar/final/lingua_franca/src/train\""
   "LF_UNTHREADED=1"
   "LIB_PICO_BIT_OPS=1"
@@ -153,8 +153,14 @@ set(CMAKE_ASM_TARGET_INCLUDE_PATH
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/foobar/final/lingua_franca/src-gen/train/train/_accelerometer.c" "CMakeFiles/train.dir/_accelerometer.c.obj" "gcc" "CMakeFiles/train.dir/_accelerometer.c.obj.d"
   "/home/foobar/final/lingua_franca/src-gen/train/train/_display.c" "CMakeFiles/train.dir/_display.c.obj" "gcc" "CMakeFiles/train.dir/_display.c.obj.d"
+  "/home/foobar/final/lingua_franca/src-gen/train/train/_encoders.c" "CMakeFiles/train.dir/_encoders.c.obj" "gcc" "CMakeFiles/train.dir/_encoders.c.obj.d"
   "/home/foobar/final/lingua_franca/src-gen/train/train/_line.c" "CMakeFiles/train.dir/_line.c.obj" "gcc" "CMakeFiles/train.dir/_line.c.obj.d"
+  "/home/foobar/final/lingua_franca/src-gen/train/train/_motors.c" "CMakeFiles/train.dir/_motors.c.obj" "gcc" "CMakeFiles/train.dir/_motors.c.obj.d"
+  "/home/foobar/final/lingua_franca/src-gen/train/train/_motorswithfeedback.c" "CMakeFiles/train.dir/_motorswithfeedback.c.obj" "gcc" "CMakeFiles/train.dir/_motorswithfeedback.c.obj.d"
+  "/home/foobar/final/lingua_franca/src-gen/train/train/_picontrol.c" "CMakeFiles/train.dir/_picontrol.c.obj" "gcc" "CMakeFiles/train.dir/_picontrol.c.obj.d"
+  "/home/foobar/final/lingua_franca/src-gen/train/train/_robot.c" "CMakeFiles/train.dir/_robot.c.obj" "gcc" "CMakeFiles/train.dir/_robot.c.obj.d"
   "/home/foobar/final/lingua_franca/src-gen/train/train/_train_main.c" "CMakeFiles/train.dir/_train_main.c.obj" "gcc" "CMakeFiles/train.dir/_train_main.c.obj.d"
   "/home/foobar/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c" "CMakeFiles/train.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj" "gcc" "CMakeFiles/train.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj.d"
   "/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c" "CMakeFiles/train.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj" "gcc" "CMakeFiles/train.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj.d"

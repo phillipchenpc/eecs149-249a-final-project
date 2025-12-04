@@ -93,4 +93,24 @@ CMakeFiles/train.dir/train.c.obj: \
  /home/foobar/final/lingua_franca/src-gen/train/train/robot-lib/src/ir_sensors.h \
  /home/foobar/final/lingua_franca/src-gen/train/train/_display.h \
  /home/foobar/final/lingua_franca/src-gen/train/train/robot-lib/src/display.h \
+ /home/foobar/final/lingua_franca/src-gen/train/train/_motors.h \
+ /home/foobar/final/lingua_franca/src-gen/train/train/robot-lib/src/motors.h \
+ /usr/include/newlib/math.h \
+ /home/foobar/final/lingua_franca/src-gen/train/train/_picontrol.h \
+ /home/foobar/final/lingua_franca/src-gen/train/train/_motorswithfeedback.h \
+ /home/foobar/final/lingua_franca/src-gen/train/train/_encoders.h \
+ /home/foobar/pico-sdk/src/rp2_common/hardware_pio/include/hardware/pio.h \
+ /home/foobar/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/pio.h \
+ /home/foobar/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/pio.h \
+ /home/foobar/pico-sdk/src/rp2_common/hardware_pio/include/hardware/pio_instructions.h \
+ /home/foobar/final/lingua_franca/src-gen/train/train/build/robot/quadrature_encoder.pio.h \
+ /home/foobar/pico-sdk/src/rp2_common/hardware_clocks/include/hardware/clocks.h \
+ /home/foobar/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/clocks.h \
+ /home/foobar/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/clocks.h \
+ /home/foobar/final/lingua_franca/src-gen/train/train/_accelerometer.h \
+ /home/foobar/final/lingua_franca/src-gen/train/train/robot-lib/src/imu.h \
+ /home/foobar/pico-sdk/src/rp2_common/hardware_i2c/include/hardware/i2c.h \
+ /home/foobar/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/i2c.h \
+ /home/foobar/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/i2c.h \
+ /home/foobar/final/lingua_franca/src-gen/train/train/_robot.h \
  /home/foobar/final/lingua_franca/src-gen/train/train/_train_main.h
