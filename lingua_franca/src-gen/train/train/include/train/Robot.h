@@ -1,9 +1,13 @@
 #ifndef _robot_H
 #define _robot_H
-#ifndef TOP_LEVEL_PREAMBLE_253380088_H
-#define TOP_LEVEL_PREAMBLE_253380088_H
+#ifndef TOP_LEVEL_PREAMBLE_1144091415_H
+#define TOP_LEVEL_PREAMBLE_1144091415_H
 /*Correspondence: Range: [(21, 2), (22, 16)) -> Range: [(0, 0), (1, 16)) (verbatim=true; src=/home/foobar/final/lingua_franca/src/lib/IMU.lf)*/#include <pico/stdlib.h>
 #include <imu.h>
+/*Correspondence: Range: [(21, 2), (24, 64)) -> Range: [(0, 0), (3, 64)) (verbatim=true; src=/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf)*/#include <math.h>
+#define WHEEL_DIAMETER 0.032 // meters
+#define COUNTS_PER_REV 360 //CPR
+#define TICKS_PER_METER (WHEEL_DIAMETER * M_PI) / COUNTS_PER_REV
 /*Correspondence: Range: [(18, 2), (26, 17)) -> Range: [(0, 0), (8, 17)) (verbatim=true; src=/home/foobar/final/lingua_franca/src/lib/Encoders.lf)*/#include <math.h>
 #include <hardware/pio.h>
 #include <quadrature_encoder.pio.h>
@@ -13,10 +17,6 @@
 #define LEFT_ENCODER_AB 12
 #define RIGHT_SM 0
 #define LEFT_SM 1
-/*Correspondence: Range: [(21, 2), (24, 64)) -> Range: [(0, 0), (3, 64)) (verbatim=true; src=/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf)*/#include <math.h>
-#define WHEEL_DIAMETER 0.032 // meters
-#define COUNTS_PER_REV 360 //CPR
-#define TICKS_PER_METER (WHEEL_DIAMETER * M_PI) / COUNTS_PER_REV
 #endif
 #ifdef __cplusplus
 extern "C" {

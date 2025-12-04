@@ -252,7 +252,7 @@ LF_FILE_SEPARATOR:UNINITIALIZED="/"
 LF_PACKAGE_DIRECTORY:UNINITIALIZED="/home/foobar/final/lingua_franca"
 
 //No help, variable specified on the command line.
-LF_REACTION_GRAPH_BREADTH:UNINITIALIZED=6
+LF_REACTION_GRAPH_BREADTH:UNINITIALIZED=3
 
 //No help, variable specified on the command line.
 LF_SOURCE_DIRECTORY:UNINITIALIZED="/home/foobar/final/lingua_franca/src/train"

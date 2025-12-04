@@ -3,14 +3,14 @@
 #include "include/core/reactor.h"
 #include "_picontrol.h"
 #include "_motors.h"
-#ifndef TOP_LEVEL_PREAMBLE_390034407_H
-#define TOP_LEVEL_PREAMBLE_390034407_H
-#include <motors.h>
-#include <math.h>
+#ifndef TOP_LEVEL_PREAMBLE_439916319_H
+#define TOP_LEVEL_PREAMBLE_439916319_H
 #include <math.h>
 #define WHEEL_DIAMETER 0.032 // meters
 #define COUNTS_PER_REV 360 //CPR
 #define TICKS_PER_METER (WHEEL_DIAMETER * M_PI) / COUNTS_PER_REV
+#include <motors.h>
+#include <math.h>
 #endif
 typedef struct {
     token_type_t type;

@@ -53,12 +53,6 @@ add_executable(
     _train_main.c
     _line.c
     _display.c
-    _robot.c
-    _motorswithfeedback.c
-    _motors.c
-    _picontrol.c
-    _encoders.c
-    _accelerometer.c
     train.c
 )
 

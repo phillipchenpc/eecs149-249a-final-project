@@ -18,7 +18,6 @@ import Accelerometer from "../lib/IMU.lf"
 
 reactor Robot {
   preamble {=
-    #include <math.h>
     #define WHEEL_DIAMETER 0.032 // meters
     #define COUNTS_PER_REV 360 //CPR
     #define TICKS_PER_METER (WHEEL_DIAMETER * M_PI) / COUNTS_PER_REV
@@ -56,7 +55,7 @@ reactor Robot {
   input side_detect: uint32_t // 0: Left, 1: Left + Center, 2: Center, 3: Right + Center, 4: Right
   state last_detect: uint32_t // Stores value of side_detect
 
-  timer t(0, 10 s) // Timer for triggering gyro
+  timer t(0, 10 ms) // Timer for triggering gyro
 
   // Reading tilt from accelerometer
   a = new Accelerometer();
@@ -73,12 +72,12 @@ reactor Robot {
     lf_set(m.left, e.left->value);
 
     // Calculate speed
-    float now = lf_time_logical();
-    float time_elapsed = now - self->prev_time;
-    lf_set(speed, ((e.left->value - self->prev_left) / time_elapsed) / 100 * self->scale); // In m/s unscaled
+    // float now = lf_time_logical();
+    // float time_elapsed = now - self->prev_time;
+    // lf_set(speed, ((e.left->value - self->prev_left) / time_elapsed) / 100 * self->scale); // In m/s unscaled
 
-    self->prev_time = now;
-    self->prev_left = e.left->value;
+    // self->prev_time = now;
+    // self->prev_left = e.left->value;
   =}
   reaction(e.right) -> m.right {=
     lf_set(m.right, e.right->value);
@@ -88,8 +87,8 @@ reactor Robot {
     // Robot waits for calibration before switching to driving mode
     reaction(start) -> m.left_speed, m.right_speed, reset(DRIVING) {=
       lf_set_mode(DRIVING);
-      self->target_speed_scaled = scale_values_exp(self->target_speed, self->scale);
-      self->target_deccel_scaled = scale_values_exp(self->decceleration, self->scale);
+      // self->target_speed_scaled = scale_values_exp(self->target_speed, self->scale);
+      // self->target_deccel_scaled = scale_values_exp(self->decceleration, self->scale);
       lf_set(m.left_speed, self->target_speed_scaled);
       lf_set(m.right_speed, self->target_speed_scaled * self->motor_calibrate);
     =}
@@ -127,7 +126,7 @@ reactor Robot {
 main reactor(calibration_time: time = 5 s, sample_period: time = 100 ms) {
   line = new Line()
   disp = new Display()
-  robot = new Robot()
+  // robot = new Robot()
 
   timer t(0, sample_period)
   timer seconds(0, 1 s)  // Timer used to display seconds.
@@ -153,7 +152,7 @@ main reactor(calibration_time: time = 5 s, sample_period: time = 100 ms) {
   //   lf_set(disp.line3, buf);
   // =}
 
-  reaction(end_calibration) -> line.calibrate, disp.line1 {=
+  reaction(end_calibration) -> line.calibrate, disp.line1{=
     static char buf[17];
     snprintf(buf, 17, "IM HERE");
     lf_set(disp.line1, buf);
@@ -166,34 +165,34 @@ main reactor(calibration_time: time = 5 s, sample_period: time = 100 ms) {
     lf_set(line.trigger, true);
   =}
 
-  reaction(line.reflect) -> disp.line0, disp.line1, disp.line2, robot.side_detect {=
-    static char buf0[17];
-    static char buf1[17];
-    static char buf2[17];
-    bool right = line.reflect->value[4] > 800; 
-    bool center = line.reflect->value[1] > 800 || line.reflect->value[2] > 800 || line.reflect->value[3] > 800;
-    bool left = line.reflect->value[0] > 800;
-    if (left && center && right) {
-      lf_set(robot.side_detect, 2);
-    } else if(left && center) {
-      lf_set(robot.side_detect, 1);
-    } else if (right && center) {
-      lf_set(robot.side_detect, 3);
-    } else if (center) {
-      lf_set(robot.side_detect, 2);
-    } else if (left) {
-      lf_set(robot.side_detect, 0);
-    } else if (right) {
-      lf_set(robot.side_detect, 4);
-    } else {
-      lf_set(robot.side_detect, 5);
-    }
+  // reaction(line.reflect) -> disp.line0, disp.line1, disp.line2, robot.side_detect {=
+  //   static char buf0[17];
+  //   static char buf1[17];
+  //   static char buf2[17];
+  //   bool right = line.reflect->value[4] > 800; 
+  //   bool center = line.reflect->value[1] > 800 || line.reflect->value[2] > 800 || line.reflect->value[3] > 800;
+  //   bool left = line.reflect->value[0] > 800;
+  //   if (left && center && right) {
+  //     lf_set(robot.side_detect, 2);
+  //   } else if(left && center) {
+  //     lf_set(robot.side_detect, 1);
+  //   } else if (right && center) {
+  //     lf_set(robot.side_detect, 3);
+  //   } else if (center) {
+  //     lf_set(robot.side_detect, 2);
+  //   } else if (left) {
+  //     lf_set(robot.side_detect, 0);
+  //   } else if (right) {
+  //     lf_set(robot.side_detect, 4);
+  //   } else {
+  //     lf_set(robot.side_detect, 5);
+  //   }
 
-    snprintf(buf0, 17, "Right: %d", right);
-    snprintf(buf1, 17, "Center: %d", center);
-    snprintf(buf2, 17, "Left: %d", left);
-    lf_set(disp.line0, buf0);
-    lf_set(disp.line1, buf1);
-    lf_set(disp.line2, buf2);
-  =}
+  //   snprintf(buf0, 17, "Right: %d", right);
+  //   snprintf(buf1, 17, "Center: %d", center);
+  //   snprintf(buf2, 17, "Left: %d", left);
+  //   lf_set(disp.line0, buf0);
+  //   lf_set(disp.line1, buf1);
+  //   lf_set(disp.line2, buf2);
+  // =}
 }

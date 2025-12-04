@@ -1,10 +1,10 @@
-#ifndef _hillclimbsolution_main_H
-#define _hillclimbsolution_main_H
-#ifndef TOP_LEVEL_PREAMBLE_81505591_H
-#define TOP_LEVEL_PREAMBLE_81505591_H
-/*Correspondence: Range: [(33, 2), (33, 25)) -> Range: [(0, 0), (0, 23)) (verbatim=true; src=/home/foobar/final/lingua_franca/src/lib/Line.lf)*/#include <ir_sensors.h>
+#ifndef _train_main_H
+#define _train_main_H
+#ifndef TOP_LEVEL_PREAMBLE_253380088_H
+#define TOP_LEVEL_PREAMBLE_253380088_H
 /*Correspondence: Range: [(18, 2), (19, 68)) -> Range: [(0, 0), (1, 68)) (verbatim=true; src=/home/foobar/final/lingua_franca/src/lib/Display.lf)*/#include <pico/stdlib.h>
 #include <display.h>        // Do not use "display.h". Doesn't work.
+/*Correspondence: Range: [(33, 2), (33, 25)) -> Range: [(0, 0), (0, 23)) (verbatim=true; src=/home/foobar/final/lingua_franca/src/lib/Line.lf)*/#include <ir_sensors.h>
 #endif
 #ifdef __cplusplus
 extern "C" {
@@ -14,13 +14,13 @@ extern "C" {
 #ifdef __cplusplus
 }
 #endif
-typedef struct hillclimbsolution_self_t{
+typedef struct train_self_t{
     self_base_t base; // This field is only to be used by the runtime, not the user.
     interval_t calibration_time;
     interval_t sample_period;
     int count;
     int end[0]; // placeholder; MSVC does not compile empty structs
-} hillclimbsolution_self_t;
+} train_self_t;
 typedef struct {
     token_type_t type;
     lf_token_t* token;
@@ -84,22 +84,4 @@ typedef struct {
     string value;
 
 } display_line3_t;
-typedef struct {
-    token_type_t type;
-    lf_token_t* token;
-    size_t length;
-    bool is_present;
-    lf_port_internal_t _base;
-    bool value;
-
-} robot_start_t;
-typedef struct {
-    token_type_t type;
-    lf_token_t* token;
-    size_t length;
-    bool is_present;
-    lf_port_internal_t _base;
-    uint32_t value;
-
-} robot_side_detect_t;
 #endif
