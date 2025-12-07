@@ -28,7 +28,7 @@ set(CMAKE_TARGET_DEFINITIONS_ASM
   "CFG_TUSB_OS=OPT_OS_PICO"
   "LF_FILE_SEPARATOR=\"/\""
   "LF_PACKAGE_DIRECTORY=\"/home/foobar/final/lingua_franca\""
-  "LF_REACTION_GRAPH_BREADTH=3"
+  "LF_REACTION_GRAPH_BREADTH=2"
   "LF_SOURCE_DIRECTORY=\"/home/foobar/final/lingua_franca/src\""
   "LF_UNTHREADED=1"
   "LIB_PICO_BIT_OPS=1"

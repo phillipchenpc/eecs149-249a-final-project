@@ -16,7 +16,6 @@ extern "C" {
 #endif
 typedef struct robotble_self_t{
     self_base_t base; // This field is only to be used by the runtime, not the user.
-    char rx_char;
     int end[0]; // placeholder; MSVC does not compile empty structs
 } robotble_self_t;
 typedef struct {
@@ -33,4 +32,18 @@ typedef struct {
     interval_t physical_time_of_arrival;
     #endif
 } robotble_tx_char_t;
+typedef struct {
+    token_type_t type;
+    lf_token_t* token;
+    size_t length;
+    bool is_present;
+    lf_port_internal_t _base;
+    char value;
+    #ifdef FEDERATED
+    #ifdef FEDERATED_DECENTRALIZED
+    tag_t intended_tag;
+    #endif
+    interval_t physical_time_of_arrival;
+    #endif
+} robotble_rx_char_t;
 #endif

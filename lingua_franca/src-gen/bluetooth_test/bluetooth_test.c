@@ -27,7 +27,7 @@ typedef enum {
 environment_t envs[_num_enclaves];
 // 'Create' and initialize the environments in the program
 void _lf_create_environments() {
-    environment_init(&envs[bluetooth_test_main],bluetooth_test_main,_lf_number_of_workers,2,2,0,0,1,0,0,NULL);
+    environment_init(&envs[bluetooth_test_main],bluetooth_test_main,_lf_number_of_workers,2,2,0,0,3,0,0,NULL);
 }
 // Update the pointer argument to point to the beginning of the environment array
 // and return the size of that array
@@ -63,17 +63,20 @@ void _lf_initialize_trigger_objects() {
     SUPPRESS_UNUSED_WARNING(_lf_watchdog_count);
     // Initiaizing timer bluetooth_test.t.
     bluetooth_test_main_self[0]->_lf__t.offset = 0;
-    bluetooth_test_main_self[0]->_lf__t.period = MSEC(10);
+    bluetooth_test_main_self[0]->_lf__t.period = SEC(1);
     // Associate timer with the environment of its parent
     envs[bluetooth_test_main].timer_triggers[timer_triggers_count[bluetooth_test_main]++] = &bluetooth_test_main_self[0]->_lf__t;
     bluetooth_test_main_self[0]->_lf__t.mode = NULL;
     
     bluetooth_test_main_self[0]->_lf__reaction_0.deadline = NEVER;
+    bluetooth_test_main_self[0]->_lf__reaction_1.deadline = NEVER;
     {
         // ***** Start initializing bluetooth_test.ble of class RobotBLE
         bluetooth_test_ble_self[0] = new__robotble();
         bluetooth_test_ble_self[0]->base.environment = &envs[bluetooth_test_main];
         bank_index = 0; SUPPRESS_UNUSED_WARNING(bank_index);
+        // width of -2 indicates that it is not a multiport.
+        bluetooth_test_ble_self[0]->_lf_rx_char_width = -2;
         // width of -2 indicates that it is not a multiport.
         bluetooth_test_ble_self[0]->_lf_tx_char_width = -2;
         envs[bluetooth_test_main].startup_reactions[startup_reaction_count[bluetooth_test_main]++] = &bluetooth_test_ble_self[0]->_lf__reaction_0;
@@ -137,6 +140,29 @@ void _lf_initialize_trigger_objects() {
         }
         
         // ** End initialization for reaction 0 of bluetooth_test
+        // Total number of outputs (single ports and multiport channels)
+        // produced by reaction_1 of bluetooth_test.
+        bluetooth_test_main_self[0]->_lf__reaction_1.num_outputs = 1;
+        // Allocate memory for triggers[] and triggered_sizes[] on the reaction_t
+        // struct for this reaction.
+        bluetooth_test_main_self[0]->_lf__reaction_1.triggers = (trigger_t***)_lf_allocate(
+                1, sizeof(trigger_t**),
+                &bluetooth_test_main_self[0]->base.allocations);
+        bluetooth_test_main_self[0]->_lf__reaction_1.triggered_sizes = (int*)_lf_allocate(
+                1, sizeof(int),
+                &bluetooth_test_main_self[0]->base.allocations);
+        bluetooth_test_main_self[0]->_lf__reaction_1.output_produced = (bool**)_lf_allocate(
+                1, sizeof(bool*),
+                &bluetooth_test_main_self[0]->base.allocations);
+        {
+            int count = 0; SUPPRESS_UNUSED_WARNING(count);
+            // Reaction writes to an input of a contained reactor.
+            {
+                bluetooth_test_main_self[0]->_lf__reaction_1.output_produced[count++] = &bluetooth_test_main_self[0]->_lf_ble.tx_char.is_present;
+            }
+        }
+        
+        // ** End initialization for reaction 1 of bluetooth_test
     
         // **** Start deferred initialize for bluetooth_test.ble
         {
@@ -151,9 +177,23 @@ void _lf_initialize_trigger_objects() {
             // ** End initialization for reaction 0 of bluetooth_test.ble
             // Total number of outputs (single ports and multiport channels)
             // produced by reaction_1 of bluetooth_test.ble.
-            bluetooth_test_ble_self[0]->_lf__reaction_1.num_outputs = 0;
+            bluetooth_test_ble_self[0]->_lf__reaction_1.num_outputs = 1;
+            // Allocate memory for triggers[] and triggered_sizes[] on the reaction_t
+            // struct for this reaction.
+            bluetooth_test_ble_self[0]->_lf__reaction_1.triggers = (trigger_t***)_lf_allocate(
+                    1, sizeof(trigger_t**),
+                    &bluetooth_test_ble_self[0]->base.allocations);
+            bluetooth_test_ble_self[0]->_lf__reaction_1.triggered_sizes = (int*)_lf_allocate(
+                    1, sizeof(int),
+                    &bluetooth_test_ble_self[0]->base.allocations);
+            bluetooth_test_ble_self[0]->_lf__reaction_1.output_produced = (bool**)_lf_allocate(
+                    1, sizeof(bool*),
+                    &bluetooth_test_ble_self[0]->base.allocations);
             {
                 int count = 0; SUPPRESS_UNUSED_WARNING(count);
+                {
+                    bluetooth_test_ble_self[0]->_lf__reaction_1.output_produced[count++] = &bluetooth_test_ble_self[0]->_lf_rx_char.is_present;
+                }
             }
             
             // ** End initialization for reaction 1 of bluetooth_test.ble
@@ -203,6 +243,16 @@ void _lf_initialize_trigger_objects() {
         bluetooth_test_main_self[src_runtime]->_lf_disp.line0._base.num_destinations = 1;
         bluetooth_test_main_self[src_runtime]->_lf_disp.line0._base.source_reactor = (self_base_t*)bluetooth_test_main_self[src_runtime];
     }
+    // Set number of destination reactors for port ble.tx_char.
+    // Iterate over range bluetooth_test.ble.tx_char(0,1)->[bluetooth_test.ble.tx_char(0,1)].
+    {
+        int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+        int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+        int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+        int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+        bluetooth_test_main_self[src_runtime]->_lf_ble.tx_char._base.num_destinations = 1;
+        bluetooth_test_main_self[src_runtime]->_lf_ble.tx_char._base.source_reactor = (self_base_t*)bluetooth_test_main_self[src_runtime];
+    }
     {
         int triggers_index[1] = { 0 }; // Number of bank members with the reaction.
         // Iterate over range bluetooth_test.disp.line0(0,1)->[bluetooth_test.disp.line0(0,1)].
@@ -241,11 +291,96 @@ void _lf_initialize_trigger_objects() {
             }
         }
     }
+    {
+        int triggers_index[1] = { 0 }; // Number of bank members with the reaction.
+        // Iterate over range bluetooth_test.ble.tx_char(0,1)->[bluetooth_test.ble.tx_char(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 1 of bluetooth_test triggers 1 downstream reactions
+            // through port bluetooth_test.ble.tx_char.
+            bluetooth_test_main_self[src_runtime]->_lf__reaction_1.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 1 of bluetooth_test, allocate an
+            // array of trigger pointers for downstream reactions through port bluetooth_test.ble.tx_char
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &bluetooth_test_main_self[src_runtime]->base.allocations); 
+            bluetooth_test_main_self[src_runtime]->_lf__reaction_1.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 0;
+        // Iterate over ranges bluetooth_test.ble.tx_char(0,1)->[bluetooth_test.ble.tx_char(0,1)] and bluetooth_test.ble.tx_char(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range bluetooth_test.ble.tx_char(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Point to destination port bluetooth_test.ble.tx_char's trigger struct.
+                bluetooth_test_main_self[src_runtime]->_lf__reaction_1.triggers[triggers_index[src_runtime] + src_channel][0] = &bluetooth_test_ble_self[dst_runtime]->_lf__tx_char;
+            }
+        }
+    }
     
     // **** Start non-nested deferred initialize for bluetooth_test.ble
     
-    
-    
+    // For reference counting, set num_destinations for port bluetooth_test.ble.rx_char.
+    // Iterate over range bluetooth_test.ble.rx_char(0,1)->[bluetooth_test.ble.rx_char(0,1)].
+    {
+        int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+        int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+        int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+        int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+        bluetooth_test_ble_self[src_runtime]->_lf_rx_char._base.num_destinations = 1;
+        bluetooth_test_ble_self[src_runtime]->_lf_rx_char._base.source_reactor = (self_base_t*)bluetooth_test_ble_self[src_runtime];
+    }
+    {
+        int triggers_index[1] = { 0 }; // Number of bank members with the reaction.
+        // Iterate over range bluetooth_test.ble.rx_char(0,1)->[bluetooth_test.ble.rx_char(0,1)].
+        {
+            int src_runtime = 0; SUPPRESS_UNUSED_WARNING(src_runtime); // Runtime index.
+            int src_channel = 0; SUPPRESS_UNUSED_WARNING(src_channel); // Channel index.
+            int src_bank = 0; SUPPRESS_UNUSED_WARNING(src_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            // Reaction 1 of bluetooth_test.ble triggers 1 downstream reactions
+            // through port bluetooth_test.ble.rx_char.
+            bluetooth_test_ble_self[src_runtime]->_lf__reaction_1.triggered_sizes[triggers_index[src_runtime]] = 1;
+            // For reaction 1 of bluetooth_test.ble, allocate an
+            // array of trigger pointers for downstream reactions through port bluetooth_test.ble.rx_char
+            trigger_t** trigger_array = (trigger_t**)_lf_allocate(
+                    1, sizeof(trigger_t*),
+                    &bluetooth_test_ble_self[src_runtime]->base.allocations); 
+            bluetooth_test_ble_self[src_runtime]->_lf__reaction_1.triggers[triggers_index[src_runtime]++] = trigger_array;
+        }
+        for (int i = 0; i < 1; i++) triggers_index[i] = 0;
+        // Iterate over ranges bluetooth_test.ble.rx_char(0,1)->[bluetooth_test.ble.rx_char(0,1)] and bluetooth_test.ble.rx_char(0,1).
+        {
+            int src_runtime = 0; // Runtime index.
+            SUPPRESS_UNUSED_WARNING(src_runtime);
+            int src_channel = 0; // Channel index.
+            SUPPRESS_UNUSED_WARNING(src_channel);
+            int src_bank = 0; // Bank index.
+            SUPPRESS_UNUSED_WARNING(src_bank);
+            // Iterate over range bluetooth_test.ble.rx_char(0,1).
+            {
+                int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+                int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+                int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+                int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+                // Port bluetooth_test.ble.rx_char has reactions in its parent's parent.
+                // Point to the trigger struct for those reactions.
+                bluetooth_test_ble_self[src_runtime]->_lf__reaction_1.triggers[triggers_index[src_runtime] + src_channel][0] = &bluetooth_test_main_self[dst_runtime]->_lf_ble.rx_char_trigger;
+            }
+        }
+    }
     
     // **** End of non-nested deferred initialize for bluetooth_test.ble
     // **** Start non-nested deferred initialize for bluetooth_test.disp
@@ -257,6 +392,42 @@ void _lf_initialize_trigger_objects() {
     // **** End of non-nested deferred initialize for bluetooth_test
     // Connect inputs and outputs for reactor bluetooth_test.
     // Connect inputs and outputs for reactor bluetooth_test.ble.
+    // Connect bluetooth_test.ble.tx_char(0,1)->[bluetooth_test.ble.tx_char(0,1)] to port bluetooth_test.ble.tx_char(0,1)
+    // Iterate over ranges bluetooth_test.ble.tx_char(0,1)->[bluetooth_test.ble.tx_char(0,1)] and bluetooth_test.ble.tx_char(0,1).
+    {
+        int src_runtime = 0; // Runtime index.
+        SUPPRESS_UNUSED_WARNING(src_runtime);
+        int src_channel = 0; // Channel index.
+        SUPPRESS_UNUSED_WARNING(src_channel);
+        int src_bank = 0; // Bank index.
+        SUPPRESS_UNUSED_WARNING(src_bank);
+        // Iterate over range bluetooth_test.ble.tx_char(0,1).
+        {
+            int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+            int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+            int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            bluetooth_test_ble_self[dst_runtime]->_lf_tx_char = (_robotble_tx_char_t*)&bluetooth_test_main_self[src_runtime]->_lf_ble.tx_char;
+        }
+    }
+    // Connect bluetooth_test.ble.rx_char(0,1)->[bluetooth_test.ble.rx_char(0,1)] to port bluetooth_test.ble.rx_char(0,1)
+    // Iterate over ranges bluetooth_test.ble.rx_char(0,1)->[bluetooth_test.ble.rx_char(0,1)] and bluetooth_test.ble.rx_char(0,1).
+    {
+        int src_runtime = 0; // Runtime index.
+        SUPPRESS_UNUSED_WARNING(src_runtime);
+        int src_channel = 0; // Channel index.
+        SUPPRESS_UNUSED_WARNING(src_channel);
+        int src_bank = 0; // Bank index.
+        SUPPRESS_UNUSED_WARNING(src_bank);
+        // Iterate over range bluetooth_test.ble.rx_char(0,1).
+        {
+            int dst_runtime = 0; SUPPRESS_UNUSED_WARNING(dst_runtime); // Runtime index.
+            int dst_channel = 0; SUPPRESS_UNUSED_WARNING(dst_channel); // Channel index.
+            int dst_bank = 0; SUPPRESS_UNUSED_WARNING(dst_bank); // Bank index.
+            int range_count = 0; SUPPRESS_UNUSED_WARNING(range_count);
+            bluetooth_test_main_self[dst_runtime]->_lf_ble.rx_char = (_robotble_rx_char_t*)&bluetooth_test_ble_self[src_runtime]->_lf_rx_char;
+        }
+    }
     // Connect inputs and outputs for reactor bluetooth_test.disp.
     // Connect bluetooth_test.disp.line0(0,1)->[bluetooth_test.disp.line0(0,1)] to port bluetooth_test.disp.line0(0,1)
     // Iterate over ranges bluetooth_test.disp.line0(0,1)->[bluetooth_test.disp.line0(0,1)] and bluetooth_test.disp.line0(0,1).
@@ -293,13 +464,42 @@ void _lf_initialize_trigger_objects() {
             }
         }
     }
+    // Add port bluetooth_test.ble.tx_char to array of is_present fields.
+    {
+        int count = 0; SUPPRESS_UNUSED_WARNING(count);
+        {
+            {
+                envs[bluetooth_test_main].is_present_fields[1 + count] = &bluetooth_test_main_self[0]->_lf_ble.tx_char.is_present;
+                #ifdef FEDERATED_DECENTRALIZED
+                envs[bluetooth_test_main]._lf_intended_tag_fields[1 + count] = &bluetooth_test_main_self[0]->_lf_ble.tx_char.intended_tag;
+                #endif // FEDERATED_DECENTRALIZED
+                count++;
+            }
+        }
+    }
+    {
+        int count = 0; SUPPRESS_UNUSED_WARNING(count);
+        {
+            // Add port bluetooth_test.ble.rx_char to array of is_present fields.
+            envs[bluetooth_test_main].is_present_fields[2 + count] = &bluetooth_test_ble_self[0]->_lf_rx_char.is_present;
+            #ifdef FEDERATED_DECENTRALIZED
+            // Add port bluetooth_test.ble.rx_char to array of intended_tag fields.
+            envs[bluetooth_test_main]._lf_intended_tag_fields[2 + count] = &bluetooth_test_ble_self[0]->_lf_rx_char.intended_tag;
+            #endif // FEDERATED_DECENTRALIZED
+            count++;
+        }
+    }
     
     // Set reaction priorities for ReactorInstance bluetooth_test
     {
         bluetooth_test_main_self[0]->_lf__reaction_0.chain_id = 1;
-        // index is the OR of level 0 and 
+        // index is the OR of level 2 and 
         // deadline 9223372036854775807 shifted left 16 bits.
-        bluetooth_test_main_self[0]->_lf__reaction_0.index = 0xffffffffffff0000LL;
+        bluetooth_test_main_self[0]->_lf__reaction_0.index = 0xffffffffffff0002LL;
+        bluetooth_test_main_self[0]->_lf__reaction_1.chain_id = 1;
+        // index is the OR of level 3 and 
+        // deadline 9223372036854775807 shifted left 16 bits.
+        bluetooth_test_main_self[0]->_lf__reaction_1.index = 0xffffffffffff0003LL;
     
         // Set reaction priorities for ReactorInstance bluetooth_test.ble
         {
@@ -312,9 +512,9 @@ void _lf_initialize_trigger_objects() {
             // deadline 9223372036854775807 shifted left 16 bits.
             bluetooth_test_ble_self[0]->_lf__reaction_1.index = 0xffffffffffff0001LL;
             bluetooth_test_ble_self[0]->_lf__reaction_2.chain_id = 1;
-            // index is the OR of level 2 and 
+            // index is the OR of level 4 and 
             // deadline 9223372036854775807 shifted left 16 bits.
-            bluetooth_test_ble_self[0]->_lf__reaction_2.index = 0xffffffffffff0002LL;
+            bluetooth_test_ble_self[0]->_lf__reaction_2.index = 0xffffffffffff0004LL;
         }
     
     
@@ -325,9 +525,9 @@ void _lf_initialize_trigger_objects() {
             // deadline 9223372036854775807 shifted left 16 bits.
             bluetooth_test_disp_self[0]->_lf__reaction_0.index = 0xffffffffffff0000LL;
             bluetooth_test_disp_self[0]->_lf__reaction_1.chain_id = 1;
-            // index is the OR of level 1 and 
+            // index is the OR of level 3 and 
             // deadline 9223372036854775807 shifted left 16 bits.
-            bluetooth_test_disp_self[0]->_lf__reaction_1.index = 0xffffffffffff0001LL;
+            bluetooth_test_disp_self[0]->_lf__reaction_1.index = 0xffffffffffff0003LL;
         }
     
     }

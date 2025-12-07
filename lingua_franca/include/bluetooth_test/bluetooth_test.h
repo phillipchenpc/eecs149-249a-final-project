@@ -35,6 +35,15 @@ typedef struct {
     size_t length;
     bool is_present;
     lf_port_internal_t _base;
+    char value;
+
+} robotble_rx_char_t;
+typedef struct {
+    token_type_t type;
+    lf_token_t* token;
+    size_t length;
+    bool is_present;
+    lf_port_internal_t _base;
     string value;
 
 } display_line0_t;

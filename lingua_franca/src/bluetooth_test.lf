@@ -17,33 +17,32 @@ preamble {=
 reactor RobotBLE {
 
     timer check_uart(0 ms, 10 ms)
-    state rx_char: char
+    output rx_char: char
     input tx_char: char
 
     reaction(startup) {=
         stdio_init_all();
 
-        uart_init(uart1, 9600);
+        uart_init(uart0, 9600);
         gpio_set_function(28, GPIO_FUNC_UART);
         gpio_set_function(29, GPIO_FUNC_UART);
-
-        
     =}
 
-    reaction(check_uart) {=
-        if (uart_is_readable(uart1)) {
-            char c = uart_getc(uart1);
-
-            self->rx_char = c;
+    reaction(check_uart) -> rx_char {=
+        if (uart_is_readable(uart0)) {
+            char c = uart_getc(uart0);
+            printf("Reading: %c\n", c);
+            lf_set(rx_char, c);
         } else {
-            self->rx_char = '\0';
+            printf("Nothing.\n");
+            // lf_set(rx_char, '\0');
         }
     =}
 
     reaction(tx_char) {=
-        uart_puts(uart1, "ECHO: ");
-        uart_putc(uart1, tx_char);
-        uart_puts(uart1, "\n");
+        uart_puts(uart0, "ECHO: ");
+        uart_putc(uart0, tx_char);
+        uart_puts(uart0, "\n");
     =}
 }
 
@@ -51,10 +50,13 @@ main reactor bluetooth_test {
     ble = new RobotBLE()
     disp = new Display()
 
-    timer t(0, 10 ms)
-    reaction(t) -> disp.line0 {=
+    timer t(0, 1 s)
+    reaction(ble.rx_char) -> disp.line0 {=
         static char buf[17];
         sprintf(buf, 17, "%c", ble.rx_char->value);
         lf_set(disp.line0, buf);
+    =}
+    reaction(t) -> ble.tx_char {=
+        lf_set(ble.tx_char, "H");    
     =}
 }
