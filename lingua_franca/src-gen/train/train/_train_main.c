@@ -84,6 +84,46 @@ void _train_mainreaction_function_3(void* instance_args) {
 #include "include/api/set.h"
 void _train_mainreaction_function_4(void* instance_args) {
     _train_main_main_self_t* self = (_train_main_main_self_t*)instance_args; SUPPRESS_UNUSED_WARNING(self);
+    struct robot {
+        _robot_stop_t* stop;
+    
+    } robot;
+    struct disp {
+        _display_line0_t* line0;
+    
+    } disp;
+    robot.stop = &(self->_lf_robot.stop);
+    disp.line0 = &(self->_lf_disp.line0);
+    #line 254 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    static char buf[17];
+    snprintf(buf, 17, "slowing");
+    lf_set(disp.line0, buf);
+    lf_set(robot.stop, true);
+}
+#include "include/api/set_undef.h"
+#include "include/api/set.h"
+void _train_mainreaction_function_5(void* instance_args) {
+    _train_main_main_self_t* self = (_train_main_main_self_t*)instance_args; SUPPRESS_UNUSED_WARNING(self);
+    struct robot {
+        _robot_cont_t* cont;
+    
+    } robot;
+    struct disp {
+        _display_line0_t* line0;
+    
+    } disp;
+    robot.cont = &(self->_lf_robot.cont);
+    disp.line0 = &(self->_lf_disp.line0);
+    #line 260 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    static char buf[17];
+    snprintf(buf, 17, "starting");
+    lf_set(disp.line0, buf);
+    lf_set(robot.cont, true);
+}
+#include "include/api/set_undef.h"
+#include "include/api/set.h"
+void _train_mainreaction_function_6(void* instance_args) {
+    _train_main_main_self_t* self = (_train_main_main_self_t*)instance_args; SUPPRESS_UNUSED_WARNING(self);
     struct line {
         _line_trigger_t* trigger;
     
@@ -94,7 +134,7 @@ void _train_mainreaction_function_4(void* instance_args) {
 }
 #include "include/api/set_undef.h"
 #include "include/api/set.h"
-void _train_mainreaction_function_5(void* instance_args) {
+void _train_mainreaction_function_7(void* instance_args) {
     _train_main_main_self_t* self = (_train_main_main_self_t*)instance_args; SUPPRESS_UNUSED_WARNING(self);
     struct line {
         _line_reflect_t* reflect;
@@ -169,7 +209,7 @@ _train_main_main_self_t* new__train_main() {
     #line 40 "/home/foobar/final/lingua_franca/src/lib/Line.lf"
     #endif // FEDERATED_DECENTRALIZED
     #line 40 "/home/foobar/final/lingua_franca/src/lib/Line.lf"
-    self->_lf_line.reflect_reactions[0] = &self->_lf__reaction_5;
+    self->_lf_line.reflect_reactions[0] = &self->_lf__reaction_7;
     #line 40 "/home/foobar/final/lingua_franca/src/lib/Line.lf"
     self->_lf_line.reflect_trigger.reactions = self->_lf_line.reflect_reactions;
     #line 40 "/home/foobar/final/lingua_franca/src/lib/Line.lf"
@@ -238,34 +278,62 @@ _train_main_main_self_t* new__train_main() {
     self->_lf__reaction_3.name = "?";
     #line 242 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_3.mode = NULL;
-    #line 266 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 253 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_4.number = 4;
-    #line 266 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 253 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_4.function = _train_mainreaction_function_4;
-    #line 266 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 253 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_4.self = self;
-    #line 266 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 253 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_4.deadline_violation_handler = NULL;
-    #line 266 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 253 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_4.STP_handler = NULL;
-    #line 266 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 253 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_4.name = "?";
-    #line 266 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 253 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_4.mode = NULL;
-    #line 270 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 259 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_5.number = 5;
-    #line 270 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 259 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_5.function = _train_mainreaction_function_5;
-    #line 270 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 259 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_5.self = self;
-    #line 270 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 259 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_5.deadline_violation_handler = NULL;
-    #line 270 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 259 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_5.STP_handler = NULL;
-    #line 270 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 259 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_5.name = "?";
-    #line 270 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 259 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_5.mode = NULL;
+    #line 266 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__reaction_6.number = 6;
+    #line 266 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__reaction_6.function = _train_mainreaction_function_6;
+    #line 266 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__reaction_6.self = self;
+    #line 266 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__reaction_6.deadline_violation_handler = NULL;
+    #line 266 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__reaction_6.STP_handler = NULL;
+    #line 266 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__reaction_6.name = "?";
+    #line 266 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__reaction_6.mode = NULL;
+    #line 270 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__reaction_7.number = 7;
+    #line 270 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__reaction_7.function = _train_mainreaction_function_7;
+    #line 270 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__reaction_7.self = self;
+    #line 270 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__reaction_7.deadline_violation_handler = NULL;
+    #line 270 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__reaction_7.STP_handler = NULL;
+    #line 270 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__reaction_7.name = "?";
+    #line 270 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__reaction_7.mode = NULL;
     #line 216 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__t.last = NULL;
     #line 216 "/home/foobar/final/lingua_franca/src/train/train.lf"
@@ -276,7 +344,7 @@ _train_main_main_self_t* new__train_main() {
     #endif // FEDERATED_DECENTRALIZED
     #line 216 "/home/foobar/final/lingua_franca/src/train/train.lf"
     #line 216 "/home/foobar/final/lingua_franca/src/train/train.lf"
-    self->_lf__t_reactions[0] = &self->_lf__reaction_4;
+    self->_lf__t_reactions[0] = &self->_lf__reaction_6;
     #line 216 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__t.reactions = &self->_lf__t_reactions[0];
     #line 216 "/home/foobar/final/lingua_franca/src/train/train.lf"
@@ -349,6 +417,19 @@ _train_main_main_self_t* new__train_main() {
     self->_lf__end.intended_tag = (tag_t) { .time = NEVER, .microstep = 0u};
     #line 222 "/home/foobar/final/lingua_franca/src/train/train.lf"
     #endif // FEDERATED_DECENTRALIZED
+    #line 222 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 222 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__end_reactions[0] = &self->_lf__reaction_4;
+    #line 222 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__end.reactions = &self->_lf__end_reactions[0];
+    #line 222 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__end.number_of_reactions = 1;
+    #line 222 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #ifdef FEDERATED
+    #line 222 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__end.physical_time_of_arrival = NEVER;
+    #line 222 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #endif // FEDERATED
     self->_lf__end.is_timer = true;
     #ifdef FEDERATED_DECENTRALIZED
     self->_lf__end.intended_tag = (tag_t) { .time = NEVER, .microstep = 0u};
@@ -361,6 +442,19 @@ _train_main_main_self_t* new__train_main() {
     self->_lf__start_again.intended_tag = (tag_t) { .time = NEVER, .microstep = 0u};
     #line 223 "/home/foobar/final/lingua_franca/src/train/train.lf"
     #endif // FEDERATED_DECENTRALIZED
+    #line 223 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 223 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__start_again_reactions[0] = &self->_lf__reaction_5;
+    #line 223 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__start_again.reactions = &self->_lf__start_again_reactions[0];
+    #line 223 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__start_again.number_of_reactions = 1;
+    #line 223 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #ifdef FEDERATED
+    #line 223 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    self->_lf__start_again.physical_time_of_arrival = NEVER;
+    #line 223 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #endif // FEDERATED
     self->_lf__start_again.is_timer = true;
     #ifdef FEDERATED_DECENTRALIZED
     self->_lf__start_again.intended_tag = (tag_t) { .time = NEVER, .microstep = 0u};

@@ -6,6 +6,12 @@
 #include "_motorswithfeedback.h"
 #ifndef TOP_LEVEL_PREAMBLE_253380088_H
 #define TOP_LEVEL_PREAMBLE_253380088_H
+#include <pico/stdlib.h>
+#include <imu.h>
+#include <math.h>
+#define WHEEL_DIAMETER 0.032 // meters
+#define COUNTS_PER_REV 360 //CPR
+#define TICKS_PER_METER (WHEEL_DIAMETER * M_PI) / COUNTS_PER_REV
 #include <math.h>
 #include <hardware/pio.h>
 #include <quadrature_encoder.pio.h>
@@ -15,12 +21,6 @@
 #define LEFT_ENCODER_AB 12
 #define RIGHT_SM 0
 #define LEFT_SM 1
-#include <pico/stdlib.h>
-#include <imu.h>
-#include <math.h>
-#define WHEEL_DIAMETER 0.032 // meters
-#define COUNTS_PER_REV 360 //CPR
-#define TICKS_PER_METER (WHEEL_DIAMETER * M_PI) / COUNTS_PER_REV
 #endif
 typedef struct {
     token_type_t type;

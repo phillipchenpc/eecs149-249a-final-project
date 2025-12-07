@@ -250,18 +250,18 @@ main reactor(calibration_time: time = 5 s, sample_period: time = 100 ms, end_tim
   =}
 
   /*TESTING PRUPOSES*/
-  // reaction(end) -> robot.stop, disp.line0 {=
-  //   static char buf[17];
-  //   snprintf(buf, 17, "slowing");
-  //   lf_set(disp.line0, buf);
-  //   lf_set(robot.stop, true);
-  // =}
-  // reaction(start_again) -> robot.cont, disp.line0 {=
-  //   static char buf[17];
-  //   snprintf(buf, 17, "starting");
-  //   lf_set(disp.line0, buf);
-  //   lf_set(robot.cont, true);
-  // =}
+  reaction(end) -> robot.stop, disp.line0 {=
+    static char buf[17];
+    snprintf(buf, 17, "slowing");
+    lf_set(disp.line0, buf);
+    lf_set(robot.stop, true);
+  =}
+  reaction(start_again) -> robot.cont, disp.line0 {=
+    static char buf[17];
+    snprintf(buf, 17, "starting");
+    lf_set(disp.line0, buf);
+    lf_set(robot.cont, true);
+  =}
 
   reaction(t) -> line.trigger {=
     lf_set(line.trigger, true);

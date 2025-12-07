@@ -40,6 +40,10 @@ typedef struct {
         reaction_t* speed_reactions[1];
         #line 47 "/home/foobar/final/lingua_franca/src/train/train.lf"
         _robot_start_t start;
+        #line 73 "/home/foobar/final/lingua_franca/src/train/train.lf"
+        _robot_stop_t stop;
+        #line 75 "/home/foobar/final/lingua_franca/src/train/train.lf"
+        _robot_cont_t cont;
         #line 56 "/home/foobar/final/lingua_franca/src/train/train.lf"
         _robot_line_left_t line_left;
         #line 57 "/home/foobar/final/lingua_franca/src/train/train.lf"
@@ -69,10 +73,14 @@ typedef struct {
     reaction_t _lf__reaction_2;
     #line 242 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t _lf__reaction_3;
-    #line 266 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 253 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t _lf__reaction_4;
-    #line 270 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 259 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t _lf__reaction_5;
+    #line 266 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    reaction_t _lf__reaction_6;
+    #line 270 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    reaction_t _lf__reaction_7;
     #line 216 "/home/foobar/final/lingua_franca/src/train/train.lf"
     trigger_t _lf__t;
     #line 216 "/home/foobar/final/lingua_franca/src/train/train.lf"
@@ -87,8 +95,12 @@ typedef struct {
     reaction_t* _lf__end_calibration_reactions[1];
     #line 222 "/home/foobar/final/lingua_franca/src/train/train.lf"
     trigger_t _lf__end;
+    #line 222 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    reaction_t* _lf__end_reactions[1];
     #line 223 "/home/foobar/final/lingua_franca/src/train/train.lf"
     trigger_t _lf__start_again;
+    #line 223 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    reaction_t* _lf__start_again_reactions[1];
     trigger_t _lf__startup;
     reaction_t* _lf__startup_reactions[1];
 } _train_main_main_self_t;
