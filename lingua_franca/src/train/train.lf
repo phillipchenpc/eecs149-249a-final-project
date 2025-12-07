@@ -39,11 +39,11 @@ reactor Robot {
   state target_speed: float = 11.67 // in m/s
   state decceleration: float = 1.6 // in m/s**2
   
-  state scale: float = 1 // How many meters in 1 cm
+  state scale: float = 2 // How many meters in 1 cm
   state target_speed_scaled: float // Will be calculated on initialization
   state target_deccel_scaled: float
   
-  state motor_calibrate: float = 0.95 // Scale the right motor input to match the left motors
+  state motor_calibrate: float = 1 // Scale the right motor input to match the left motors
   input start: bool // True if the line calibrators are done with calibration and robot can start driving
   
   state prev_left: float = 0 // Previous left encoder reading 
@@ -53,10 +53,19 @@ reactor Robot {
   e = new Encoders();
   
   // Input from line detector. Only using the center 3 line detectors
-  input line_left: uint32_t
-  input line_center: uint32_t
-  input line_right: uint32_t
-  state last_detect: uint32_t // Stores value of side_detect
+  input line_left: uint16_t
+  input line_center: uint16_t
+  input line_right: uint16_t
+  state last_left: int32_t // Stores last seen values: left, center, right
+  state last_center: int32_t
+  state last_right: int32_t
+
+  state side_detect_gain: float = 0.0003
+  state center_detect_gain: float = 0.0003
+  state diff_tolerance: uint16_t = 10 // The amount of difference in the line detection value that will cause feedback to start
+  state min_detect: int32_t = 180 // Minimum value of the line detection
+  state max_detect: int32_t = 350 // Maximum value of the side detectors
+  state max_feedback_perc: float = 0.1 // Max percentage of target speed that a feedback can add
 
   timer t(0, 10 ms) // Timer for triggering gyro
 
@@ -80,9 +89,9 @@ reactor Robot {
     lf_set(m.left, e.left->value);
 
     // Calculate speed
-    float now = lf_time_logical_elapsed() / pow(10, 8); // Time in seconds
+    float now = lf_time_logical_elapsed() / pow(10, 9); // Time in seconds
     float time_elapsed = now - self->prev_time;
-    lf_set(speed, ((e.left->value - self->prev_left) / time_elapsed) * 100 * self->scale); // In m/s unscaled
+    lf_set(speed, ((e.left->value - self->prev_left) / time_elapsed) * TICKS_PER_METER); // In m/s unscaled
 
     self->prev_time = now;
     self->prev_left = e.left->value;
@@ -110,8 +119,63 @@ reactor Robot {
     =}
 
     // Line Following
-    reaction(line_left, line_center, line_right) {=
-      printf("L:%f,C:%f,R:%f\n", line_left, line_center, line_right);
+    reaction(line_left, line_center, line_right) -> m.left_speed, m.right_speed {=
+      // Do feedback control. Higher penalty if center is decreasing
+      // Find diffence
+      int32_t left_diff = self->last_left - (int32_t) line_left->value;
+      int32_t center_diff = self->last_center - (int32_t) line_center->value; // Should always be maxed out
+      int32_t right_diff = self->last_right - (int32_t) line_right->value;
+
+      // If the difference is less than tolerance, then set to 0
+      left_diff = left_diff > self->diff_tolerance ? left_diff : 0;
+      center_diff = center_diff > self->diff_tolerance ? center_diff : 0;
+      right_diff = right_diff > self->diff_tolerance ? right_diff : 0;
+
+      // Get the feedback for all 3. A negative difference will reduce power of the respective motor
+      float left_gain = left_diff * self->side_detect_gain + 
+        ((left_diff > 0) - (left_diff < 0)) * center_diff * self->center_detect_gain * (center_diff > self->diff_tolerance);
+      float right_gain = right_diff * self->side_detect_gain + 
+        ((right_diff > 0) - (right_diff < 0)) * center_diff * self->center_detect_gain * (center_diff > self->diff_tolerance);
+
+      // Want to stay on the line at the very least.
+      float line_keep_perc = 0.1; // BOO Hardcoding, but don't want to clog state
+      if (line_left->value < self->min_detect) {
+        left_gain += (self->min_detect - line_left->value) * self->side_detect_gain * line_keep_perc;
+      } else if (line_left->value > self->max_detect) {
+        left_gain += (self->max_detect - line_left->value) * self->side_detect_gain * line_keep_perc;
+      }
+      if (line_right->value < self->min_detect) {
+        right_gain += (self->min_detect - line_right->value) * self->side_detect_gain * line_keep_perc;
+      } else if (line_right->value > self->max_detect) {
+        right_gain += (self->max_detect - line_right->value) * self->side_detect_gain * line_keep_perc;
+      }
+
+      printf("LastL: %d, LastC: %d, LastR: %d\nL: %u, C: %u, R: %u\nLd: %d, Cd: %d, Rd: %d\nLg: %f, Rg: %f\nSpeed: %f, LA: %d, RA: %d\n\n", 
+        self->last_left, self->last_center, self->last_right,
+        line_left->value, line_center->value, line_right->value,
+        left_diff, center_diff, right_diff, left_gain, right_gain, self->target_speed_scaled * self->max_feedback_perc,
+        (fabsf(left_gain) < (self->target_speed_scaled * self->max_feedback_perc)), (fabsf(right_gain) < (self->target_speed_scaled * self->max_feedback_perc)));
+
+      // Update the motor speeds. If left_diff is non-zero by a large margin, update that first
+      // Won't allow feedback to be too large: clip the output
+      float max_feedback = (self->target_speed_scaled * self->max_feedback_perc);
+      bool allow_left_fd = (fabsf(left_gain) < max_feedback);
+      bool allow_right_fd = (fabsf(right_gain) < max_feedback);
+
+      if (!allow_left_fd) {
+        left_gain = left_gain > 0 ? max_feedback : -max_feedback;
+      }
+      if (!allow_right_fd) {
+        right_gain = right_gain > 0 ? max_feedback: -max_feedback;
+      }
+
+      lf_set(m.left_speed, self->target_speed_scaled + left_gain);
+      lf_set(m.right_speed, self->target_speed_scaled * self->motor_calibrate + right_gain);
+      
+      // Update last seen values
+      self->last_left = (int32_t) line_left->value;
+      self->last_center = (int32_t) line_center->value;
+      self->last_right = (int32_t) line_right->value;
     =}
 
     // Changing mode
@@ -185,18 +249,19 @@ main reactor(calibration_time: time = 5 s, sample_period: time = 100 ms, end_tim
     lf_set(robot.start, true);
   =}
 
-  reaction(end) -> robot.stop, disp.line0 {=
-    static char buf[17];
-    snprintf(buf, 17, "slowing");
-    lf_set(disp.line0, buf);
-    lf_set(robot.stop, true);
-  =}
-  reaction(start_again) -> robot.cont, disp.line0 {=
-    static char buf[17];
-    snprintf(buf, 17, "starting");
-    lf_set(disp.line0, buf);
-    lf_set(robot.cont, true);
-  =}
+  /*TESTING PRUPOSES*/
+  // reaction(end) -> robot.stop, disp.line0 {=
+  //   static char buf[17];
+  //   snprintf(buf, 17, "slowing");
+  //   lf_set(disp.line0, buf);
+  //   lf_set(robot.stop, true);
+  // =}
+  // reaction(start_again) -> robot.cont, disp.line0 {=
+  //   static char buf[17];
+  //   snprintf(buf, 17, "starting");
+  //   lf_set(disp.line0, buf);
+  //   lf_set(robot.cont, true);
+  // =}
 
   reaction(t) -> line.trigger {=
     lf_set(line.trigger, true);
@@ -204,16 +269,17 @@ main reactor(calibration_time: time = 5 s, sample_period: time = 100 ms, end_tim
 
   reaction(line.reflect) -> disp.line1, robot.line_left, robot.line_center, robot.line_right {=
     static char buf1[17];
-    // Larger = darker
-    lf_set(robot.line_right, line.reflect->value[3]); 
-    lf_set(robot.line_center, line.reflect->value[2]); 
-    lf_set(robot.line_left, line.reflect->value[1]);
-
     // Just seeing if it's detecting or not
     bool right = line.reflect->value[3] > 500;
     bool center = line.reflect->value[2] > 500;
     bool left = line.reflect->value[1] > 500;
     snprintf(buf1, 17, "R:%d,C:%d,L:%d", right, center, left);
     lf_set(disp.line1, buf1);
+    printf("READ\n");
+
+    // Larger = darker
+    lf_set(robot.line_right, line.reflect->value[3]); 
+    lf_set(robot.line_center, line.reflect->value[2]); 
+    lf_set(robot.line_left, line.reflect->value[1]);
   =}
 }

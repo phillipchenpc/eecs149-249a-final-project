@@ -100,7 +100,7 @@ typedef struct {
     size_t length;
     bool is_present;
     lf_port_internal_t _base;
-    uint32_t value;
+    uint16_t value;
 
 } robot_line_left_t;
 typedef struct {
@@ -109,7 +109,7 @@ typedef struct {
     size_t length;
     bool is_present;
     lf_port_internal_t _base;
-    uint32_t value;
+    uint16_t value;
 
 } robot_line_center_t;
 typedef struct {
@@ -118,7 +118,7 @@ typedef struct {
     size_t length;
     bool is_present;
     lf_port_internal_t _base;
-    uint32_t value;
+    uint16_t value;
 
 } robot_line_right_t;
 typedef struct {

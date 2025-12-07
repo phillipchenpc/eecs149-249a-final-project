@@ -2,10 +2,6 @@
 #define _robot_H
 #ifndef TOP_LEVEL_PREAMBLE_253380088_H
 #define TOP_LEVEL_PREAMBLE_253380088_H
-/*Correspondence: Range: [(21, 2), (24, 64)) -> Range: [(0, 0), (3, 64)) (verbatim=true; src=/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf)*/#include <math.h>
-#define WHEEL_DIAMETER 0.032 // meters
-#define COUNTS_PER_REV 360 //CPR
-#define TICKS_PER_METER (WHEEL_DIAMETER * M_PI) / COUNTS_PER_REV
 /*Correspondence: Range: [(18, 2), (26, 17)) -> Range: [(0, 0), (8, 17)) (verbatim=true; src=/home/foobar/final/lingua_franca/src/lib/Encoders.lf)*/#include <math.h>
 #include <hardware/pio.h>
 #include <quadrature_encoder.pio.h>
@@ -17,6 +13,10 @@
 #define LEFT_SM 1
 /*Correspondence: Range: [(21, 2), (22, 16)) -> Range: [(0, 0), (1, 16)) (verbatim=true; src=/home/foobar/final/lingua_franca/src/lib/IMU.lf)*/#include <pico/stdlib.h>
 #include <imu.h>
+/*Correspondence: Range: [(21, 2), (24, 64)) -> Range: [(0, 0), (3, 64)) (verbatim=true; src=/home/foobar/final/lingua_franca/src/lib/MotorsWithFeedback.lf)*/#include <math.h>
+#define WHEEL_DIAMETER 0.032 // meters
+#define COUNTS_PER_REV 360 //CPR
+#define TICKS_PER_METER (WHEEL_DIAMETER * M_PI) / COUNTS_PER_REV
 #endif
 #ifdef __cplusplus
 extern "C" {
@@ -36,7 +36,15 @@ typedef struct robot_self_t{
     float motor_calibrate;
     float prev_left;
     float prev_time;
-    uint32_t last_detect;
+    int32_t last_left;
+    int32_t last_center;
+    int32_t last_right;
+    float side_detect_gain;
+    float center_detect_gain;
+    uint16_t diff_tolerance;
+    int32_t min_detect;
+    int32_t max_detect;
+    float max_feedback_perc;
     float start_time;
     int end[0]; // placeholder; MSVC does not compile empty structs
 } robot_self_t;
@@ -60,7 +68,7 @@ typedef struct {
     size_t length;
     bool is_present;
     lf_port_internal_t _base;
-    uint32_t value;
+    uint16_t value;
     #ifdef FEDERATED
     #ifdef FEDERATED_DECENTRALIZED
     tag_t intended_tag;
@@ -74,7 +82,7 @@ typedef struct {
     size_t length;
     bool is_present;
     lf_port_internal_t _base;
-    uint32_t value;
+    uint16_t value;
     #ifdef FEDERATED
     #ifdef FEDERATED_DECENTRALIZED
     tag_t intended_tag;
@@ -88,7 +96,7 @@ typedef struct {
     size_t length;
     bool is_present;
     lf_port_internal_t _base;
-    uint32_t value;
+    uint16_t value;
     #ifdef FEDERATED
     #ifdef FEDERATED_DECENTRALIZED
     tag_t intended_tag;
