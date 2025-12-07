@@ -1,0 +1,60 @@
+target C {
+    platform: {
+      name: "rp2040",
+      board: "pololu_3pi_2040_robot"
+    },
+    single-threaded: true
+}
+
+import Display from "lib/Display.lf"
+
+preamble {=
+    #include <stdio.h>
+    #include <pico/stdlib.h>
+    #include <hardware/gpio.h>
+=}
+
+reactor RobotBLE {
+
+    timer check_uart(0 ms, 10 ms)
+    state rx_char: char
+    input tx_char: char
+
+    reaction(startup) {=
+        stdio_init_all();
+
+        uart_init(uart1, 9600);
+        gpio_set_function(28, GPIO_FUNC_UART);
+        gpio_set_function(29, GPIO_FUNC_UART);
+
+        
+    =}
+
+    reaction(check_uart) {=
+        if (uart_is_readable(uart1)) {
+            char c = uart_getc(uart1);
+
+            self->rx_char = c;
+        } else {
+            self->rx_char = '\0';
+        }
+    =}
+
+    reaction(tx_char) {=
+        uart_puts(uart1, "ECHO: ");
+        uart_putc(uart1, tx_char);
+        uart_puts(uart1, "\n");
+    =}
+}
+
+main reactor bluetooth_test {
+    ble = new RobotBLE()
+    disp = new Display()
+
+    timer t(0, 10 ms)
+    reaction(t) -> disp.line0 {=
+        static char buf[17];
+        sprintf(buf, 17, "%c", ble.rx_char->value);
+        lf_set(disp.line0, buf);
+    =}
+}
