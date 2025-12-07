@@ -23,9 +23,7 @@ detector = cv.aruco.ArucoDetector(aruco_dict, parameters)
 # Open the camera
 print("Opening Camera...", end='\r')
 start = time.time()
-cam = cv.VideoCapture(2)
-# Adjusting exposure time
-cam.set(cv.CAP_PROP_EXPOSURE, -2)
+cam = cv.VideoCapture(0)
 end = time.time()
 print(f"Camera opened in {end - start} s")
 
