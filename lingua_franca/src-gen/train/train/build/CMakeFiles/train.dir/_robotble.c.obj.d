@@ -1,5 +1,5 @@
-CMakeFiles/train.dir/_robot.c.obj: \
- /home/foobar/final/lingua_franca/src-gen/train/train/_robot.c \
+CMakeFiles/train.dir/_robotble.c.obj: \
+ /home/foobar/final/lingua_franca/src-gen/train/train/_robotble.c \
  /home/foobar/final/lingua_franca/src-gen/train/train/include/api/api.h \
  /usr/include/newlib/stdio.h /usr/include/newlib/_ansi.h \
  /usr/include/newlib/newlib.h /usr/include/newlib/_newlib_version.h \
@@ -29,8 +29,7 @@ CMakeFiles/train.dir/_robot.c.obj: \
  /usr/include/newlib/alloca.h \
  /home/foobar/final/lingua_franca/src-gen/train/train/include/core/tag.h \
  /home/foobar/final/lingua_franca/src-gen/train/train/include/core/utils/vector.h \
- /home/foobar/final/lingua_franca/src-gen/train/train/include/train/Robot.h \
- /usr/include/newlib/math.h \
+ /home/foobar/final/lingua_franca/src-gen/train/train/include/RobotBLE/RobotBLE.h \
  /home/foobar/pico-sdk/src/common/pico_stdlib/include/pico/stdlib.h \
  /home/foobar/pico-sdk/src/common/pico_base/include/pico.h \
  /home/foobar/pico-sdk/src/common/pico_base/include/pico/types.h \
@@ -69,18 +68,6 @@ CMakeFiles/train.dir/_robot.c.obj: \
  /home/foobar/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/dreq.h \
  /home/foobar/pico-sdk/src/rp2_common/pico_stdio_uart/include/pico/stdio_uart.h \
  /home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/include/pico/stdio_usb.h \
- /home/foobar/final/lingua_franca/src-gen/train/train/robot-lib/src/imu.h \
- /home/foobar/pico-sdk/src/rp2_common/hardware_i2c/include/hardware/i2c.h \
- /home/foobar/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/i2c.h \
- /home/foobar/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/i2c.h \
- /home/foobar/pico-sdk/src/rp2_common/hardware_pio/include/hardware/pio.h \
- /home/foobar/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/pio.h \
- /home/foobar/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/pio.h \
- /home/foobar/pico-sdk/src/rp2_common/hardware_pio/include/hardware/pio_instructions.h \
- /home/foobar/final/lingua_franca/src-gen/train/train/build/robot/quadrature_encoder.pio.h \
- /home/foobar/pico-sdk/src/rp2_common/hardware_clocks/include/hardware/clocks.h \
- /home/foobar/pico-sdk/src/rp2040/hardware_structs/include/hardware/structs/clocks.h \
- /home/foobar/pico-sdk/src/rp2040/hardware_regs/include/hardware/regs/clocks.h \
  /home/foobar/final/lingua_franca/src-gen/train/train/include/../include/api/api.h \
  /home/foobar/final/lingua_franca/src-gen/train/train/include/../include/core/reactor.h \
  /home/foobar/final/lingua_franca/src-gen/train/train/include/../include/core/lf_types.h \
@@ -90,13 +77,7 @@ CMakeFiles/train.dir/_robot.c.obj: \
  /home/foobar/final/lingua_franca/src-gen/train/train/include/../include/core/tag.h \
  /home/foobar/final/lingua_franca/src-gen/train/train/include/../include/core/trace.h \
  /home/foobar/final/lingua_franca/src-gen/train/train/include/core/utils/util.h \
- /home/foobar/final/lingua_franca/src-gen/train/train/_robot.h \
+ /home/foobar/final/lingua_franca/src-gen/train/train/_robotble.h \
  /home/foobar/final/lingua_franca/src-gen/train/train/include/core/reactor.h \
- /home/foobar/final/lingua_franca/src-gen/train/train/_encoders.h \
- /home/foobar/final/lingua_franca/src-gen/train/train/_accelerometer.h \
- /home/foobar/final/lingua_franca/src-gen/train/train/_motorswithfeedback.h \
- /home/foobar/final/lingua_franca/src-gen/train/train/_picontrol.h \
- /home/foobar/final/lingua_franca/src-gen/train/train/_motors.h \
- /home/foobar/final/lingua_franca/src-gen/train/train/robot-lib/src/motors.h \
  /home/foobar/final/lingua_franca/src-gen/train/train/include/api/set.h \
  /home/foobar/final/lingua_franca/src-gen/train/train/include/api/set_undef.h

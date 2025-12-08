@@ -15,6 +15,7 @@ import Display from "../lib/Display.lf"
 import MotorsWithFeedback from "../lib/MotorsWithFeedback.lf"
 import Encoders from "../lib/Encoders.lf"
 import Accelerometer from "../lib/IMU.lf"
+import RobotBLE from "../lib/RobotBLE.lf"
 
 reactor Robot {
   preamble {=
@@ -212,6 +213,7 @@ main reactor(calibration_time: time = 5 s, sample_period: time = 100 ms, end_tim
   line = new Line()
   disp = new Display()
   robot = new Robot()
+  ble = new RobotBLE()
 
   timer t(0, sample_period)
   timer seconds(0, 1 s)  // Timer used to display seconds.
@@ -219,8 +221,8 @@ main reactor(calibration_time: time = 5 s, sample_period: time = 100 ms, end_tim
   state count: int = 0
 
 
-  timer end(5 s, end_time) // TESTING PURPOSES
-  timer start_again(15 s, end_time);
+  // timer end(5 s, end_time) // TESTING PURPOSES
+  // timer start_again(15 s, end_time);
 
   reaction(startup) -> disp.line0, disp.line1, disp.line2 {=
     lf_set(disp.line0, "CALIBRATING");
@@ -250,21 +252,39 @@ main reactor(calibration_time: time = 5 s, sample_period: time = 100 ms, end_tim
   =}
 
   /*TESTING PRUPOSES*/
-  reaction(end) -> robot.stop, disp.line0 {=
-    static char buf[17];
-    snprintf(buf, 17, "slowing");
-    lf_set(disp.line0, buf);
-    lf_set(robot.stop, true);
-  =}
-  reaction(start_again) -> robot.cont, disp.line0 {=
-    static char buf[17];
-    snprintf(buf, 17, "starting");
-    lf_set(disp.line0, buf);
-    lf_set(robot.cont, true);
+  // reaction(end) -> robot.stop, disp.line0 {=
+  //   static char buf[17];
+  //   snprintf(buf, 17, "slowing");
+  //   lf_set(disp.line0, buf);
+  //   lf_set(robot.stop, true);
+  // =}
+  // reaction(start_again) -> robot.cont, disp.line0 {=
+  //   static char buf[17];
+  //   snprintf(buf, 17, "starting");
+  //   lf_set(disp.line0, buf);
+  //   lf_set(robot.cont, true);
+  // =}
+
+  reaction(t) -> line.trigger, ble.check_uart {=
+    lf_set(line.trigger, true);
+    lf_set(ble.check_uart, true); // Check for messages
   =}
 
-  reaction(t) -> line.trigger {=
-    lf_set(line.trigger, true);
+  reaction(ble.rx_char) -> robot.stop, robot.cont, disp.line0 {=
+    char c = ble.rx_char->value;
+    static char buf[17];
+    if (c == '0') {
+      // 0 == stop
+      lf_set(robot.stop, true);
+      snprintf(buf, 17, "Stopping.");
+    } else if (c == '1') {
+      // 1 == start
+      lf_set(robot.cont, true);
+      snprintf(buf, 17, "Driving.");
+    }
+
+    // Printing
+    lf_set(disp.line0, buf);
   =}
 
   reaction(line.reflect) -> disp.line1, robot.line_left, robot.line_center, robot.line_right {=

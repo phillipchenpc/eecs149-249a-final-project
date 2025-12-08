@@ -496,6 +496,30 @@ _robot.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/train.dir/build.make CMakeFiles/train.dir/_robot.c.s
 .PHONY : _robot.c.s
 
+_robotble.obj: _robotble.c.obj
+.PHONY : _robotble.obj
+
+# target to build an object file
+_robotble.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/train.dir/build.make CMakeFiles/train.dir/_robotble.c.obj
+.PHONY : _robotble.c.obj
+
+_robotble.i: _robotble.c.i
+.PHONY : _robotble.i
+
+# target to preprocess a source file
+_robotble.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/train.dir/build.make CMakeFiles/train.dir/_robotble.c.i
+.PHONY : _robotble.c.i
+
+_robotble.s: _robotble.c.s
+.PHONY : _robotble.s
+
+# target to generate assembly for a file
+_robotble.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/train.dir/build.make CMakeFiles/train.dir/_robotble.c.s
+.PHONY : _robotble.c.s
+
 _train_main.obj: _train_main.c.obj
 .PHONY : _train_main.obj
 
@@ -2215,6 +2239,9 @@ help:
 	@echo "... _robot.obj"
 	@echo "... _robot.i"
 	@echo "... _robot.s"
+	@echo "... _robotble.obj"
+	@echo "... _robotble.i"
+	@echo "... _robotble.s"
 	@echo "... _train_main.obj"
 	@echo "... _train_main.i"
 	@echo "... _train_main.s"

@@ -59,6 +59,7 @@ add_executable(
     _picontrol.c
     _encoders.c
     _accelerometer.c
+    _robotble.c
     train.c
 )
 

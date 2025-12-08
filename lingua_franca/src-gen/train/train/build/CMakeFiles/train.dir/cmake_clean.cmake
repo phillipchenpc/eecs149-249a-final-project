@@ -15,6 +15,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/train.dir/_picontrol.c.obj.d"
   "CMakeFiles/train.dir/_robot.c.obj"
   "CMakeFiles/train.dir/_robot.c.obj.d"
+  "CMakeFiles/train.dir/_robotble.c.obj"
+  "CMakeFiles/train.dir/_robotble.c.obj.d"
   "CMakeFiles/train.dir/_train_main.c.obj"
   "CMakeFiles/train.dir/_train_main.c.obj.d"
   "CMakeFiles/train.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/audio/audio_device.c.obj"

@@ -2,23 +2,27 @@
 #define _TRAIN_MAIN_H
 #include "include/core/reactor.h"
 #include "_display.h"
+#include "_robotble.h"
 #include "_robot.h"
 #include "_line.h"
-#ifndef TOP_LEVEL_PREAMBLE_253380088_H
-#define TOP_LEVEL_PREAMBLE_253380088_H
+#ifndef TOP_LEVEL_PREAMBLE_2068499906_H
+#define TOP_LEVEL_PREAMBLE_2068499906_H
 #include <pico/stdlib.h>
 #include <display.h>        // Do not use "display.h". Doesn't work.
 #include <ir_sensors.h>
+#include <stdio.h>
+#include <pico/stdlib.h>
+#include <hardware/gpio.h>
 #endif
 typedef struct {
     struct self_base_t base;
-    #line 211 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 212 "/home/foobar/final/lingua_franca/src/train/train.lf"
     interval_t calibration_time;
-    #line 211 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 212 "/home/foobar/final/lingua_franca/src/train/train.lf"
     interval_t sample_period;
-    #line 211 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 212 "/home/foobar/final/lingua_franca/src/train/train.lf"
     interval_t end_time;
-    #line 219 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 221 "/home/foobar/final/lingua_franca/src/train/train.lf"
     int count;
     struct {
         #line 27 "/home/foobar/final/lingua_franca/src/lib/Display.lf"
@@ -32,23 +36,23 @@ typedef struct {
     } _lf_disp;
     int _lf_disp_width;
     struct {
-        #line 51 "/home/foobar/final/lingua_franca/src/train/train.lf"
+        #line 52 "/home/foobar/final/lingua_franca/src/train/train.lf"
         _robot_speed_t* speed;
-        #line 51 "/home/foobar/final/lingua_franca/src/train/train.lf"
+        #line 52 "/home/foobar/final/lingua_franca/src/train/train.lf"
         trigger_t speed_trigger;
-        #line 51 "/home/foobar/final/lingua_franca/src/train/train.lf"
+        #line 52 "/home/foobar/final/lingua_franca/src/train/train.lf"
         reaction_t* speed_reactions[1];
-        #line 47 "/home/foobar/final/lingua_franca/src/train/train.lf"
+        #line 48 "/home/foobar/final/lingua_franca/src/train/train.lf"
         _robot_start_t start;
-        #line 73 "/home/foobar/final/lingua_franca/src/train/train.lf"
+        #line 74 "/home/foobar/final/lingua_franca/src/train/train.lf"
         _robot_stop_t stop;
-        #line 75 "/home/foobar/final/lingua_franca/src/train/train.lf"
+        #line 76 "/home/foobar/final/lingua_franca/src/train/train.lf"
         _robot_cont_t cont;
-        #line 56 "/home/foobar/final/lingua_franca/src/train/train.lf"
-        _robot_line_left_t line_left;
         #line 57 "/home/foobar/final/lingua_franca/src/train/train.lf"
-        _robot_line_center_t line_center;
+        _robot_line_left_t line_left;
         #line 58 "/home/foobar/final/lingua_franca/src/train/train.lf"
+        _robot_line_center_t line_center;
+        #line 59 "/home/foobar/final/lingua_franca/src/train/train.lf"
         _robot_line_right_t line_right;
     } _lf_robot;
     int _lf_robot_width;
@@ -65,42 +69,43 @@ typedef struct {
         reaction_t* reflect_reactions[1];
     } _lf_line;
     int _lf_line_width;
-    #line 225 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    struct {
+        #line 17 "/home/foobar/final/lingua_franca/src/lib/RobotBLE.lf"
+        _robotble_check_uart_t check_uart;
+        #line 18 "/home/foobar/final/lingua_franca/src/lib/RobotBLE.lf"
+        _robotble_rx_char_t* rx_char;
+        #line 18 "/home/foobar/final/lingua_franca/src/lib/RobotBLE.lf"
+        trigger_t rx_char_trigger;
+        #line 18 "/home/foobar/final/lingua_franca/src/lib/RobotBLE.lf"
+        reaction_t* rx_char_reactions[1];
+    } _lf_ble;
+    int _lf_ble_width;
+    #line 227 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t _lf__reaction_0;
-    #line 231 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 233 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t _lf__reaction_1;
-    #line 236 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 238 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t _lf__reaction_2;
-    #line 242 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 244 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t _lf__reaction_3;
-    #line 253 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 268 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t _lf__reaction_4;
-    #line 259 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 273 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t _lf__reaction_5;
-    #line 266 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 290 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t _lf__reaction_6;
-    #line 270 "/home/foobar/final/lingua_franca/src/train/train.lf"
-    reaction_t _lf__reaction_7;
-    #line 216 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 218 "/home/foobar/final/lingua_franca/src/train/train.lf"
     trigger_t _lf__t;
-    #line 216 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 218 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t* _lf__t_reactions[1];
-    #line 217 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 219 "/home/foobar/final/lingua_franca/src/train/train.lf"
     trigger_t _lf__seconds;
-    #line 217 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 219 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t* _lf__seconds_reactions[1];
-    #line 218 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 220 "/home/foobar/final/lingua_franca/src/train/train.lf"
     trigger_t _lf__end_calibration;
-    #line 218 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 220 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t* _lf__end_calibration_reactions[1];
-    #line 222 "/home/foobar/final/lingua_franca/src/train/train.lf"
-    trigger_t _lf__end;
-    #line 222 "/home/foobar/final/lingua_franca/src/train/train.lf"
-    reaction_t* _lf__end_reactions[1];
-    #line 223 "/home/foobar/final/lingua_franca/src/train/train.lf"
-    trigger_t _lf__start_again;
-    #line 223 "/home/foobar/final/lingua_franca/src/train/train.lf"
-    reaction_t* _lf__start_again_reactions[1];
     trigger_t _lf__startup;
     reaction_t* _lf__startup_reactions[1];
 } _train_main_main_self_t;

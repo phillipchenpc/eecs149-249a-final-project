@@ -1,0 +1,41 @@
+target C {
+  platform: {
+    name: "rp2040",
+    board: "pololu_3pi_2040_robot"
+  },
+  single-threaded: true
+}
+
+preamble {=
+    #include <stdio.h>
+    #include <pico/stdlib.h>
+    #include <hardware/gpio.h>
+=}
+
+reactor RobotBLE {
+
+    input check_uart: bool // Has to be turned on to read
+    output rx_char: char
+    input tx_char: char
+
+    reaction(startup) {=
+        stdio_init_all();
+
+        uart_init(uart0, 9600);
+        gpio_set_function(28, GPIO_FUNC_UART); // 28 = transmit
+        gpio_set_function(29, GPIO_FUNC_UART); // 29 = receieve
+    =}
+
+    reaction(check_uart) -> rx_char {=
+        if (uart_is_readable(uart0)) {
+            char c = uart_getc(uart0);
+            if (c != '0') {
+                lf_set(rx_char, c);
+            }
+        }
+    =}
+
+    reaction(tx_char) {=
+        uart_putc(uart0, tx_char->value);
+    =}
+}
