@@ -167,11 +167,11 @@ void _robotreaction_function_5(void* instance_args) {
       right_gain += (self->max_detect - line_right->value) * self->side_detect_gain * line_keep_perc;
     }
     
-    printf("LastL: %d, LastC: %d, LastR: %d\nL: %u, C: %u, R: %u\nLd: %d, Cd: %d, Rd: %d\nLg: %f, Rg: %f\nSpeed: %f, LA: %d, RA: %d\n\n", 
-      self->last_left, self->last_center, self->last_right,
-      line_left->value, line_center->value, line_right->value,
-      left_diff, center_diff, right_diff, left_gain, right_gain, self->target_speed_scaled * self->max_feedback_perc,
-      (fabsf(left_gain) < (self->target_speed_scaled * self->max_feedback_perc)), (fabsf(right_gain) < (self->target_speed_scaled * self->max_feedback_perc)));
+    // printf("LastL: %d, LastC: %d, LastR: %d\nL: %u, C: %u, R: %u\nLd: %d, Cd: %d, Rd: %d\nLg: %f, Rg: %f\nSpeed: %f, LA: %d, RA: %d\n\n", 
+    //   self->last_left, self->last_center, self->last_right,
+    //   line_left->value, line_center->value, line_right->value,
+    //   left_diff, center_diff, right_diff, left_gain, right_gain, self->target_speed_scaled * self->max_feedback_perc,
+    //   (fabsf(left_gain) < (self->target_speed_scaled * self->max_feedback_perc)), (fabsf(right_gain) < (self->target_speed_scaled * self->max_feedback_perc)));
     
     // Update the motor speeds. If left_diff is non-zero by a large margin, update that first
     // Won't allow feedback to be too large: clip the output

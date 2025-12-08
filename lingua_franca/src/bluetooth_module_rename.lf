@@ -1,0 +1,55 @@
+target C {
+    platform: {
+      name: "rp2040",
+      board: "pololu_3pi_2040_robot"
+    },
+    single-threaded: true
+}
+
+import RobotBLE from "lib/RobotBLE.lf"
+import Display from "lib/Display.lf"
+
+preamble {=
+    #include <string.h>    
+=}
+
+main reactor {
+    ble = new RobotBLE();
+    disp = new Display();
+
+    // Renaming the bluetooth module
+    state name: char[] = "AT+NAME?\r\n"
+    state count: int = 0
+
+    timer r(0, 10 ms)
+    timer t(5 s, 100 ms)
+    
+    reaction(startup) {=
+        printf("PROGRAM\n");
+    =}
+
+    reaction(r) -> ble.check_uart {=
+        // Read
+        lf_set(ble.check_uart, true);
+    =}
+
+    reaction(t) -> ble.tx_string, disp.line1 {=
+        if (self->count < 1) {
+            // Send over the next character
+            lf_set(ble.tx_string, self->name);
+            self->count++;
+            printf("TRANSMITTING.\n");
+            lf_set(disp.line1, "TXMT");
+        } else {
+            // printf("DONE.\n");
+            lf_set(disp.line1, "DONE");
+        }
+    =}
+    
+    reaction(ble.rx_char) -> disp.line0{=
+        // Only print if it isn't the terminating character
+        static char buf[17];
+        snprintf(buf, 17, "READ: %c", ble.rx_char->value);
+        lf_set(disp.line0, buf);
+    =}
+}

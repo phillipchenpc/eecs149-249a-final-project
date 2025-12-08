@@ -122,11 +122,12 @@ void _train_mainreaction_function_5(void* instance_args) {
     #line 274 "/home/foobar/final/lingua_franca/src/train/train.lf"
     char c = ble.rx_char->value;
     static char buf[17];
-    if (c == '0') {
+    
+    if (c == 'S' || c == 's') {
       // 0 == stop
       lf_set(robot.stop, true);
       snprintf(buf, 17, "Stopping.");
-    } else if (c == '1') {
+    } else if (c == 'D' || c == 'd') {
       // 1 == start
       lf_set(robot.cont, true);
       snprintf(buf, 17, "Driving.");
@@ -158,7 +159,7 @@ void _train_mainreaction_function_6(void* instance_args) {
     robot.line_left = &(self->_lf_robot.line_left);
     robot.line_center = &(self->_lf_robot.line_center);
     robot.line_right = &(self->_lf_robot.line_right);
-    #line 291 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 292 "/home/foobar/final/lingua_franca/src/train/train.lf"
     static char buf1[17];
     // Just seeing if it's detecting or not
     bool right = line.reflect->value[3] > 500;
@@ -166,7 +167,7 @@ void _train_mainreaction_function_6(void* instance_args) {
     bool left = line.reflect->value[1] > 500;
     snprintf(buf1, 17, "R:%d,C:%d,L:%d", right, center, left);
     lf_set(disp.line1, buf1);
-    printf("READ\n");
+    // printf("READ\n");
     
     // Larger = darker
     lf_set(robot.line_right, line.reflect->value[3]); 
@@ -332,19 +333,19 @@ _train_main_main_self_t* new__train_main() {
     self->_lf__reaction_5.name = "?";
     #line 273 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_5.mode = NULL;
-    #line 290 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 291 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_6.number = 6;
-    #line 290 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 291 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_6.function = _train_mainreaction_function_6;
-    #line 290 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 291 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_6.self = self;
-    #line 290 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 291 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_6.deadline_violation_handler = NULL;
-    #line 290 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 291 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_6.STP_handler = NULL;
-    #line 290 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 291 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_6.name = "?";
-    #line 290 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 291 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__reaction_6.mode = NULL;
     #line 218 "/home/foobar/final/lingua_franca/src/train/train.lf"
     self->_lf__t.last = NULL;

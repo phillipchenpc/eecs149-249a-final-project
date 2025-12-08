@@ -151,11 +151,11 @@ reactor Robot {
         right_gain += (self->max_detect - line_right->value) * self->side_detect_gain * line_keep_perc;
       }
 
-      printf("LastL: %d, LastC: %d, LastR: %d\nL: %u, C: %u, R: %u\nLd: %d, Cd: %d, Rd: %d\nLg: %f, Rg: %f\nSpeed: %f, LA: %d, RA: %d\n\n", 
-        self->last_left, self->last_center, self->last_right,
-        line_left->value, line_center->value, line_right->value,
-        left_diff, center_diff, right_diff, left_gain, right_gain, self->target_speed_scaled * self->max_feedback_perc,
-        (fabsf(left_gain) < (self->target_speed_scaled * self->max_feedback_perc)), (fabsf(right_gain) < (self->target_speed_scaled * self->max_feedback_perc)));
+      // printf("LastL: %d, LastC: %d, LastR: %d\nL: %u, C: %u, R: %u\nLd: %d, Cd: %d, Rd: %d\nLg: %f, Rg: %f\nSpeed: %f, LA: %d, RA: %d\n\n", 
+      //   self->last_left, self->last_center, self->last_right,
+      //   line_left->value, line_center->value, line_right->value,
+      //   left_diff, center_diff, right_diff, left_gain, right_gain, self->target_speed_scaled * self->max_feedback_perc,
+      //   (fabsf(left_gain) < (self->target_speed_scaled * self->max_feedback_perc)), (fabsf(right_gain) < (self->target_speed_scaled * self->max_feedback_perc)));
 
       // Update the motor speeds. If left_diff is non-zero by a large margin, update that first
       // Won't allow feedback to be too large: clip the output
@@ -273,11 +273,12 @@ main reactor(calibration_time: time = 5 s, sample_period: time = 100 ms, end_tim
   reaction(ble.rx_char) -> robot.stop, robot.cont, disp.line0 {=
     char c = ble.rx_char->value;
     static char buf[17];
-    if (c == '0') {
+    
+    if (c == 'S' || c == 's') {
       // 0 == stop
       lf_set(robot.stop, true);
       snprintf(buf, 17, "Stopping.");
-    } else if (c == '1') {
+    } else if (c == 'D' || c == 'd') {
       // 1 == start
       lf_set(robot.cont, true);
       snprintf(buf, 17, "Driving.");
@@ -295,7 +296,7 @@ main reactor(calibration_time: time = 5 s, sample_period: time = 100 ms, end_tim
     bool left = line.reflect->value[1] > 500;
     snprintf(buf1, 17, "R:%d,C:%d,L:%d", right, center, left);
     lf_set(disp.line1, buf1);
-    printf("READ\n");
+    // printf("READ\n");
 
     // Larger = darker
     lf_set(robot.line_right, line.reflect->value[3]); 

@@ -92,7 +92,7 @@ typedef struct {
     reaction_t _lf__reaction_4;
     #line 273 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t _lf__reaction_5;
-    #line 290 "/home/foobar/final/lingua_franca/src/train/train.lf"
+    #line 291 "/home/foobar/final/lingua_franca/src/train/train.lf"
     reaction_t _lf__reaction_6;
     #line 218 "/home/foobar/final/lingua_franca/src/train/train.lf"
     trigger_t _lf__t;
