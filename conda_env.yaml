@@ -1,0 +1,11 @@
+# WoRK IN PROGRESS; MIGHT SWITCH TO DOCKER FOR AR TAGS
+name: train_intersect_149-249a
+channels:
+  - defaults
+dependencies:
+  - pip
+  - python=3.11
+  - pip:
+    - opencv-python
+    - numpy
+    - ultralytics
