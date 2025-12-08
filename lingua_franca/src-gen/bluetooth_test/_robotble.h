@@ -57,7 +57,7 @@ typedef struct {
     reaction_t _lf__reaction_0;
     #line 31 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     reaction_t _lf__reaction_1;
-    #line 42 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 43 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     reaction_t _lf__reaction_2;
     #line 19 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     trigger_t _lf__check_uart;

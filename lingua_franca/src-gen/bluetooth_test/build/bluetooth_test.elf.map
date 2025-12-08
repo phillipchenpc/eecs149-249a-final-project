@@ -588,6 +588,8 @@ Discarded input sections
  .text          0x0000000000000000        0x0 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
  .data          0x0000000000000000        0x0 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
  .bss           0x0000000000000000        0x0 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+ .text.__wrap_sprintf
+                0x0000000000000000       0x28 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
  .text.__wrap_vsnprintf
                 0x0000000000000000       0x1c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
  .data          0x0000000000000000        0x0 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.obj
@@ -1551,9 +1553,9 @@ Discarded input sections
                 0x0000000000000000       0x70 robot/librobot.a(sh1106.c.obj)
  .text.sh1106_rotate
                 0x0000000000000000       0x88 robot/librobot.a(sh1106.c.obj)
- .text          0x0000000000000000        0x0 /tmp/ccoWgpLW.o
- .data          0x0000000000000000        0x0 /tmp/ccoWgpLW.o
- .bss           0x0000000000000000        0x0 /tmp/ccoWgpLW.o
+ .text          0x0000000000000000        0x0 /tmp/ccR3B5X5.o
+ .data          0x0000000000000000        0x0 /tmp/ccR3B5X5.o
+ .bss           0x0000000000000000        0x0 /tmp/ccR3B5X5.o
  .data          0x0000000000000000        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
  .bss           0x0000000000000000        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
  .data          0x0000000000000000        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-atexit.o)
@@ -1714,11 +1716,11 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nof
 .boot2          0x0000000010000000      0x100
                 0x0000000010000000                __boot2_start__ = .
  *(.boot2)
- .boot2         0x0000000010000000      0x100 /tmp/ccoWgpLW.o
+ .boot2         0x0000000010000000      0x100 /tmp/ccR3B5X5.o
                 0x0000000010000100                __boot2_end__ = .
                 0x0000000000000001                ASSERT (((__boot2_end__ - __boot2_start__) == 0x100), ERROR: Pico second stage bootloader must be 256 bytes in size)
 
-.text           0x0000000010000100    0x102f8
+.text           0x0000000010000100    0x102d0
                 0x0000000010000100                __logical_binary_start = .
  *(.vectors)
  .vectors       0x0000000010000100       0xd4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/crt0.S.obj
@@ -1783,1133 +1785,1129 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nof
                 0x0000000010000354       0x3c CMakeFiles/bluetooth_test.dir/_bluetooth_test_main.c.obj
                 0x0000000010000354                _bluetooth_test_mainreaction_function_0
  .text._bluetooth_test_mainreaction_function_1
-                0x0000000010000390       0x30 CMakeFiles/bluetooth_test.dir/_bluetooth_test_main.c.obj
+                0x0000000010000390       0x2c CMakeFiles/bluetooth_test.dir/_bluetooth_test_main.c.obj
                 0x0000000010000390                _bluetooth_test_mainreaction_function_1
  .text.new__bluetooth_test_main
-                0x00000000100003c0       0x98 CMakeFiles/bluetooth_test.dir/_bluetooth_test_main.c.obj
-                0x00000000100003c0                new__bluetooth_test_main
+                0x00000000100003bc       0x98 CMakeFiles/bluetooth_test.dir/_bluetooth_test_main.c.obj
+                0x00000000100003bc                new__bluetooth_test_main
  .text._robotblereaction_function_0
-                0x0000000010000458       0x28 CMakeFiles/bluetooth_test.dir/_robotble.c.obj
-                0x0000000010000458                _robotblereaction_function_0
+                0x0000000010000454       0x28 CMakeFiles/bluetooth_test.dir/_robotble.c.obj
+                0x0000000010000454                _robotblereaction_function_0
  .text._robotblereaction_function_1
-                0x0000000010000480       0x58 CMakeFiles/bluetooth_test.dir/_robotble.c.obj
-                0x0000000010000480                _robotblereaction_function_1
+                0x000000001000047c       0x60 CMakeFiles/bluetooth_test.dir/_robotble.c.obj
+                0x000000001000047c                _robotblereaction_function_1
  .text._robotblereaction_function_2
-                0x00000000100004d8       0xa4 CMakeFiles/bluetooth_test.dir/_robotble.c.obj
-                0x00000000100004d8                _robotblereaction_function_2
+                0x00000000100004dc       0xa4 CMakeFiles/bluetooth_test.dir/_robotble.c.obj
+                0x00000000100004dc                _robotblereaction_function_2
  .text.new__robotble
-                0x000000001000057c       0xd8 CMakeFiles/bluetooth_test.dir/_robotble.c.obj
-                0x000000001000057c                new__robotble
+                0x0000000010000580       0xd8 CMakeFiles/bluetooth_test.dir/_robotble.c.obj
+                0x0000000010000580                new__robotble
  .text._displayreaction_function_1
-                0x0000000010000654       0xb4 CMakeFiles/bluetooth_test.dir/_display.c.obj
-                0x0000000010000654                _displayreaction_function_1
+                0x0000000010000658       0xb4 CMakeFiles/bluetooth_test.dir/_display.c.obj
+                0x0000000010000658                _displayreaction_function_1
  .text._displayreaction_function_0
-                0x0000000010000708       0x2c CMakeFiles/bluetooth_test.dir/_display.c.obj
-                0x0000000010000708                _displayreaction_function_0
+                0x000000001000070c       0x2c CMakeFiles/bluetooth_test.dir/_display.c.obj
+                0x000000001000070c                _displayreaction_function_0
  .text.new__display
-                0x0000000010000734      0x100 CMakeFiles/bluetooth_test.dir/_display.c.obj
-                0x0000000010000734                new__display
+                0x0000000010000738      0x100 CMakeFiles/bluetooth_test.dir/_display.c.obj
+                0x0000000010000738                new__display
  .text.startup.main
-                0x0000000010000834        0xc CMakeFiles/bluetooth_test.dir/bluetooth_test.c.obj
-                0x0000000010000834                main
+                0x0000000010000838        0xc CMakeFiles/bluetooth_test.dir/bluetooth_test.c.obj
+                0x0000000010000838                main
  .text._lf_set_default_command_line_options
-                0x0000000010000840        0x4 CMakeFiles/bluetooth_test.dir/bluetooth_test.c.obj
-                0x0000000010000840                _lf_set_default_command_line_options
+                0x0000000010000844        0x4 CMakeFiles/bluetooth_test.dir/bluetooth_test.c.obj
+                0x0000000010000844                _lf_set_default_command_line_options
  .text._lf_create_environments
-                0x0000000010000844       0x30 CMakeFiles/bluetooth_test.dir/bluetooth_test.c.obj
-                0x0000000010000844                _lf_create_environments
+                0x0000000010000848       0x30 CMakeFiles/bluetooth_test.dir/bluetooth_test.c.obj
+                0x0000000010000848                _lf_create_environments
  .text._lf_get_environments
-                0x0000000010000874        0xc CMakeFiles/bluetooth_test.dir/bluetooth_test.c.obj
-                0x0000000010000874                _lf_get_environments
+                0x0000000010000878        0xc CMakeFiles/bluetooth_test.dir/bluetooth_test.c.obj
+                0x0000000010000878                _lf_get_environments
  .text._lf_initialize_trigger_objects
-                0x0000000010000880      0x314 CMakeFiles/bluetooth_test.dir/bluetooth_test.c.obj
-                0x0000000010000880                _lf_initialize_trigger_objects
+                0x0000000010000884      0x314 CMakeFiles/bluetooth_test.dir/bluetooth_test.c.obj
+                0x0000000010000884                _lf_initialize_trigger_objects
  .text.terminate_execution
-                0x0000000010000b94        0x4 CMakeFiles/bluetooth_test.dir/bluetooth_test.c.obj
-                0x0000000010000b94                terminate_execution
+                0x0000000010000b98        0x4 CMakeFiles/bluetooth_test.dir/bluetooth_test.c.obj
+                0x0000000010000b98                terminate_execution
  .text.gpio_set_function
-                0x0000000010000b98       0x30 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj
-                0x0000000010000b98                gpio_set_function
+                0x0000000010000b9c       0x30 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj
+                0x0000000010000b9c                gpio_set_function
  .text.gpio_init
-                0x0000000010000bc8       0x3c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj
-                0x0000000010000bc8                gpio_init
+                0x0000000010000bcc       0x3c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_gpio/gpio.c.obj
+                0x0000000010000bcc                gpio_init
  .text.running_on_fpga
-                0x0000000010000c04       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_platform/platform.c.obj
-                0x0000000010000c04                running_on_fpga
+                0x0000000010000c08       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_platform/platform.c.obj
+                0x0000000010000c08                running_on_fpga
  .text.hw_claim_or_assert
-                0x0000000010000c14       0x44 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj
-                0x0000000010000c14                hw_claim_or_assert
+                0x0000000010000c18       0x44 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj
+                0x0000000010000c18                hw_claim_or_assert
  .text.hw_claim_unused_from_range
-                0x0000000010000c58       0x9c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj
-                0x0000000010000c58                hw_claim_unused_from_range
+                0x0000000010000c5c       0x9c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_claim/claim.c.obj
+                0x0000000010000c5c                hw_claim_unused_from_range
  .text.spin_locks_reset
-                0x0000000010000cf4       0x1c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj
-                0x0000000010000cf4                spin_locks_reset
+                0x0000000010000cf8       0x1c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj
+                0x0000000010000cf8                spin_locks_reset
  .text.next_striped_spin_lock_num
-                0x0000000010000d10       0x18 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj
-                0x0000000010000d10                next_striped_spin_lock_num
+                0x0000000010000d14       0x18 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj
+                0x0000000010000d14                next_striped_spin_lock_num
  .text.spin_lock_claim_unused
-                0x0000000010000d28       0x20 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj
-                0x0000000010000d28                spin_lock_claim_unused
+                0x0000000010000d2c       0x20 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj
+                0x0000000010000d2c                spin_lock_claim_unused
  .text.irq_set_enabled
-                0x0000000010000d48       0x24 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
-                0x0000000010000d48                irq_set_enabled
+                0x0000000010000d4c       0x24 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+                0x0000000010000d4c                irq_set_enabled
  .text.irq_set_pending
-                0x0000000010000d6c       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
-                0x0000000010000d6c                irq_set_pending
+                0x0000000010000d70       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+                0x0000000010000d70                irq_set_pending
  .text.irq_has_shared_handler
-                0x0000000010000d7c       0x2c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
-                0x0000000010000d7c                irq_has_shared_handler
+                0x0000000010000d80       0x2c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+                0x0000000010000d80                irq_has_shared_handler
  .text.irq_get_vtable_handler
-                0x0000000010000da8       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
-                0x0000000010000da8                irq_get_vtable_handler
+                0x0000000010000dac       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+                0x0000000010000dac                irq_get_vtable_handler
  .text.irq_set_exclusive_handler
-                0x0000000010000db8       0x54 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
-                0x0000000010000db8                irq_set_exclusive_handler
+                0x0000000010000dbc       0x54 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+                0x0000000010000dbc                irq_set_exclusive_handler
  .text.irq_add_shared_handler
-                0x0000000010000e0c      0x1e8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
-                0x0000000010000e0c                irq_add_shared_handler
+                0x0000000010000e10      0x1e8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+                0x0000000010000e10                irq_add_shared_handler
  .text.irq_remove_handler
-                0x0000000010000ff4      0x1b0 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
-                0x0000000010000ff4                irq_remove_handler
+                0x0000000010000ff8      0x1b0 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+                0x0000000010000ff8                irq_remove_handler
  .text.irq_add_tail_to_free_list
-                0x00000000100011a4       0xb4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
-                0x00000000100011a4                irq_add_tail_to_free_list
+                0x00000000100011a8       0xb4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+                0x00000000100011a8                irq_add_tail_to_free_list
  .text.irq_init_priorities
-                0x0000000010001258       0x24 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
-                0x0000000010001258                irq_init_priorities
+                0x000000001000125c       0x24 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+                0x000000001000125c                irq_init_priorities
  .text.user_irq_claim_unused
-                0x000000001000127c       0x28 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
-                0x000000001000127c                user_irq_claim_unused
+                0x0000000010001280       0x28 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+                0x0000000010001280                user_irq_claim_unused
  .text.sem_init
-                0x00000000100012a4       0x20 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_sync/sem.c.obj
-                0x00000000100012a4                sem_init
+                0x00000000100012a8       0x20 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_sync/sem.c.obj
+                0x00000000100012a8                sem_init
  .text.lock_init
-                0x00000000100012c4       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_sync/lock_core.c.obj
-                0x00000000100012c4                lock_init
+                0x00000000100012c8       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_sync/lock_core.c.obj
+                0x00000000100012c8                lock_init
  .text.mutex_init
-                0x00000000100012d4       0x1c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_sync/mutex.c.obj
-                0x00000000100012d4                mutex_init
+                0x00000000100012d8       0x1c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_sync/mutex.c.obj
+                0x00000000100012d8                mutex_init
  .text.recursive_mutex_init
-                0x00000000100012f0       0x1c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_sync/mutex.c.obj
-                0x00000000100012f0                recursive_mutex_init
+                0x00000000100012f4       0x1c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_sync/mutex.c.obj
+                0x00000000100012f4                recursive_mutex_init
  .text.critical_section_init
-                0x000000001000130c       0x20 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_sync/critical_section.c.obj
-                0x000000001000130c                critical_section_init
+                0x0000000010001310       0x20 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_sync/critical_section.c.obj
+                0x0000000010001310                critical_section_init
  .text.critical_section_init_with_lock_num
-                0x000000001000132c       0x14 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_sync/critical_section.c.obj
-                0x000000001000132c                critical_section_init_with_lock_num
+                0x0000000010001330       0x14 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_sync/critical_section.c.obj
+                0x0000000010001330                critical_section_init_with_lock_num
  .text.timer_pool_entry_comparator
-                0x0000000010001340       0x34 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
-                0x0000000010001340                timer_pool_entry_comparator
+                0x0000000010001344       0x34 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
+                0x0000000010001344                timer_pool_entry_comparator
  .text.sleep_until_callback
-                0x0000000010001374       0x30 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
+                0x0000000010001378       0x30 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
  .text.add_alarm_under_lock.isra.0
-                0x00000000100013a4      0x100 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
+                0x00000000100013a8      0x100 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
  .text.alarm_pool_alarm_callback
-                0x00000000100014a4      0x1bc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
+                0x00000000100014a8      0x1bc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
  .text.alarm_pool_init_default
-                0x0000000010001660       0x6c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
-                0x0000000010001660                alarm_pool_init_default
+                0x0000000010001664       0x6c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
+                0x0000000010001664                alarm_pool_init_default
  .text.alarm_pool_get_default
-                0x00000000100016cc        0x8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
-                0x00000000100016cc                alarm_pool_get_default
+                0x00000000100016d0        0x8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
+                0x00000000100016d0                alarm_pool_get_default
  .text.alarm_pool_add_alarm_at
-                0x00000000100016d4      0x178 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
-                0x00000000100016d4                alarm_pool_add_alarm_at
+                0x00000000100016d8      0x178 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
+                0x00000000100016d8                alarm_pool_add_alarm_at
  .text.alarm_pool_core_num
-                0x000000001000184c        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
-                0x000000001000184c                alarm_pool_core_num
+                0x0000000010001850        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
+                0x0000000010001850                alarm_pool_core_num
  .text.sleep_until
-                0x0000000010001850       0xc4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
-                0x0000000010001850                sleep_until
+                0x0000000010001854       0xc4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
+                0x0000000010001854                sleep_until
  .text.sleep_us
-                0x0000000010001914       0x24 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
-                0x0000000010001914                sleep_us
+                0x0000000010001918       0x24 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
+                0x0000000010001918                sleep_us
  .text.best_effort_wfe_or_timeout
-                0x0000000010001938       0xd4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
-                0x0000000010001938                best_effort_wfe_or_timeout
+                0x000000001000193c       0xd4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
+                0x000000001000193c                best_effort_wfe_or_timeout
  .text.hardware_alarm_irq_handler
-                0x0000000010001a0c       0xbc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+                0x0000000010001a10       0xbc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
  .text.hardware_alarm_claim
-                0x0000000010001ac8       0x18 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
-                0x0000000010001ac8                hardware_alarm_claim
+                0x0000000010001acc       0x18 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+                0x0000000010001acc                hardware_alarm_claim
  .text.time_us_64
-                0x0000000010001ae0       0x14 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
-                0x0000000010001ae0                time_us_64
+                0x0000000010001ae4       0x14 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+                0x0000000010001ae4                time_us_64
  .text.busy_wait_us
-                0x0000000010001af4       0x54 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
-                0x0000000010001af4                busy_wait_us
+                0x0000000010001af8       0x54 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+                0x0000000010001af8                busy_wait_us
  .text.busy_wait_until
-                0x0000000010001b48       0x20 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
-                0x0000000010001b48                busy_wait_until
+                0x0000000010001b4c       0x20 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+                0x0000000010001b4c                busy_wait_until
  .text.hardware_alarm_set_callback
-                0x0000000010001b68       0x8c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
-                0x0000000010001b68                hardware_alarm_set_callback
+                0x0000000010001b6c       0x8c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+                0x0000000010001b6c                hardware_alarm_set_callback
  .text.hardware_alarm_set_target
-                0x0000000010001bf4       0xd4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
-                0x0000000010001bf4                hardware_alarm_set_target
+                0x0000000010001bf8       0xd4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+                0x0000000010001bf8                hardware_alarm_set_target
  .text.hardware_alarm_cancel
-                0x0000000010001cc8       0x3c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
-                0x0000000010001cc8                hardware_alarm_cancel
+                0x0000000010001ccc       0x3c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+                0x0000000010001ccc                hardware_alarm_cancel
  .text.ph_merge_nodes
-                0x0000000010001d04       0x68 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_util/pheap.c.obj
+                0x0000000010001d08       0x68 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_util/pheap.c.obj
  .text.ph_post_alloc_init
-                0x0000000010001d6c       0x3c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_util/pheap.c.obj
-                0x0000000010001d6c                ph_post_alloc_init
+                0x0000000010001d70       0x3c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_util/pheap.c.obj
+                0x0000000010001d70                ph_post_alloc_init
  .text.ph_merge_two_pass
-                0x0000000010001da8       0x90 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_util/pheap.c.obj
-                0x0000000010001da8                ph_merge_two_pass
+                0x0000000010001dac       0x90 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_util/pheap.c.obj
+                0x0000000010001dac                ph_merge_two_pass
  .text.ph_remove_any_head
-                0x0000000010001e38      0x100 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_util/pheap.c.obj
+                0x0000000010001e3c      0x100 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_util/pheap.c.obj
  .text.ph_remove_head
-                0x0000000010001f38      0x104 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_util/pheap.c.obj
-                0x0000000010001f38                ph_remove_head
+                0x0000000010001f3c      0x104 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_util/pheap.c.obj
+                0x0000000010001f3c                ph_remove_head
  .text.ph_remove_and_free_node
-                0x000000001000203c       0x7c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_util/pheap.c.obj
-                0x000000001000203c                ph_remove_and_free_node
+                0x0000000010002040       0x7c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_util/pheap.c.obj
+                0x0000000010002040                ph_remove_and_free_node
  .text.uart_init
-                0x00000000100020b8      0x188 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj
-                0x00000000100020b8                uart_init
+                0x00000000100020bc      0x188 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_uart/uart.c.obj
+                0x00000000100020bc                uart_init
  .text.clocks_init
-                0x0000000010002240      0x2d0 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj
-                0x0000000010002240                clocks_init
+                0x0000000010002244      0x2d0 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj
+                0x0000000010002244                clocks_init
  .text.clock_get_hz
-                0x0000000010002510        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj
-                0x0000000010002510                clock_get_hz
+                0x0000000010002514        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj
+                0x0000000010002514                clock_get_hz
  .text.pll_init
-                0x000000001000251c       0xa0 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_pll/pll.c.obj
-                0x000000001000251c                pll_init
+                0x0000000010002520       0xa0 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_pll/pll.c.obj
+                0x0000000010002520                pll_init
  .text.watchdog_start_tick
-                0x00000000100025bc       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.obj
-                0x00000000100025bc                watchdog_start_tick
+                0x00000000100025c0       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.obj
+                0x00000000100025c0                watchdog_start_tick
  .text.watchdog_reboot
-                0x00000000100025cc       0x98 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.obj
-                0x00000000100025cc                watchdog_reboot
+                0x00000000100025d0       0x98 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.obj
+                0x00000000100025d0                watchdog_reboot
  .text.xosc_init
-                0x0000000010002664       0x28 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.obj
-                0x0000000010002664                xosc_init
+                0x0000000010002668       0x28 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_xosc/xosc.c.obj
+                0x0000000010002668                xosc_init
  .text.runtime_init
-                0x000000001000268c       0xf0 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
-                0x000000001000268c                runtime_init
- .text._exit    0x000000001000277c        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
-                0x000000001000277c                _exit
- .text._sbrk    0x0000000010002780       0x34 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
-                0x0000000010002780                _sbrk
- .text.exit     0x00000000100027b4        0x8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
-                0x00000000100027b4                exit
+                0x0000000010002690       0xf0 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
+                0x0000000010002690                runtime_init
+ .text._exit    0x0000000010002780        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
+                0x0000000010002780                _exit
+ .text._sbrk    0x0000000010002784       0x34 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
+                0x0000000010002784                _sbrk
+ .text.exit     0x00000000100027b8        0x8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
+                0x00000000100027b8                exit
  .text.__assert_func
-                0x00000000100027bc       0x34 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
-                0x00000000100027bc                __assert_func
- .text.panic    0x00000000100027f0       0x30 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
-                0x00000000100027f0                panic
+                0x00000000100027c0       0x34 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
+                0x00000000100027c0                __assert_func
+ .text.panic    0x00000000100027f4       0x30 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
+                0x00000000100027f4                panic
  .text.hard_assertion_failure
-                0x0000000010002820        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
-                0x0000000010002820                hard_assertion_failure
+                0x0000000010002824        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
+                0x0000000010002824                hard_assertion_failure
  .text._out_buffer
-                0x000000001000282c        0x8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+                0x0000000010002830        0x8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
  .text._out_null
-                0x0000000010002834        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+                0x0000000010002838        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
  .text._out_rev
-                0x0000000010002838       0x9c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+                0x000000001000283c       0x9c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
  .text._ntoa_format
-                0x00000000100028d4      0x1cc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+                0x00000000100028d8      0x1cc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
  .text._out_char
-                0x0000000010002aa0       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+                0x0000000010002aa4       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
  .text._out_fct
-                0x0000000010002ab0       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
- .text._etoa    0x0000000010002ac0      0x44c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
- .text._ftoa    0x0000000010002f0c      0x398 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+                0x0000000010002ab4       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+ .text._etoa    0x0000000010002ac4      0x44c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+ .text._ftoa    0x0000000010002f10      0x398 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
  .text._vsnprintf
-                0x00000000100032a4      0xb04 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
- .text.__wrap_sprintf
-                0x0000000010003da8       0x28 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
-                0x0000000010003da8                __wrap_sprintf
+                0x00000000100032a8      0xb04 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
  .text.__wrap_snprintf
-                0x0000000010003dd0       0x28 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
-                0x0000000010003dd0                __wrap_snprintf
+                0x0000000010003dac       0x28 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+                0x0000000010003dac                __wrap_snprintf
  .text.vfctprintf
-                0x0000000010003df8       0x20 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
-                0x0000000010003df8                vfctprintf
+                0x0000000010003dd4       0x20 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+                0x0000000010003dd4                vfctprintf
  .text.weak_raw_printf
-                0x0000000010003e18       0x40 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
-                0x0000000010003e18                weak_raw_printf
+                0x0000000010003df4       0x40 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+                0x0000000010003df4                weak_raw_printf
  .text.weak_raw_vprintf
-                0x0000000010003e58       0x30 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
-                0x0000000010003e58                weak_raw_vprintf
- .text          0x0000000010003e88       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.obj
+                0x0000000010003e34       0x30 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+                0x0000000010003e34                weak_raw_vprintf
+ .text          0x0000000010003e64       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_bit_ops/bit_ops_aeabi.S.obj
  .text.rom_func_lookup
-                0x0000000010003e98       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.obj
-                0x0000000010003e98                rom_func_lookup
+                0x0000000010003e74       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.obj
+                0x0000000010003e74                rom_func_lookup
  .text.rom_data_lookup
-                0x0000000010003ea8       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.obj
-                0x0000000010003ea8                rom_data_lookup
+                0x0000000010003e84       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.obj
+                0x0000000010003e84                rom_data_lookup
  .text.rom_funcs_lookup
-                0x0000000010003eb8       0x44 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.obj
-                0x0000000010003eb8                rom_funcs_lookup
+                0x0000000010003e94       0x44 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_bootrom/bootrom.c.obj
+                0x0000000010003e94                rom_funcs_lookup
  .text.__wrap___aeabi_idiv
-                0x0000000010003efc       0x50 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_divider/divider.S.obj
-                0x0000000010003efc                __wrap___aeabi_idivmod
-                0x0000000010003efc                divmod_s32s32
-                0x0000000010003efc                div_s32s32
-                0x0000000010003efc                __wrap___aeabi_idiv
-                0x0000000010003f04                divmod_s32s32_unsafe
-                0x0000000010003f30                divmod_s32s32_savestate
+                0x0000000010003ed8       0x50 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_divider/divider.S.obj
+                0x0000000010003ed8                __wrap___aeabi_idivmod
+                0x0000000010003ed8                divmod_s32s32
+                0x0000000010003ed8                div_s32s32
+                0x0000000010003ed8                __wrap___aeabi_idiv
+                0x0000000010003ee0                divmod_s32s32_unsafe
+                0x0000000010003f0c                divmod_s32s32_savestate
  .text.__wrap___aeabi_uidiv
-                0x0000000010003f4c       0x4c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_divider/divider.S.obj
-                0x0000000010003f4c                __wrap___aeabi_uidiv
-                0x0000000010003f4c                __wrap___aeabi_uidivmod
-                0x0000000010003f4c                div_u32u32
-                0x0000000010003f4c                divmod_u32u32
-                0x0000000010003f54                divmod_u32u32_unsafe
-                0x0000000010003f7c                divmod_u32u32_savestate
+                0x0000000010003f28       0x4c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_divider/divider.S.obj
+                0x0000000010003f28                __wrap___aeabi_uidiv
+                0x0000000010003f28                __wrap___aeabi_uidivmod
+                0x0000000010003f28                div_u32u32
+                0x0000000010003f28                divmod_u32u32
+                0x0000000010003f30                divmod_u32u32_unsafe
+                0x0000000010003f58                divmod_u32u32_savestate
  .text.__wrap___aeabi_ldiv
-                0x0000000010003f98      0x424 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_divider/divider.S.obj
-                0x0000000010003f98                div_s64s64
-                0x0000000010003f98                divmod_s64s64
-                0x0000000010003f98                __wrap___aeabi_ldivmod
-                0x0000000010003fc8                div_u64u64
-                0x0000000010003fc8                divmod_u64u64
-                0x0000000010003fc8                __wrap___aeabi_uldivmod
-                0x0000000010003fd8                divmod_u64u64_savestate
-                0x0000000010003ff8                divmod_s64s64_unsafe
-                0x0000000010004080                divmod_u64u64_unsafe
+                0x0000000010003f74      0x424 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_divider/divider.S.obj
+                0x0000000010003f74                div_s64s64
+                0x0000000010003f74                divmod_s64s64
+                0x0000000010003f74                __wrap___aeabi_ldivmod
+                0x0000000010003fa4                div_u64u64
+                0x0000000010003fa4                divmod_u64u64
+                0x0000000010003fa4                __wrap___aeabi_uldivmod
+                0x0000000010003fb4                divmod_u64u64_savestate
+                0x0000000010003fd4                divmod_s64s64_unsafe
+                0x000000001000405c                divmod_u64u64_unsafe
  .text.__wrap___aeabi_darithmetic
-                0x00000000100043bc       0x60 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
-                0x00000000100043bc                __wrap___aeabi_drsub
-                0x00000000100043c2                __wrap___aeabi_dsub
-                0x00000000100043cc                __wrap___aeabi_dadd
-                0x00000000100043d6                __wrap___aeabi_ddiv
-                0x000000001000440a                __wrap___aeabi_dmul
+                0x0000000010004398       0x60 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
+                0x0000000010004398                __wrap___aeabi_drsub
+                0x000000001000439e                __wrap___aeabi_dsub
+                0x00000000100043a8                __wrap___aeabi_dadd
+                0x00000000100043b2                __wrap___aeabi_ddiv
+                0x00000000100043e6                __wrap___aeabi_dmul
  .text.__wrap___aeabi_cdcmple
-                0x000000001000441c       0x6c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
-                0x000000001000441c                __wrap___aeabi_cdrcmple
-                0x000000001000442c                __wrap___aeabi_cdcmple
-                0x000000001000442c                __wrap___aeabi_cdcmpeq
+                0x00000000100043f8       0x6c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
+                0x00000000100043f8                __wrap___aeabi_cdrcmple
+                0x0000000010004408                __wrap___aeabi_cdcmple
+                0x0000000010004408                __wrap___aeabi_cdcmpeq
  .text.__wrap___aeabi_dcmpeq
-                0x0000000010004488       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
-                0x0000000010004488                __wrap___aeabi_dcmpeq
+                0x0000000010004464       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
+                0x0000000010004464                __wrap___aeabi_dcmpeq
  .text.__wrap___aeabi_dcmplt
-                0x0000000010004498        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
-                0x0000000010004498                __wrap___aeabi_dcmplt
+                0x0000000010004474        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
+                0x0000000010004474                __wrap___aeabi_dcmplt
  .text.__wrap___aeabi_dcmple
-                0x00000000100044a4       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
-                0x00000000100044a4                __wrap___aeabi_dcmple
+                0x0000000010004480       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
+                0x0000000010004480                __wrap___aeabi_dcmple
  .text.__wrap___aeabi_dcmpge
-                0x00000000100044b4       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
-                0x00000000100044b4                __wrap___aeabi_dcmpge
+                0x0000000010004490       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
+                0x0000000010004490                __wrap___aeabi_dcmpge
  .text.__wrap___aeabi_dcmpgt
-                0x00000000100044c4        0xa CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
-                0x00000000100044c4                __wrap___aeabi_dcmpgt
+                0x00000000100044a0        0xa CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
+                0x00000000100044a0                __wrap___aeabi_dcmpgt
  .text.__wrap___aeabi_dcmpun
-                0x00000000100044ce       0x1c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
-                0x00000000100044ce                __wrap___aeabi_dcmpun
- *fill*         0x00000000100044ea        0x2 
+                0x00000000100044aa       0x1c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
+                0x00000000100044aa                __wrap___aeabi_dcmpun
+ *fill*         0x00000000100044c6        0x2 
  .text.__wrap___aeabi_i2d
-                0x00000000100044ec       0x38 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
-                0x00000000100044ec                __wrap___aeabi_ui2d
-                0x00000000100044f4                __wrap___aeabi_i2d
+                0x00000000100044c8       0x38 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
+                0x00000000100044c8                __wrap___aeabi_ui2d
+                0x00000000100044d0                __wrap___aeabi_i2d
  .text.__wrap___aeabi_d2iz
-                0x0000000010004524       0x48 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
-                0x0000000010004524                __wrap___aeabi_d2iz
-                0x0000000010004524                double2int_z
+                0x0000000010004500       0x48 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
+                0x0000000010004500                __wrap___aeabi_d2iz
+                0x0000000010004500                double2int_z
  .text.__wrap___aeabi_d2uiz
-                0x000000001000456c       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
-                0x000000001000456c                double2uint
-                0x000000001000456c                __wrap___aeabi_d2uiz
+                0x0000000010004548       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_aeabi.S.obj
+                0x0000000010004548                double2uint
+                0x0000000010004548                __wrap___aeabi_d2uiz
  .text.missing_double_func_shim
-                0x000000001000457c        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.obj
+                0x0000000010004558        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.obj
  .text.__aeabi_double_init
-                0x0000000010004588       0x98 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.obj
-                0x0000000010004588                __aeabi_double_init
+                0x0000000010004564       0x98 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.obj
+                0x0000000010004564                __aeabi_double_init
  .text.double_table_shim_on_use_helper
-                0x0000000010004620       0x2c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj
-                0x0000000010004620                double_table_shim_on_use_helper
+                0x00000000100045fc       0x2c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_v1_rom_shim.S.obj
+                0x00000000100045fc                double_table_shim_on_use_helper
  .text.__aeabi_lmul
-                0x000000001000464c       0x32 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_int64_ops/pico_int64_ops_aeabi.S.obj
-                0x000000001000464c                __wrap___aeabi_lmul
- *fill*         0x000000001000467e        0x2 
+                0x0000000010004628       0x32 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_int64_ops/pico_int64_ops_aeabi.S.obj
+                0x0000000010004628                __wrap___aeabi_lmul
+ *fill*         0x000000001000465a        0x2 
  .text.__wrap___aeabi_farithmetic
-                0x0000000010004680       0x48 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
-                0x0000000010004680                __wrap___aeabi_frsub
-                0x0000000010004686                __wrap___aeabi_fsub
-                0x000000001000468c                __wrap___aeabi_fadd
-                0x0000000010004692                __wrap___aeabi_fdiv
-                0x00000000100046ba                __wrap___aeabi_fmul
+                0x000000001000465c       0x48 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
+                0x000000001000465c                __wrap___aeabi_frsub
+                0x0000000010004662                __wrap___aeabi_fsub
+                0x0000000010004668                __wrap___aeabi_fadd
+                0x000000001000466e                __wrap___aeabi_fdiv
+                0x0000000010004696                __wrap___aeabi_fmul
  .text.__wrap___aeabi_cfcmple
-                0x00000000100046c8       0x50 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
-                0x00000000100046c8                __wrap___aeabi_cfrcmple
-                0x00000000100046d4                __wrap___aeabi_cfcmpeq
-                0x00000000100046d4                __wrap___aeabi_cfcmple
+                0x00000000100046a4       0x50 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
+                0x00000000100046a4                __wrap___aeabi_cfrcmple
+                0x00000000100046b0                __wrap___aeabi_cfcmpeq
+                0x00000000100046b0                __wrap___aeabi_cfcmple
  .text.__wrap___aeabi_fcmpge
-                0x0000000010004718       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
-                0x0000000010004718                __wrap___aeabi_fcmpge
+                0x00000000100046f4       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
+                0x00000000100046f4                __wrap___aeabi_fcmpge
  .text.__wrap___aeabi_ui2f
-                0x0000000010004728        0xa CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
-                0x0000000010004728                __wrap___aeabi_ui2f
- *fill*         0x0000000010004732        0x2 
+                0x0000000010004704        0xa CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
+                0x0000000010004704                __wrap___aeabi_ui2f
+ *fill*         0x000000001000470e        0x2 
  .text.__wrap___aeabi_i2f
-                0x0000000010004734       0x44 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
-                0x0000000010004734                __wrap___aeabi_i2f
+                0x0000000010004710       0x44 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_float/float_aeabi.S.obj
+                0x0000000010004710                __wrap___aeabi_i2f
  .text.missing_float_func_shim
-                0x0000000010004778        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.obj
+                0x0000000010004754        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.obj
  .text.__aeabi_float_init
-                0x0000000010004784       0x5c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.obj
-                0x0000000010004784                __aeabi_float_init
+                0x0000000010004760       0x5c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.obj
+                0x0000000010004760                __aeabi_float_init
  .text.__wrap_malloc
-                0x00000000100047e0       0x3c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj
-                0x00000000100047e0                __wrap_malloc
+                0x00000000100047bc       0x3c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj
+                0x00000000100047bc                __wrap_malloc
  .text.__wrap_calloc
-                0x000000001000481c       0x40 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj
-                0x000000001000481c                __wrap_calloc
+                0x00000000100047f8       0x40 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj
+                0x00000000100047f8                __wrap_calloc
  .text.__wrap_realloc
-                0x000000001000485c       0x40 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj
-                0x000000001000485c                __wrap_realloc
+                0x0000000010004838       0x40 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj
+                0x0000000010004838                __wrap_realloc
  .text.__wrap_free
-                0x000000001000489c       0x20 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj
-                0x000000001000489c                __wrap_free
- .text          0x00000000100048bc       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj
-                0x00000000100048bc                __aeabi_mem_init
- .text.memset   0x00000000100048cc        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj
-                0x00000000100048cc                __wrap_memset
- .text.memcpy   0x00000000100048d8        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj
-                0x00000000100048d8                __wrap___aeabi_memcpy
-                0x00000000100048d8                __wrap_memcpy
+                0x0000000010004878       0x20 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj
+                0x0000000010004878                __wrap_free
+ .text          0x0000000010004898       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj
+                0x0000000010004898                __aeabi_mem_init
+ .text.memset   0x00000000100048a8        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj
+                0x00000000100048a8                __wrap_memset
+ .text.memcpy   0x00000000100048b4        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_mem_ops/mem_ops_aeabi.S.obj
+                0x00000000100048b4                __wrap___aeabi_memcpy
+                0x00000000100048b4                __wrap_memcpy
  .text.stdio_out_chars_no_crlf
-                0x00000000100048e4       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x00000000100048c0       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
  .text.stdio_out_chars_crlf
-                0x00000000100048f4       0xb4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x00000000100048d0       0xb4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
  .text.stdio_buffered_printer
-                0x00000000100049a8       0x64 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x0000000010004984       0x64 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
  .text.stdio_put_string.isra.0
-                0x0000000010004a0c       0xfc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x00000000100049e8       0xfc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
  .text.__wrap_putchar
-                0x0000000010004b08       0x98 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
-                0x0000000010004b08                __wrap_putchar
+                0x0000000010004ae4       0x98 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x0000000010004ae4                __wrap_putchar
  .text.__wrap_puts
-                0x0000000010004ba0       0x3c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
-                0x0000000010004ba0                __wrap_puts
- .text._read    0x0000000010004bdc       0x94 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
-                0x0000000010004bdc                _read
- .text._write   0x0000000010004c70       0xac CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
-                0x0000000010004c70                _write
- .text._close   0x0000000010004d1c        0x8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
-                0x0000000010004d1c                _close
- .text._lseek   0x0000000010004d24        0x8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
-                0x0000000010004d24                _lseek
- .text._fstat   0x0000000010004d2c        0x8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
-                0x0000000010004d2c                _fstat
- .text._isatty  0x0000000010004d34        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
-                0x0000000010004d34                _isatty
+                0x0000000010004b7c       0x3c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x0000000010004b7c                __wrap_puts
+ .text._read    0x0000000010004bb8       0x94 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x0000000010004bb8                _read
+ .text._write   0x0000000010004c4c       0xac CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x0000000010004c4c                _write
+ .text._close   0x0000000010004cf8        0x8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x0000000010004cf8                _close
+ .text._lseek   0x0000000010004d00        0x8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x0000000010004d00                _lseek
+ .text._fstat   0x0000000010004d08        0x8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x0000000010004d08                _fstat
+ .text._isatty  0x0000000010004d10        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x0000000010004d10                _isatty
  .text.stdio_set_driver_enabled
-                0x0000000010004d40       0x30 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
-                0x0000000010004d40                stdio_set_driver_enabled
+                0x0000000010004d1c       0x30 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x0000000010004d1c                stdio_set_driver_enabled
  .text.__wrap_vprintf
-                0x0000000010004d70       0xd8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
-                0x0000000010004d70                __wrap_vprintf
+                0x0000000010004d4c       0xd8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x0000000010004d4c                __wrap_vprintf
  .text.__wrap_printf
-                0x0000000010004e48       0x18 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
-                0x0000000010004e48                __wrap_printf
+                0x0000000010004e24       0x18 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x0000000010004e24                __wrap_printf
  .text.stdio_init_all
-                0x0000000010004e60       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
-                0x0000000010004e60                stdio_init_all
+                0x0000000010004e3c       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x0000000010004e3c                stdio_init_all
  .text.stdio_uart_init
-                0x0000000010004e70        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_uart/stdio_uart.c.obj
-                0x0000000010004e70                stdio_uart_init
+                0x0000000010004e4c        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_uart/stdio_uart.c.obj
+                0x0000000010004e4c                stdio_uart_init
  .text.resetd_init
-                0x0000000010004e74        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
+                0x0000000010004e50        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
  .text.resetd_reset
-                0x0000000010004e78        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
+                0x0000000010004e54        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
  .text.resetd_open
-                0x0000000010004e84       0x28 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
+                0x0000000010004e60       0x28 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
  .text.resetd_xfer_cb
-                0x0000000010004eac        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
+                0x0000000010004e88        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
  .text.resetd_control_xfer_cb
-                0x0000000010004eb0       0x64 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
+                0x0000000010004e8c       0x64 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
  .text.usbd_app_driver_get_cb
-                0x0000000010004f14        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
-                0x0000000010004f14                usbd_app_driver_get_cb
+                0x0000000010004ef0        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
+                0x0000000010004ef0                usbd_app_driver_get_cb
  .text.tud_cdc_line_coding_cb
-                0x0000000010004f20       0x34 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
-                0x0000000010004f20                tud_cdc_line_coding_cb
+                0x0000000010004efc       0x34 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
+                0x0000000010004efc                tud_cdc_line_coding_cb
  .text.stdio_usb_set_chars_available_callback
-                0x0000000010004f54       0x14 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
-                0x0000000010004f54                stdio_usb_set_chars_available_callback
- .text.usb_irq  0x0000000010004f68       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+                0x0000000010004f30       0x14 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+                0x0000000010004f30                stdio_usb_set_chars_available_callback
+ .text.usb_irq  0x0000000010004f44       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
  .text.timer_task
-                0x0000000010004f78       0x54 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+                0x0000000010004f54       0x54 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
  .text.stdio_usb_in_chars
-                0x0000000010004fcc       0x90 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
-                0x0000000010004fcc                stdio_usb_in_chars
+                0x0000000010004fa8       0x90 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+                0x0000000010004fa8                stdio_usb_in_chars
  .text.stdio_usb_out_chars
-                0x000000001000505c      0x100 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+                0x0000000010005038      0x100 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
  .text.low_priority_worker_irq
-                0x000000001000515c       0xa8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+                0x0000000010005138       0xa8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
  .text.tud_cdc_rx_cb
-                0x0000000010005204       0x20 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
-                0x0000000010005204                tud_cdc_rx_cb
+                0x00000000100051e0       0x20 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+                0x00000000100051e0                tud_cdc_rx_cb
  .text.stdio_usb_init
-                0x0000000010005224       0xdc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
-                0x0000000010005224                stdio_usb_init
+                0x0000000010005200       0xdc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+                0x0000000010005200                stdio_usb_init
  .text.tud_descriptor_device_cb
-                0x0000000010005300        0x8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
-                0x0000000010005300                tud_descriptor_device_cb
+                0x00000000100052dc        0x8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
+                0x00000000100052dc                tud_descriptor_device_cb
  .text.tud_descriptor_configuration_cb
-                0x0000000010005308        0x8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
-                0x0000000010005308                tud_descriptor_configuration_cb
+                0x00000000100052e4        0x8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
+                0x00000000100052e4                tud_descriptor_configuration_cb
  .text.tud_descriptor_string_cb
-                0x0000000010005310       0x74 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
-                0x0000000010005310                tud_descriptor_string_cb
+                0x00000000100052ec       0x74 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
+                0x00000000100052ec                tud_descriptor_string_cb
  .text.startup._retrieve_unique_id_on_boot
-                0x0000000010005384       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj
+                0x0000000010005360       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj
  .text.pico_get_unique_board_id_string
-                0x0000000010005394      0x1a8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj
-                0x0000000010005394                pico_get_unique_board_id_string
+                0x0000000010005370      0x1a8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj
+                0x0000000010005370                pico_get_unique_board_id_string
  .text.flash_get_unique_id
-                0x000000001000553c       0x40 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj
-                0x000000001000553c                flash_get_unique_id
+                0x0000000010005518       0x40 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj
+                0x0000000010005518                flash_get_unique_id
  .text.dcd_int_enable
-                0x000000001000557c        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
-                0x000000001000557c                dcd_int_enable
+                0x0000000010005558        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x0000000010005558                dcd_int_enable
  .text.dcd_set_address
-                0x0000000010005588       0x14 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
-                0x0000000010005588                dcd_set_address
+                0x0000000010005564       0x14 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x0000000010005564                dcd_set_address
  .text.dcd_connect
-                0x000000001000559c       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
-                0x000000001000559c                dcd_connect
+                0x0000000010005578       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x0000000010005578                dcd_connect
  .text.dcd_init
-                0x00000000100055ac       0x98 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
-                0x00000000100055ac                dcd_init
+                0x0000000010005588       0x98 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x0000000010005588                dcd_init
  .text.dcd_edpt0_status_complete
-                0x0000000010005644       0x1c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
-                0x0000000010005644                dcd_edpt0_status_complete
+                0x0000000010005620       0x1c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x0000000010005620                dcd_edpt0_status_complete
  .text.dcd_edpt_open
-                0x0000000010005660      0x108 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
-                0x0000000010005660                dcd_edpt_open
+                0x000000001000563c      0x108 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x000000001000563c                dcd_edpt_open
  .text.dcd_edpt_close_all
-                0x0000000010005768        0x8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
-                0x0000000010005768                dcd_edpt_close_all
+                0x0000000010005744        0x8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x0000000010005744                dcd_edpt_close_all
  .text.dcd_edpt_xfer
-                0x0000000010005770       0x24 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
-                0x0000000010005770                dcd_edpt_xfer
+                0x000000001000574c       0x24 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x000000001000574c                dcd_edpt_xfer
  .text.dcd_edpt_stall
-                0x0000000010005794       0x38 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
-                0x0000000010005794                dcd_edpt_stall
+                0x0000000010005770       0x38 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x0000000010005770                dcd_edpt_stall
  .text.dcd_edpt_clear_stall
-                0x00000000100057cc       0x30 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
-                0x00000000100057cc                dcd_edpt_clear_stall
+                0x00000000100057a8       0x30 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x00000000100057a8                dcd_edpt_clear_stall
  .text.rp2040_usb_init
-                0x00000000100057fc       0x4c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj
-                0x00000000100057fc                rp2040_usb_init
+                0x00000000100057d8       0x4c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj
+                0x00000000100057d8                rp2040_usb_init
  .text.hw_endpoint_xfer_start
-                0x0000000010005848       0x50 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj
-                0x0000000010005848                hw_endpoint_xfer_start
+                0x0000000010005824       0x50 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj
+                0x0000000010005824                hw_endpoint_xfer_start
  .text.tud_mounted
-                0x0000000010005898       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x0000000010005898                tud_mounted
+                0x0000000010005874       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x0000000010005874                tud_mounted
  .text.tud_suspended
-                0x00000000100058a8       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x00000000100058a8                tud_suspended
+                0x0000000010005884       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x0000000010005884                tud_suspended
  .text.tud_inited
-                0x00000000100058b8       0x14 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x00000000100058b8                tud_inited
+                0x0000000010005894       0x14 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x0000000010005894                tud_inited
  .text.tud_init
-                0x00000000100058cc       0xe4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x00000000100058cc                tud_init
+                0x00000000100058a8       0xe4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x00000000100058a8                tud_init
  .text.tud_task_ext
-                0x00000000100059b0      0x854 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x00000000100059b0                tud_task_ext
+                0x000000001000598c      0x854 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x000000001000598c                tud_task_ext
  .text.usbd_open_edpt_pair
-                0x0000000010006204       0x9c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x0000000010006204                usbd_open_edpt_pair
+                0x00000000100061e0       0x9c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x00000000100061e0                usbd_open_edpt_pair
  .text.usbd_defer_func
-                0x00000000100062a0       0x48 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x00000000100062a0                usbd_defer_func
+                0x000000001000627c       0x48 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x000000001000627c                usbd_defer_func
  .text.usbd_edpt_open
-                0x00000000100062e8       0x34 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x00000000100062e8                usbd_edpt_open
+                0x00000000100062c4       0x34 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x00000000100062c4                usbd_edpt_open
  .text.usbd_edpt_claim
-                0x000000001000631c       0x28 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x000000001000631c                usbd_edpt_claim
+                0x00000000100062f8       0x28 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x00000000100062f8                usbd_edpt_claim
  .text.usbd_edpt_release
-                0x0000000010006344       0x28 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x0000000010006344                usbd_edpt_release
+                0x0000000010006320       0x28 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x0000000010006320                usbd_edpt_release
  .text.usbd_edpt_xfer
-                0x000000001000636c       0x4c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x000000001000636c                usbd_edpt_xfer
+                0x0000000010006348       0x4c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x0000000010006348                usbd_edpt_xfer
  .text.tud_control_status
-                0x00000000100063b8       0x30 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
-                0x00000000100063b8                tud_control_status
+                0x0000000010006394       0x30 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
+                0x0000000010006394                tud_control_status
  .text.tud_control_xfer
-                0x00000000100063e8       0xbc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
-                0x00000000100063e8                tud_control_xfer
+                0x00000000100063c4       0xbc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
+                0x00000000100063c4                tud_control_xfer
  .text.usbd_control_reset
-                0x00000000100064a4       0x14 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
-                0x00000000100064a4                usbd_control_reset
+                0x0000000010006480       0x14 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
+                0x0000000010006480                usbd_control_reset
  .text.usbd_control_set_complete_callback
-                0x00000000100064b8        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
-                0x00000000100064b8                usbd_control_set_complete_callback
+                0x0000000010006494        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
+                0x0000000010006494                usbd_control_set_complete_callback
  .text.usbd_control_set_request
-                0x00000000100064c4       0x1c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
-                0x00000000100064c4                usbd_control_set_request
+                0x00000000100064a0       0x1c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
+                0x00000000100064a0                usbd_control_set_request
  .text.usbd_control_xfer_cb
-                0x00000000100064e0       0xfc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
-                0x00000000100064e0                usbd_control_xfer_cb
+                0x00000000100064bc       0xfc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
+                0x00000000100064bc                usbd_control_xfer_cb
  .text.tud_cdc_n_connected
-                0x00000000100065dc       0x30 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
-                0x00000000100065dc                tud_cdc_n_connected
+                0x00000000100065b8       0x30 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+                0x00000000100065b8                tud_cdc_n_connected
  .text.tud_cdc_n_available
-                0x000000001000660c       0x18 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
-                0x000000001000660c                tud_cdc_n_available
+                0x00000000100065e8       0x18 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+                0x00000000100065e8                tud_cdc_n_available
  .text.tud_cdc_n_read
-                0x0000000010006624       0x70 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
-                0x0000000010006624                tud_cdc_n_read
+                0x0000000010006600       0x70 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+                0x0000000010006600                tud_cdc_n_read
  .text.tud_cdc_n_write_flush
-                0x0000000010006694       0x78 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
-                0x0000000010006694                tud_cdc_n_write_flush
+                0x0000000010006670       0x78 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+                0x0000000010006670                tud_cdc_n_write_flush
  .text.tud_cdc_n_write
-                0x000000001000670c       0x34 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
-                0x000000001000670c                tud_cdc_n_write
+                0x00000000100066e8       0x34 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+                0x00000000100066e8                tud_cdc_n_write
  .text.tud_cdc_n_write_available
-                0x0000000010006740       0x18 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
-                0x0000000010006740                tud_cdc_n_write_available
+                0x000000001000671c       0x18 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+                0x000000001000671c                tud_cdc_n_write_available
  .text.cdcd_init
-                0x0000000010006758       0x7c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
-                0x0000000010006758                cdcd_init
+                0x0000000010006734       0x7c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+                0x0000000010006734                cdcd_init
  .text.cdcd_reset
-                0x00000000100067d4       0x2c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
-                0x00000000100067d4                cdcd_reset
+                0x00000000100067b0       0x2c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+                0x00000000100067b0                cdcd_reset
  .text.cdcd_open
-                0x0000000010006800       0xe8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
-                0x0000000010006800                cdcd_open
+                0x00000000100067dc       0xe8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+                0x00000000100067dc                cdcd_open
  .text.cdcd_control_xfer_cb
-                0x00000000100068e8       0xe4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
-                0x00000000100068e8                cdcd_control_xfer_cb
+                0x00000000100068c4       0xe4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+                0x00000000100068c4                cdcd_control_xfer_cb
  .text.cdcd_xfer_cb
-                0x00000000100069cc      0x148 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
-                0x00000000100069cc                cdcd_xfer_cb
+                0x00000000100069a8      0x148 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
+                0x00000000100069a8                cdcd_xfer_cb
  .text.tusb_init
-                0x0000000010006b14        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/tusb.c.obj
-                0x0000000010006b14                tusb_init
+                0x0000000010006af0        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/tusb.c.obj
+                0x0000000010006af0                tusb_init
  .text.tusb_inited
-                0x0000000010006b20        0x8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/tusb.c.obj
-                0x0000000010006b20                tusb_inited
+                0x0000000010006afc        0x8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/tusb.c.obj
+                0x0000000010006afc                tusb_inited
  .text.tu_edpt_claim
-                0x0000000010006b28       0x50 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/tusb.c.obj
-                0x0000000010006b28                tu_edpt_claim
+                0x0000000010006b04       0x50 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/tusb.c.obj
+                0x0000000010006b04                tu_edpt_claim
  .text.tu_edpt_release
-                0x0000000010006b78       0x38 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/tusb.c.obj
-                0x0000000010006b78                tu_edpt_release
+                0x0000000010006b54       0x38 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/tusb.c.obj
+                0x0000000010006b54                tu_edpt_release
  .text.tu_edpt_validate
-                0x0000000010006bb0       0x78 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/tusb.c.obj
-                0x0000000010006bb0                tu_edpt_validate
+                0x0000000010006b8c       0x78 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/tusb.c.obj
+                0x0000000010006b8c                tu_edpt_validate
  .text.tu_edpt_bind_driver
-                0x0000000010006c28       0x34 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/tusb.c.obj
-                0x0000000010006c28                tu_edpt_bind_driver
+                0x0000000010006c04       0x34 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/tusb.c.obj
+                0x0000000010006c04                tu_edpt_bind_driver
  .text.tu_fifo_config
-                0x0000000010006c5c       0x70 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
-                0x0000000010006c5c                tu_fifo_config
+                0x0000000010006c38       0x70 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+                0x0000000010006c38                tu_fifo_config
  .text.tu_fifo_count
-                0x0000000010006ccc       0x2c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
-                0x0000000010006ccc                tu_fifo_count
+                0x0000000010006ca8       0x2c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+                0x0000000010006ca8                tu_fifo_count
  .text.tu_fifo_empty
-                0x0000000010006cf8       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
-                0x0000000010006cf8                tu_fifo_empty
+                0x0000000010006cd4       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+                0x0000000010006cd4                tu_fifo_empty
  .text.tu_fifo_remaining
-                0x0000000010006d08       0x2c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
-                0x0000000010006d08                tu_fifo_remaining
+                0x0000000010006ce4       0x2c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+                0x0000000010006ce4                tu_fifo_remaining
  .text.tu_fifo_read
-                0x0000000010006d34       0xa0 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
-                0x0000000010006d34                tu_fifo_read
+                0x0000000010006d10       0xa0 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+                0x0000000010006d10                tu_fifo_read
  .text.tu_fifo_read_n
-                0x0000000010006dd4       0xec CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
-                0x0000000010006dd4                tu_fifo_read_n
+                0x0000000010006db0       0xec CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+                0x0000000010006db0                tu_fifo_read_n
  .text.tu_fifo_write
-                0x0000000010006ec0       0x88 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
-                0x0000000010006ec0                tu_fifo_write
+                0x0000000010006e9c       0x88 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+                0x0000000010006e9c                tu_fifo_write
  .text.tu_fifo_write_n
-                0x0000000010006f48      0x168 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
-                0x0000000010006f48                tu_fifo_write_n
+                0x0000000010006f24      0x168 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+                0x0000000010006f24                tu_fifo_write_n
  .text.tu_fifo_clear
-                0x00000000100070b0       0x40 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
-                0x00000000100070b0                tu_fifo_clear
+                0x000000001000708c       0x40 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+                0x000000001000708c                tu_fifo_clear
  .text.tu_fifo_set_overwritable
-                0x00000000100070f0       0x48 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
-                0x00000000100070f0                tu_fifo_set_overwritable
+                0x00000000100070cc       0x48 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+                0x00000000100070cc                tu_fifo_set_overwritable
  .text.spi_init
-                0x0000000010007138      0x138 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_spi/spi.c.obj
-                0x0000000010007138                spi_init
+                0x0000000010007114      0x138 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_spi/spi.c.obj
+                0x0000000010007114                spi_init
  .text.lf_tag_compare
-                0x0000000010007270       0x38 core/libcore.a(tag.c.obj)
-                0x0000000010007270                lf_tag_compare
+                0x000000001000724c       0x38 core/libcore.a(tag.c.obj)
+                0x000000001000724c                lf_tag_compare
  .text.lf_time_logical
-                0x00000000100072a8        0x8 core/libcore.a(tag.c.obj)
-                0x00000000100072a8                lf_time_logical
+                0x0000000010007284        0x8 core/libcore.a(tag.c.obj)
+                0x0000000010007284                lf_time_logical
  .text.lf_time_logical_elapsed
-                0x00000000100072b0       0x14 core/libcore.a(tag.c.obj)
-                0x00000000100072b0                lf_time_logical_elapsed
+                0x000000001000728c       0x14 core/libcore.a(tag.c.obj)
+                0x000000001000728c                lf_time_logical_elapsed
  .text.lf_time_physical
-                0x00000000100072c4       0x60 core/libcore.a(tag.c.obj)
-                0x00000000100072c4                lf_time_physical
+                0x00000000100072a0       0x60 core/libcore.a(tag.c.obj)
+                0x00000000100072a0                lf_time_physical
  .text.lf_time_physical_elapsed
-                0x0000000010007324       0x6c core/libcore.a(tag.c.obj)
-                0x0000000010007324                lf_time_physical_elapsed
+                0x0000000010007300       0x6c core/libcore.a(tag.c.obj)
+                0x0000000010007300                lf_time_physical_elapsed
  .text.lf_comma_separated_time
-                0x0000000010007390      0x274 core/libcore.a(tag.c.obj)
-                0x0000000010007390                lf_comma_separated_time
+                0x000000001000736c      0x274 core/libcore.a(tag.c.obj)
+                0x000000001000736c                lf_comma_separated_time
  .text._lf_allocate
-                0x0000000010007604       0x3c core/libcore.a(reactor_common.c.obj)
-                0x0000000010007604                _lf_allocate
+                0x00000000100075e0       0x3c core/libcore.a(reactor_common.c.obj)
+                0x00000000100075e0                _lf_allocate
  .text._lf_new_reactor
-                0x0000000010007640       0x40 core/libcore.a(reactor_common.c.obj)
-                0x0000000010007640                _lf_new_reactor
+                0x000000001000761c       0x40 core/libcore.a(reactor_common.c.obj)
+                0x000000001000761c                _lf_new_reactor
  .text._lf_set_stop_tag
-                0x0000000010007680       0x3c core/libcore.a(reactor_common.c.obj)
-                0x0000000010007680                _lf_set_stop_tag
+                0x000000001000765c       0x3c core/libcore.a(reactor_common.c.obj)
+                0x000000001000765c                _lf_set_stop_tag
  .text._lf_start_time_step
-                0x00000000100076bc       0x68 core/libcore.a(reactor_common.c.obj)
-                0x00000000100076bc                _lf_start_time_step
+                0x0000000010007698       0x68 core/libcore.a(reactor_common.c.obj)
+                0x0000000010007698                _lf_start_time_step
  .text._lf_is_tag_after_stop_tag
-                0x0000000010007724       0x30 core/libcore.a(reactor_common.c.obj)
-                0x0000000010007724                _lf_is_tag_after_stop_tag
+                0x0000000010007700       0x30 core/libcore.a(reactor_common.c.obj)
+                0x0000000010007700                _lf_is_tag_after_stop_tag
  .text._lf_initialize_timer
-                0x0000000010007754       0x88 core/libcore.a(reactor_common.c.obj)
-                0x0000000010007754                _lf_initialize_timer
+                0x0000000010007730       0x88 core/libcore.a(reactor_common.c.obj)
+                0x0000000010007730                _lf_initialize_timer
  .text._lf_initialize_timers
-                0x00000000100077dc       0x30 core/libcore.a(reactor_common.c.obj)
-                0x00000000100077dc                _lf_initialize_timers
+                0x00000000100077b8       0x30 core/libcore.a(reactor_common.c.obj)
+                0x00000000100077b8                _lf_initialize_timers
  .text._lf_trigger_startup_reactions
-                0x000000001000780c       0x38 core/libcore.a(reactor_common.c.obj)
-                0x000000001000780c                _lf_trigger_startup_reactions
+                0x00000000100077e8       0x38 core/libcore.a(reactor_common.c.obj)
+                0x00000000100077e8                _lf_trigger_startup_reactions
  .text._lf_trigger_shutdown_reactions
-                0x0000000010007844       0x38 core/libcore.a(reactor_common.c.obj)
-                0x0000000010007844                _lf_trigger_shutdown_reactions
+                0x0000000010007820       0x38 core/libcore.a(reactor_common.c.obj)
+                0x0000000010007820                _lf_trigger_shutdown_reactions
  .text._lf_schedule
-                0x000000001000787c      0x2c4 core/libcore.a(reactor_common.c.obj)
-                0x000000001000787c                _lf_schedule
+                0x0000000010007858      0x2c4 core/libcore.a(reactor_common.c.obj)
+                0x0000000010007858                _lf_schedule
  .text._lf_pop_events
-                0x0000000010007b40      0x118 core/libcore.a(reactor_common.c.obj)
-                0x0000000010007b40                _lf_pop_events
+                0x0000000010007b1c      0x118 core/libcore.a(reactor_common.c.obj)
+                0x0000000010007b1c                _lf_pop_events
  .text._lf_advance_logical_time
-                0x0000000010007c58       0x38 core/libcore.a(reactor_common.c.obj)
-                0x0000000010007c58                _lf_advance_logical_time
+                0x0000000010007c34       0x38 core/libcore.a(reactor_common.c.obj)
+                0x0000000010007c34                _lf_advance_logical_time
  .text._lf_invoke_reaction
-                0x0000000010007c90       0x14 core/libcore.a(reactor_common.c.obj)
-                0x0000000010007c90                _lf_invoke_reaction
+                0x0000000010007c6c       0x14 core/libcore.a(reactor_common.c.obj)
+                0x0000000010007c6c                _lf_invoke_reaction
  .text.schedule_output_reactions
-                0x0000000010007ca4      0x150 core/libcore.a(reactor_common.c.obj)
-                0x0000000010007ca4                schedule_output_reactions
- .text.usage    0x0000000010007df4       0xb0 core/libcore.a(reactor_common.c.obj)
-                0x0000000010007df4                usage
+                0x0000000010007c80      0x150 core/libcore.a(reactor_common.c.obj)
+                0x0000000010007c80                schedule_output_reactions
+ .text.usage    0x0000000010007dd0       0xb0 core/libcore.a(reactor_common.c.obj)
+                0x0000000010007dd0                usage
  .text.process_args
-                0x0000000010007ea4      0x414 core/libcore.a(reactor_common.c.obj)
-                0x0000000010007ea4                process_args
+                0x0000000010007e80      0x414 core/libcore.a(reactor_common.c.obj)
+                0x0000000010007e80                process_args
  .text.initialize_global
-                0x00000000100082b8       0x24 core/libcore.a(reactor_common.c.obj)
-                0x00000000100082b8                initialize_global
+                0x0000000010008294       0x24 core/libcore.a(reactor_common.c.obj)
+                0x0000000010008294                initialize_global
  .text.termination
-                0x00000000100082dc      0x194 core/libcore.a(reactor_common.c.obj)
-                0x00000000100082dc                termination
+                0x00000000100082b8      0x194 core/libcore.a(reactor_common.c.obj)
+                0x00000000100082b8                termination
  .text._lf_free_token.part.0
-                0x0000000010008470       0xcc core/libcore.a(lf_token.c.obj)
+                0x000000001000844c       0xcc core/libcore.a(lf_token.c.obj)
  .text._lf_new_token
-                0x000000001000853c       0xb4 core/libcore.a(lf_token.c.obj)
-                0x000000001000853c                _lf_new_token
+                0x0000000010008518       0xb4 core/libcore.a(lf_token.c.obj)
+                0x0000000010008518                _lf_new_token
  .text._lf_initialize_token_with_value
-                0x00000000100085f0       0x80 core/libcore.a(lf_token.c.obj)
-                0x00000000100085f0                _lf_initialize_token_with_value
+                0x00000000100085cc       0x80 core/libcore.a(lf_token.c.obj)
+                0x00000000100085cc                _lf_initialize_token_with_value
  .text._lf_free_all_tokens
-                0x0000000010008670       0xe0 core/libcore.a(lf_token.c.obj)
-                0x0000000010008670                _lf_free_all_tokens
+                0x000000001000864c       0xe0 core/libcore.a(lf_token.c.obj)
+                0x000000001000864c                _lf_free_all_tokens
  .text._lf_replace_template_token
-                0x0000000010008750       0x44 core/libcore.a(lf_token.c.obj)
-                0x0000000010008750                _lf_replace_template_token
+                0x000000001000872c       0x44 core/libcore.a(lf_token.c.obj)
+                0x000000001000872c                _lf_replace_template_token
  .text._lf_done_using
-                0x0000000010008794       0x2c core/libcore.a(lf_token.c.obj)
-                0x0000000010008794                _lf_done_using
+                0x0000000010008770       0x2c core/libcore.a(lf_token.c.obj)
+                0x0000000010008770                _lf_done_using
  .text._lf_free_token_copies
-                0x00000000100087c0       0x44 core/libcore.a(lf_token.c.obj)
-                0x00000000100087c0                _lf_free_token_copies
+                0x000000001000879c       0x44 core/libcore.a(lf_token.c.obj)
+                0x000000001000879c                _lf_free_token_copies
  .text.environment_init_tags
-                0x0000000010008804       0x58 core/libcore.a(environment.c.obj)
-                0x0000000010008804                environment_init_tags
+                0x00000000100087e0       0x58 core/libcore.a(environment.c.obj)
+                0x00000000100087e0                environment_init_tags
  .text.environment_free
-                0x000000001000885c       0x44 core/libcore.a(environment.c.obj)
-                0x000000001000885c                environment_free
+                0x0000000010008838       0x44 core/libcore.a(environment.c.obj)
+                0x0000000010008838                environment_free
  .text.environment_init
-                0x00000000100088a0      0x188 core/libcore.a(environment.c.obj)
-                0x00000000100088a0                environment_init
+                0x000000001000887c      0x188 core/libcore.a(environment.c.obj)
+                0x000000001000887c                environment_init
  .text._lf_set_present
-                0x0000000010008a28       0x4c core/libcore.a(reactor.c.obj)
-                0x0000000010008a28                _lf_set_present
+                0x0000000010008a04       0x4c core/libcore.a(reactor.c.obj)
+                0x0000000010008a04                _lf_set_present
  .text._lf_trigger_reaction
-                0x0000000010008a74       0x28 core/libcore.a(reactor.c.obj)
-                0x0000000010008a74                _lf_trigger_reaction
+                0x0000000010008a50       0x28 core/libcore.a(reactor.c.obj)
+                0x0000000010008a50                _lf_trigger_reaction
  .text._lf_do_step
-                0x0000000010008a9c       0xb0 core/libcore.a(reactor.c.obj)
-                0x0000000010008a9c                _lf_do_step
- .text.next     0x0000000010008b4c      0x138 core/libcore.a(reactor.c.obj)
-                0x0000000010008b4c                next
+                0x0000000010008a78       0xb0 core/libcore.a(reactor.c.obj)
+                0x0000000010008a78                _lf_do_step
+ .text.next     0x0000000010008b28      0x138 core/libcore.a(reactor.c.obj)
+                0x0000000010008b28                next
  .text.lf_reactor_c_main
-                0x0000000010008c84       0xf8 core/libcore.a(reactor.c.obj)
-                0x0000000010008c84                lf_reactor_c_main
+                0x0000000010008c60       0xf8 core/libcore.a(reactor.c.obj)
+                0x0000000010008c60                lf_reactor_c_main
  .text.lf_critical_section_enter
-                0x0000000010008d7c        0x8 core/libcore.a(reactor.c.obj)
-                0x0000000010008d7c                lf_critical_section_enter
+                0x0000000010008d58        0x8 core/libcore.a(reactor.c.obj)
+                0x0000000010008d58                lf_critical_section_enter
  .text.lf_critical_section_exit
-                0x0000000010008d84        0x8 core/libcore.a(reactor.c.obj)
-                0x0000000010008d84                lf_critical_section_exit
+                0x0000000010008d60        0x8 core/libcore.a(reactor.c.obj)
+                0x0000000010008d60                lf_critical_section_exit
  .text.vector_at
-                0x0000000010008d8c       0x54 core/libcore.a(vector.c.obj)
-                0x0000000010008d8c                vector_at
+                0x0000000010008d68       0x54 core/libcore.a(vector.c.obj)
+                0x0000000010008d68                vector_at
  .text.vector_size
-                0x0000000010008de0        0x8 core/libcore.a(vector.c.obj)
-                0x0000000010008de0                vector_size
+                0x0000000010008dbc        0x8 core/libcore.a(vector.c.obj)
+                0x0000000010008dbc                vector_size
  .text.percolate_down
-                0x0000000010008de8       0xd8 core/libcore.a(pqueue.c.obj)
+                0x0000000010008dc4       0xd8 core/libcore.a(pqueue.c.obj)
  .text.bubble_up.isra.0
-                0x0000000010008ec0       0x84 core/libcore.a(pqueue.c.obj)
+                0x0000000010008e9c       0x84 core/libcore.a(pqueue.c.obj)
  .text.find_equal_same_priority
-                0x0000000010008f44       0xa8 core/libcore.a(pqueue.c.obj)
-                0x0000000010008f44                find_equal_same_priority
+                0x0000000010008f20       0xa8 core/libcore.a(pqueue.c.obj)
+                0x0000000010008f20                find_equal_same_priority
  .text.pqueue_init
-                0x0000000010008fec       0x54 core/libcore.a(pqueue.c.obj)
-                0x0000000010008fec                pqueue_init
+                0x0000000010008fc8       0x54 core/libcore.a(pqueue.c.obj)
+                0x0000000010008fc8                pqueue_init
  .text.pqueue_free
-                0x0000000010009040       0x14 core/libcore.a(pqueue.c.obj)
-                0x0000000010009040                pqueue_free
+                0x000000001000901c       0x14 core/libcore.a(pqueue.c.obj)
+                0x000000001000901c                pqueue_free
  .text.pqueue_size
-                0x0000000010009054       0x10 core/libcore.a(pqueue.c.obj)
-                0x0000000010009054                pqueue_size
+                0x0000000010009030       0x10 core/libcore.a(pqueue.c.obj)
+                0x0000000010009030                pqueue_size
  .text.pqueue_find_equal_same_priority
-                0x0000000010009064        0xc core/libcore.a(pqueue.c.obj)
-                0x0000000010009064                pqueue_find_equal_same_priority
+                0x0000000010009040        0xc core/libcore.a(pqueue.c.obj)
+                0x0000000010009040                pqueue_find_equal_same_priority
  .text.pqueue_insert
-                0x0000000010009070       0x44 core/libcore.a(pqueue.c.obj)
-                0x0000000010009070                pqueue_insert
+                0x000000001000904c       0x44 core/libcore.a(pqueue.c.obj)
+                0x000000001000904c                pqueue_insert
  .text.pqueue_pop
-                0x00000000100090b4       0x28 core/libcore.a(pqueue.c.obj)
-                0x00000000100090b4                pqueue_pop
+                0x0000000010009090       0x28 core/libcore.a(pqueue.c.obj)
+                0x0000000010009090                pqueue_pop
  .text.pqueue_peek
-                0x00000000100090dc       0x14 core/libcore.a(pqueue.c.obj)
-                0x00000000100090dc                pqueue_peek
+                0x00000000100090b8       0x14 core/libcore.a(pqueue.c.obj)
+                0x00000000100090b8                pqueue_peek
  .text.in_reverse_order
-                0x00000000100090f0       0x18 core/libcore.a(pqueue.c.obj)
-                0x00000000100090f0                in_reverse_order
+                0x00000000100090cc       0x18 core/libcore.a(pqueue.c.obj)
+                0x00000000100090cc                in_reverse_order
  .text.in_no_particular_order
-                0x0000000010009108        0x4 core/libcore.a(pqueue.c.obj)
-                0x0000000010009108                in_no_particular_order
+                0x00000000100090e4        0x4 core/libcore.a(pqueue.c.obj)
+                0x00000000100090e4                in_no_particular_order
  .text.event_matches
-                0x000000001000910c        0xc core/libcore.a(pqueue.c.obj)
-                0x000000001000910c                event_matches
+                0x00000000100090e8        0xc core/libcore.a(pqueue.c.obj)
+                0x00000000100090e8                event_matches
  .text.reaction_matches
-                0x0000000010009118        0x8 core/libcore.a(pqueue.c.obj)
-                0x0000000010009118                reaction_matches
+                0x00000000100090f4        0x8 core/libcore.a(pqueue.c.obj)
+                0x00000000100090f4                reaction_matches
  .text.get_event_time
-                0x0000000010009120        0x8 core/libcore.a(pqueue.c.obj)
-                0x0000000010009120                get_event_time
+                0x00000000100090fc        0x8 core/libcore.a(pqueue.c.obj)
+                0x00000000100090fc                get_event_time
  .text.get_reaction_index
-                0x0000000010009128        0x8 core/libcore.a(pqueue.c.obj)
-                0x0000000010009128                get_reaction_index
+                0x0000000010009104        0x8 core/libcore.a(pqueue.c.obj)
+                0x0000000010009104                get_reaction_index
  .text.get_event_position
-                0x0000000010009130        0x4 core/libcore.a(pqueue.c.obj)
-                0x0000000010009130                get_event_position
+                0x000000001000910c        0x4 core/libcore.a(pqueue.c.obj)
+                0x000000001000910c                get_event_position
  .text.get_reaction_position
-                0x0000000010009134        0x4 core/libcore.a(pqueue.c.obj)
-                0x0000000010009134                get_reaction_position
+                0x0000000010009110        0x4 core/libcore.a(pqueue.c.obj)
+                0x0000000010009110                get_reaction_position
  .text.set_event_position
-                0x0000000010009138        0x4 core/libcore.a(pqueue.c.obj)
-                0x0000000010009138                set_event_position
+                0x0000000010009114        0x4 core/libcore.a(pqueue.c.obj)
+                0x0000000010009114                set_event_position
  .text.set_reaction_position
-                0x000000001000913c        0x4 core/libcore.a(pqueue.c.obj)
-                0x000000001000913c                set_reaction_position
+                0x0000000010009118        0x4 core/libcore.a(pqueue.c.obj)
+                0x0000000010009118                set_reaction_position
  .text.print_reaction
-                0x0000000010009140        0x4 core/libcore.a(pqueue.c.obj)
-                0x0000000010009140                print_reaction
+                0x000000001000911c        0x4 core/libcore.a(pqueue.c.obj)
+                0x000000001000911c                print_reaction
  .text.print_event
-                0x0000000010009144        0x4 core/libcore.a(pqueue.c.obj)
-                0x0000000010009144                print_event
+                0x0000000010009120        0x4 core/libcore.a(pqueue.c.obj)
+                0x0000000010009120                print_event
  .text._lf_message_print
-                0x0000000010009148       0xc0 core/libcore.a(util.c.obj)
-                0x0000000010009148                _lf_message_print
+                0x0000000010009124       0xc0 core/libcore.a(util.c.obj)
+                0x0000000010009124                _lf_message_print
  .text.lf_print
-                0x0000000010009208       0x88 core/libcore.a(util.c.obj)
-                0x0000000010009208                lf_print
+                0x00000000100091e4       0x88 core/libcore.a(util.c.obj)
+                0x00000000100091e4                lf_print
  .text.lf_print_error
-                0x0000000010009290       0x88 core/libcore.a(util.c.obj)
-                0x0000000010009290                lf_print_error
+                0x000000001000926c       0x88 core/libcore.a(util.c.obj)
+                0x000000001000926c                lf_print_error
  .text.lf_print_warning
-                0x0000000010009318       0x88 core/libcore.a(util.c.obj)
-                0x0000000010009318                lf_print_warning
+                0x00000000100092f4       0x88 core/libcore.a(util.c.obj)
+                0x00000000100092f4                lf_print_warning
  .text.lf_print_error_and_exit
-                0x00000000100093a0       0x24 core/libcore.a(util.c.obj)
-                0x00000000100093a0                lf_print_error_and_exit
+                0x000000001000937c       0x24 core/libcore.a(util.c.obj)
+                0x000000001000937c                lf_print_error_and_exit
  .text.lf_assert
-                0x00000000100093c4       0x2c core/libcore.a(util.c.obj)
-                0x00000000100093c4                lf_assert
+                0x00000000100093a0       0x2c core/libcore.a(util.c.obj)
+                0x00000000100093a0                lf_assert
  .text.hashset_num_items
-                0x00000000100093f0        0x4 core/libcore.a(hashset.c.obj)
-                0x00000000100093f0                hashset_num_items
+                0x00000000100093cc        0x4 core/libcore.a(hashset.c.obj)
+                0x00000000100093cc                hashset_num_items
  .text.hashset_destroy
-                0x00000000100093f4       0x18 core/libcore.a(hashset.c.obj)
-                0x00000000100093f4                hashset_destroy
+                0x00000000100093d0       0x18 core/libcore.a(hashset.c.obj)
+                0x00000000100093d0                hashset_destroy
  .text.hashset_create
-                0x000000001000940c       0x40 core/libcore.a(hashset.c.obj)
-                0x000000001000940c                hashset_create
+                0x00000000100093e8       0x40 core/libcore.a(hashset.c.obj)
+                0x00000000100093e8                hashset_create
  .text.hashset_add
-                0x000000001000944c      0x180 core/libcore.a(hashset.c.obj)
-                0x000000001000944c                hashset_add
+                0x0000000010009428      0x180 core/libcore.a(hashset.c.obj)
+                0x0000000010009428                hashset_add
  .text.hashset_remove
-                0x00000000100095cc       0x50 core/libcore.a(hashset.c.obj)
-                0x00000000100095cc                hashset_remove
+                0x00000000100095a8       0x50 core/libcore.a(hashset.c.obj)
+                0x00000000100095a8                hashset_remove
  .text.hashset_iterator
-                0x000000001000961c       0x1c core/libcore.a(hashset_itr.c.obj)
-                0x000000001000961c                hashset_iterator
+                0x00000000100095f8       0x1c core/libcore.a(hashset_itr.c.obj)
+                0x00000000100095f8                hashset_iterator
  .text.hashset_iterator_next
-                0x0000000010009638       0x34 core/libcore.a(hashset_itr.c.obj)
-                0x0000000010009638                hashset_iterator_next
+                0x0000000010009614       0x34 core/libcore.a(hashset_itr.c.obj)
+                0x0000000010009614                hashset_iterator_next
  .text.hashset_iterator_value
-                0x000000001000966c        0xc core/libcore.a(hashset_itr.c.obj)
-                0x000000001000966c                hashset_iterator_value
+                0x0000000010009648        0xc core/libcore.a(hashset_itr.c.obj)
+                0x0000000010009648                hashset_iterator_value
  .text._lf_initialize_clock
-                0x0000000010009678       0x20 core/libcore.a(lf_rp2040_support.c.obj)
-                0x0000000010009678                _lf_initialize_clock
+                0x0000000010009654       0x20 core/libcore.a(lf_rp2040_support.c.obj)
+                0x0000000010009654                _lf_initialize_clock
  .text._lf_clock_now
-                0x0000000010009698       0x24 core/libcore.a(lf_rp2040_support.c.obj)
-                0x0000000010009698                _lf_clock_now
+                0x0000000010009674       0x24 core/libcore.a(lf_rp2040_support.c.obj)
+                0x0000000010009674                _lf_clock_now
  .text._lf_interruptable_sleep_until_locked
-                0x00000000100096bc       0x48 core/libcore.a(lf_rp2040_support.c.obj)
-                0x00000000100096bc                _lf_interruptable_sleep_until_locked
+                0x0000000010009698       0x48 core/libcore.a(lf_rp2040_support.c.obj)
+                0x0000000010009698                _lf_interruptable_sleep_until_locked
  .text.lf_disable_interrupts_nested
-                0x0000000010009704       0x3c core/libcore.a(lf_rp2040_support.c.obj)
-                0x0000000010009704                lf_disable_interrupts_nested
+                0x00000000100096e0       0x3c core/libcore.a(lf_rp2040_support.c.obj)
+                0x00000000100096e0                lf_disable_interrupts_nested
  .text.lf_enable_interrupts_nested
-                0x0000000010009740       0x34 core/libcore.a(lf_rp2040_support.c.obj)
-                0x0000000010009740                lf_enable_interrupts_nested
+                0x000000001000971c       0x34 core/libcore.a(lf_rp2040_support.c.obj)
+                0x000000001000971c                lf_enable_interrupts_nested
  .text.color32_0
-                0x0000000010009774        0x8 robot/librobot.a(display.c.obj)
-                0x0000000010009774                color32_0
+                0x0000000010009750        0x8 robot/librobot.a(display.c.obj)
+                0x0000000010009750                color32_0
  .text.color32_1
-                0x000000001000977c        0x8 robot/librobot.a(display.c.obj)
-                0x000000001000977c                color32_1
+                0x0000000010009758        0x8 robot/librobot.a(display.c.obj)
+                0x0000000010009758                color32_1
  .text.color32_0_on_1
-                0x0000000010009784        0x8 robot/librobot.a(display.c.obj)
-                0x0000000010009784                color32_0_on_1
+                0x0000000010009760        0x8 robot/librobot.a(display.c.obj)
+                0x0000000010009760                color32_0_on_1
  .text.color32_1_on_0
-                0x000000001000978c        0x4 robot/librobot.a(display.c.obj)
-                0x000000001000978c                color32_1_on_0
+                0x0000000010009768        0x4 robot/librobot.a(display.c.obj)
+                0x0000000010009768                color32_1_on_0
  .text.color32_xor
-                0x0000000010009790        0x8 robot/librobot.a(display.c.obj)
-                0x0000000010009790                color32_xor
+                0x000000001000976c        0x8 robot/librobot.a(display.c.obj)
+                0x000000001000976c                color32_xor
  .text.color32_nop
-                0x0000000010009798        0x4 robot/librobot.a(display.c.obj)
-                0x0000000010009798                color32_nop
+                0x0000000010009774        0x4 robot/librobot.a(display.c.obj)
+                0x0000000010009774                color32_nop
  .text.color8_0
-                0x000000001000979c        0x8 robot/librobot.a(display.c.obj)
-                0x000000001000979c                color8_0
+                0x0000000010009778        0x8 robot/librobot.a(display.c.obj)
+                0x0000000010009778                color8_0
  .text.color8_1
-                0x00000000100097a4        0x8 robot/librobot.a(display.c.obj)
-                0x00000000100097a4                color8_1
+                0x0000000010009780        0x8 robot/librobot.a(display.c.obj)
+                0x0000000010009780                color8_1
  .text.color8_0_on_1
-                0x00000000100097ac        0x8 robot/librobot.a(display.c.obj)
-                0x00000000100097ac                color8_0_on_1
+                0x0000000010009788        0x8 robot/librobot.a(display.c.obj)
+                0x0000000010009788                color8_0_on_1
  .text.color8_1_on_0
-                0x00000000100097b4        0x4 robot/librobot.a(display.c.obj)
-                0x00000000100097b4                color8_1_on_0
+                0x0000000010009790        0x4 robot/librobot.a(display.c.obj)
+                0x0000000010009790                color8_1_on_0
  .text.color8_xor
-                0x00000000100097b8        0x8 robot/librobot.a(display.c.obj)
-                0x00000000100097b8                color8_xor
+                0x0000000010009794        0x8 robot/librobot.a(display.c.obj)
+                0x0000000010009794                color8_xor
  .text.color8_nop
-                0x00000000100097c0        0x4 robot/librobot.a(display.c.obj)
-                0x00000000100097c0                color8_nop
+                0x000000001000979c        0x4 robot/librobot.a(display.c.obj)
+                0x000000001000979c                color8_nop
  .text.display_set_font
-                0x00000000100097c4        0xc robot/librobot.a(display.c.obj)
-                0x00000000100097c4                display_set_font
+                0x00000000100097a0        0xc robot/librobot.a(display.c.obj)
+                0x00000000100097a0                display_set_font
  .text.display_init
-                0x00000000100097d0       0x18 robot/librobot.a(display.c.obj)
-                0x00000000100097d0                display_init
+                0x00000000100097ac       0x18 robot/librobot.a(display.c.obj)
+                0x00000000100097ac                display_init
  .text.display_fill
-                0x00000000100097e8       0x2c robot/librobot.a(display.c.obj)
-                0x00000000100097e8                display_fill
+                0x00000000100097c4       0x2c robot/librobot.a(display.c.obj)
+                0x00000000100097c4                display_fill
  .text.display_show_partial
-                0x0000000010009814       0xb0 robot/librobot.a(display.c.obj)
-                0x0000000010009814                display_show_partial
+                0x00000000100097f0       0xb0 robot/librobot.a(display.c.obj)
+                0x00000000100097f0                display_show_partial
  .text.display_text
-                0x00000000100098c4      0x44c robot/librobot.a(display.c.obj)
-                0x00000000100098c4                display_text
+                0x00000000100098a0      0x44c robot/librobot.a(display.c.obj)
+                0x00000000100098a0                display_text
  .text.display_fill_rect
-                0x0000000010009d10      0x15c robot/librobot.a(display.c.obj)
-                0x0000000010009d10                display_fill_rect
+                0x0000000010009cec      0x15c robot/librobot.a(display.c.obj)
+                0x0000000010009cec                display_fill_rect
  .text.display_show
-                0x0000000010009e6c       0x28 robot/librobot.a(display.c.obj)
-                0x0000000010009e6c                display_show
+                0x0000000010009e48       0x28 robot/librobot.a(display.c.obj)
+                0x0000000010009e48                display_show
  .text.sh1106_transfer_start
-                0x0000000010009e94       0x40 robot/librobot.a(sh1106.c.obj)
-                0x0000000010009e94                sh1106_transfer_start
+                0x0000000010009e70       0x40 robot/librobot.a(sh1106.c.obj)
+                0x0000000010009e70                sh1106_transfer_start
  .text.sh1106_transfer_end
-                0x0000000010009ed4       0x1c robot/librobot.a(sh1106.c.obj)
-                0x0000000010009ed4                sh1106_transfer_end
+                0x0000000010009eb0       0x1c robot/librobot.a(sh1106.c.obj)
+                0x0000000010009eb0                sh1106_transfer_end
  .text.sh1106_write_page
-                0x0000000010009ef0       0x54 robot/librobot.a(sh1106.c.obj)
-                0x0000000010009ef0                sh1106_write_page
+                0x0000000010009ecc       0x54 robot/librobot.a(sh1106.c.obj)
+                0x0000000010009ecc                sh1106_write_page
  .text.sh1106_clear
-                0x0000000010009f44       0xa0 robot/librobot.a(sh1106.c.obj)
-                0x0000000010009f44                sh1106_clear
+                0x0000000010009f20       0xa0 robot/librobot.a(sh1106.c.obj)
+                0x0000000010009f20                sh1106_clear
  .text.sh1106_init
-                0x0000000010009fe4       0xd0 robot/librobot.a(sh1106.c.obj)
-                0x0000000010009fe4                sh1106_init
- .text          0x000000001000a0b4       0x10 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-atexit.o)
-                0x000000001000a0b4                atexit
- .text          0x000000001000a0c4       0x18 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-atoi.o)
-                0x000000001000a0c4                atoi
-                0x000000001000a0d0                _atoi_r
- .text          0x000000001000a0dc       0x18 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-atoll.o)
-                0x000000001000a0dc                atoll
-                0x000000001000a0e8                _atoll_r
- .text          0x000000001000a0f4       0x18 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-calloc.o)
-                0x000000001000a0f4                calloc
- .text          0x000000001000a10c       0x5c /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-callocr.o)
-                0x000000001000a10c                _calloc_r
- .text          0x000000001000a168       0x28 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-malloc.o)
-                0x000000001000a168                malloc
-                0x000000001000a17c                free
- .text          0x000000001000a190      0x574 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-mallocr.o)
-                0x000000001000a190                _malloc_r
- .text          0x000000001000a704        0x8 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-mlock.o)
-                0x000000001000a704                __malloc_lock
-                0x000000001000a708                __malloc_unlock
- .text          0x000000001000a70c       0x18 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-realloc.o)
-                0x000000001000a70c                realloc
- .text          0x000000001000a724      0x354 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-reallocr.o)
-                0x000000001000a724                _realloc_r
- .text          0x000000001000aa78       0x24 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-sbrkr.o)
-                0x000000001000aa78                _sbrk_r
- .text          0x000000001000aa9c       0x88 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-strcmp.o)
-                0x000000001000aa9c                strcmp
- .text          0x000000001000ab24       0x5c /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-strlen-stub.o)
-                0x000000001000ab24                strlen
- .text          0x000000001000ab80       0x74 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-strncmp.o)
-                0x000000001000ab80                strncmp
- .text          0x000000001000abf4      0x1b8 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-strtol.o)
-                0x000000001000ad38                _strtol_r
-                0x000000001000ad54                strtol_l
-                0x000000001000ad80                strtol
- .text          0x000000001000adac      0x1d0 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-strtoll.o)
-                0x000000001000af44                _strtoll_r
-                0x000000001000af4c                strtoll_l
-                0x000000001000af64                strtoll
- .text          0x000000001000af7c     0x16e4 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-vfprintf.o)
-                0x000000001000af7c                _vfprintf_r
-                0x000000001000c5d4                vfprintf
- .text          0x000000001000c660       0xdc /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-wsetup.o)
-                0x000000001000c660                __swsetup_r
- .text          0x000000001000c73c       0x88 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-__atexit.o)
-                0x000000001000c73c                __register_exitproc
- .text          0x000000001000c7c4     0x1104 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-dtoa.o)
-                0x000000001000c90c                _dtoa_r
- .text          0x000000001000d8c8        0xc /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-errno.o)
-                0x000000001000d8c8                __errno
- .text          0x000000001000d8d4      0x1c0 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-fflush.o)
-                0x000000001000d8d4                __sflush_r
-                0x000000001000da14                _fflush_r
-                0x000000001000da40                fflush
- .text          0x000000001000da94      0x248 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-findfp.o)
-                0x000000001000da98                _cleanup_r
-                0x000000001000db94                __sfmoreglue
-                0x000000001000dbc4                __sfp
-                0x000000001000dc74                _cleanup
-                0x000000001000dc8c                __sinit
-                0x000000001000dc9c                __sfp_lock_acquire
-                0x000000001000dca0                __sfp_lock_release
-                0x000000001000dca4                __sinit_lock_acquire
-                0x000000001000dca8                __sinit_lock_release
-                0x000000001000dcac                __fp_lock_all
-                0x000000001000dcc4                __fp_unlock_all
- .text          0x000000001000dcdc      0x260 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-freer.o)
-                0x000000001000dcdc                _malloc_trim_r
-                0x000000001000dd78                _free_r
- .text          0x000000001000df3c       0x88 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-fwalk.o)
-                0x000000001000df3c                _fwalk
-                0x000000001000df7c                _fwalk_reent
- .text          0x000000001000dfc4       0x14 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-localeconv.o)
-                0x000000001000dfc4                __localeconv_l
-                0x000000001000dfc8                _localeconv_r
-                0x000000001000dfd0                localeconv
- .text          0x000000001000dfd8      0x144 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-makebuf.o)
-                0x000000001000dfd8                __smakebuf_r
-                0x000000001000e0bc                __swhatbuf_r
- .text          0x000000001000e11c      0xafc /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-mprec.o)
-                0x000000001000e11c                _Balloc
-                0x000000001000e16c                _Bfree
-                0x000000001000e180                __multadd
-                0x000000001000e228                __s2b
-                0x000000001000e2d8                __hi0bits
-                0x000000001000e310                __lo0bits
-                0x000000001000e36c                __i2b
-                0x000000001000e3cc                __multiply
-                0x000000001000e570                __pow5mult
-                0x000000001000e648                __lshift
-                0x000000001000e744                __mcmp
-                0x000000001000e778                __mdiff
-                0x000000001000e904                __ulp
-                0x000000001000e94c                __b2d
-                0x000000001000ea14                __d2b
-                0x000000001000eaec                __ratio
-                0x000000001000eb54                _mprec_log10
-                0x000000001000eb88                __copybits
-                0x000000001000ebc8                __any_on
- .text          0x000000001000ec18       0xa4 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-stdio.o)
-                0x000000001000ec18                __sread
-                0x000000001000ec40                __seofread
-                0x000000001000ec44                __swrite
-                0x000000001000ec84                __sseek
-                0x000000001000ecb0                __sclose
- .text          0x000000001000ecbc      0xdd8 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-vfiprintf.o)
-                0x000000001000ed44                __sprint_r
-                0x000000001000ed58                _vfiprintf_r
-                0x000000001000fa08                vfiprintf
- .text          0x000000001000fa94       0x28 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-writer.o)
-                0x000000001000fa94                _write_r
- .text          0x000000001000fabc       0x24 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-closer.o)
-                0x000000001000fabc                _close_r
- .text          0x000000001000fae0       0xe8 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-fclose.o)
-                0x000000001000fb50                _fclose_r
-                0x000000001000fb88                fclose
- .text          0x000000001000fbc8       0xfc /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-fputwc.o)
-                0x000000001000fbc8                __fputwc
-                0x000000001000fc60                _fputwc_r
-                0x000000001000fc80                fputwc
- .text          0x000000001000fcc4       0x28 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-fstatr.o)
-                0x000000001000fcc4                _fstat_r
- .text          0x000000001000fcec      0x2f4 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-fvwrite.o)
-                0x000000001000fcec                __sfvwrite_r
- .text          0x000000001000ffe0       0x24 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-isattyr.o)
-                0x000000001000ffe0                _isatty_r
- .text          0x0000000010010004       0x98 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-locale.o)
-                0x0000000010010004                _setlocale_r
-                0x0000000010010048                __locale_mb_cur_max
-                0x0000000010010058                setlocale
- .text          0x000000001001009c       0x28 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-lseekr.o)
-                0x000000001001009c                _lseek_r
- .text          0x00000000100100c4       0x44 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-mbtowc_r.o)
-                0x00000000100100c4                _mbtowc_r
-                0x00000000100100dc                __ascii_mbtowc
- .text          0x0000000010010108       0x28 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-readr.o)
-                0x0000000010010108                _read_r
- .text          0x0000000010010130       0xe0 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-wbuf.o)
-                0x0000000010010130                __swbuf_r
-                0x00000000100101f8                __swbuf
- .text          0x0000000010010210       0x84 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-wcrtomb.o)
-                0x0000000010010210                _wcrtomb_r
-                0x0000000010010250                wcrtomb
- .text          0x0000000010010294       0x2c /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-wctomb_r.o)
-                0x0000000010010294                _wctomb_r
-                0x00000000100102a4                __ascii_wctomb
+                0x0000000010009fc0       0xd0 robot/librobot.a(sh1106.c.obj)
+                0x0000000010009fc0                sh1106_init
+ .text          0x000000001000a090       0x10 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-atexit.o)
+                0x000000001000a090                atexit
+ .text          0x000000001000a0a0       0x18 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-atoi.o)
+                0x000000001000a0a0                atoi
+                0x000000001000a0ac                _atoi_r
+ .text          0x000000001000a0b8       0x18 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-atoll.o)
+                0x000000001000a0b8                atoll
+                0x000000001000a0c4                _atoll_r
+ .text          0x000000001000a0d0       0x18 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-calloc.o)
+                0x000000001000a0d0                calloc
+ .text          0x000000001000a0e8       0x5c /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-callocr.o)
+                0x000000001000a0e8                _calloc_r
+ .text          0x000000001000a144       0x28 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-malloc.o)
+                0x000000001000a144                malloc
+                0x000000001000a158                free
+ .text          0x000000001000a16c      0x574 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-mallocr.o)
+                0x000000001000a16c                _malloc_r
+ .text          0x000000001000a6e0        0x8 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-mlock.o)
+                0x000000001000a6e0                __malloc_lock
+                0x000000001000a6e4                __malloc_unlock
+ .text          0x000000001000a6e8       0x18 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-realloc.o)
+                0x000000001000a6e8                realloc
+ .text          0x000000001000a700      0x354 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-reallocr.o)
+                0x000000001000a700                _realloc_r
+ .text          0x000000001000aa54       0x24 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-sbrkr.o)
+                0x000000001000aa54                _sbrk_r
+ .text          0x000000001000aa78       0x88 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-strcmp.o)
+                0x000000001000aa78                strcmp
+ .text          0x000000001000ab00       0x5c /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-strlen-stub.o)
+                0x000000001000ab00                strlen
+ .text          0x000000001000ab5c       0x74 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-strncmp.o)
+                0x000000001000ab5c                strncmp
+ .text          0x000000001000abd0      0x1b8 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-strtol.o)
+                0x000000001000ad14                _strtol_r
+                0x000000001000ad30                strtol_l
+                0x000000001000ad5c                strtol
+ .text          0x000000001000ad88      0x1d0 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-strtoll.o)
+                0x000000001000af20                _strtoll_r
+                0x000000001000af28                strtoll_l
+                0x000000001000af40                strtoll
+ .text          0x000000001000af58     0x16e4 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-vfprintf.o)
+                0x000000001000af58                _vfprintf_r
+                0x000000001000c5b0                vfprintf
+ .text          0x000000001000c63c       0xdc /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-wsetup.o)
+                0x000000001000c63c                __swsetup_r
+ .text          0x000000001000c718       0x88 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-__atexit.o)
+                0x000000001000c718                __register_exitproc
+ .text          0x000000001000c7a0     0x1104 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-dtoa.o)
+                0x000000001000c8e8                _dtoa_r
+ .text          0x000000001000d8a4        0xc /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-errno.o)
+                0x000000001000d8a4                __errno
+ .text          0x000000001000d8b0      0x1c0 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-fflush.o)
+                0x000000001000d8b0                __sflush_r
+                0x000000001000d9f0                _fflush_r
+                0x000000001000da1c                fflush
+ .text          0x000000001000da70      0x248 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-findfp.o)
+                0x000000001000da74                _cleanup_r
+                0x000000001000db70                __sfmoreglue
+                0x000000001000dba0                __sfp
+                0x000000001000dc50                _cleanup
+                0x000000001000dc68                __sinit
+                0x000000001000dc78                __sfp_lock_acquire
+                0x000000001000dc7c                __sfp_lock_release
+                0x000000001000dc80                __sinit_lock_acquire
+                0x000000001000dc84                __sinit_lock_release
+                0x000000001000dc88                __fp_lock_all
+                0x000000001000dca0                __fp_unlock_all
+ .text          0x000000001000dcb8      0x260 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-freer.o)
+                0x000000001000dcb8                _malloc_trim_r
+                0x000000001000dd54                _free_r
+ .text          0x000000001000df18       0x88 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-fwalk.o)
+                0x000000001000df18                _fwalk
+                0x000000001000df58                _fwalk_reent
+ .text          0x000000001000dfa0       0x14 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-localeconv.o)
+                0x000000001000dfa0                __localeconv_l
+                0x000000001000dfa4                _localeconv_r
+                0x000000001000dfac                localeconv
+ .text          0x000000001000dfb4      0x144 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-makebuf.o)
+                0x000000001000dfb4                __smakebuf_r
+                0x000000001000e098                __swhatbuf_r
+ .text          0x000000001000e0f8      0xafc /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-mprec.o)
+                0x000000001000e0f8                _Balloc
+                0x000000001000e148                _Bfree
+                0x000000001000e15c                __multadd
+                0x000000001000e204                __s2b
+                0x000000001000e2b4                __hi0bits
+                0x000000001000e2ec                __lo0bits
+                0x000000001000e348                __i2b
+                0x000000001000e3a8                __multiply
+                0x000000001000e54c                __pow5mult
+                0x000000001000e624                __lshift
+                0x000000001000e720                __mcmp
+                0x000000001000e754                __mdiff
+                0x000000001000e8e0                __ulp
+                0x000000001000e928                __b2d
+                0x000000001000e9f0                __d2b
+                0x000000001000eac8                __ratio
+                0x000000001000eb30                _mprec_log10
+                0x000000001000eb64                __copybits
+                0x000000001000eba4                __any_on
+ .text          0x000000001000ebf4       0xa4 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-stdio.o)
+                0x000000001000ebf4                __sread
+                0x000000001000ec1c                __seofread
+                0x000000001000ec20                __swrite
+                0x000000001000ec60                __sseek
+                0x000000001000ec8c                __sclose
+ .text          0x000000001000ec98      0xdd8 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-vfiprintf.o)
+                0x000000001000ed20                __sprint_r
+                0x000000001000ed34                _vfiprintf_r
+                0x000000001000f9e4                vfiprintf
+ .text          0x000000001000fa70       0x28 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-writer.o)
+                0x000000001000fa70                _write_r
+ .text          0x000000001000fa98       0x24 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-closer.o)
+                0x000000001000fa98                _close_r
+ .text          0x000000001000fabc       0xe8 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-fclose.o)
+                0x000000001000fb2c                _fclose_r
+                0x000000001000fb64                fclose
+ .text          0x000000001000fba4       0xfc /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-fputwc.o)
+                0x000000001000fba4                __fputwc
+                0x000000001000fc3c                _fputwc_r
+                0x000000001000fc5c                fputwc
+ .text          0x000000001000fca0       0x28 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-fstatr.o)
+                0x000000001000fca0                _fstat_r
+ .text          0x000000001000fcc8      0x2f4 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-fvwrite.o)
+                0x000000001000fcc8                __sfvwrite_r
+ .text          0x000000001000ffbc       0x24 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-isattyr.o)
+                0x000000001000ffbc                _isatty_r
+ .text          0x000000001000ffe0       0x98 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-locale.o)
+                0x000000001000ffe0                _setlocale_r
+                0x0000000010010024                __locale_mb_cur_max
+                0x0000000010010034                setlocale
+ .text          0x0000000010010078       0x28 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-lseekr.o)
+                0x0000000010010078                _lseek_r
+ .text          0x00000000100100a0       0x44 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-mbtowc_r.o)
+                0x00000000100100a0                _mbtowc_r
+                0x00000000100100b8                __ascii_mbtowc
+ .text          0x00000000100100e4       0x28 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-readr.o)
+                0x00000000100100e4                _read_r
+ .text          0x000000001001010c       0xe0 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-wbuf.o)
+                0x000000001001010c                __swbuf_r
+                0x00000000100101d4                __swbuf
+ .text          0x00000000100101ec       0x84 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-wcrtomb.o)
+                0x00000000100101ec                _wcrtomb_r
+                0x000000001001022c                wcrtomb
+ .text          0x0000000010010270       0x2c /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-wctomb_r.o)
+                0x0000000010010270                _wctomb_r
+                0x0000000010010280                __ascii_wctomb
  *(.fini)
- .fini          0x00000000100102c0        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crti.o
-                0x00000000100102c0                _fini
- *fill*         0x00000000100102c4        0x4 
- .fini.__stub   0x00000000100102c8      0x130 linker stubs
+ .fini          0x000000001001029c        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crti.o
+                0x000000001001029c                _fini
+ .fini.__stub   0x00000000100102a0      0x130 linker stubs
  *crtbegin.o(.ctors)
  *crtbegin?.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o *crtend?.o) .ctors)
@@ -2921,253 +2919,249 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nof
  *(SORT_BY_NAME(.dtors.*))
  *(.dtors)
  *(.eh_frame*)
- .eh_frame      0x00000000100103f8        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
-                0x00000000100103f8                . = ALIGN (0x4)
+ .eh_frame      0x00000000100103d0        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
+                0x00000000100103d0                . = ALIGN (0x4)
 
-.glue_7         0x00000000100103f8        0x0
- .glue_7        0x00000000100103f8        0x0 linker stubs
+.glue_7         0x00000000100103d0        0x0
+ .glue_7        0x00000000100103d0        0x0 linker stubs
 
-.glue_7t        0x00000000100103f8        0x0
- .glue_7t       0x00000000100103f8        0x0 linker stubs
+.glue_7t        0x00000000100103d0        0x0
+ .glue_7t       0x00000000100103d0        0x0 linker stubs
 
-.vfp11_veneer   0x00000000100103f8        0x0
- .vfp11_veneer  0x00000000100103f8        0x0 linker stubs
+.vfp11_veneer   0x00000000100103d0        0x0
+ .vfp11_veneer  0x00000000100103d0        0x0 linker stubs
 
-.v4_bx          0x00000000100103f8        0x0
- .v4_bx         0x00000000100103f8        0x0 linker stubs
+.v4_bx          0x00000000100103d0        0x0
+ .v4_bx         0x00000000100103d0        0x0 linker stubs
 
-.iplt           0x00000000100103f8        0x0
- .iplt          0x00000000100103f8        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
+.iplt           0x00000000100103d0        0x0
+ .iplt          0x00000000100103d0        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
 
-.rodata         0x00000000100103f8     0x4154
+.rodata         0x00000000100103d0     0x4154
  *(EXCLUDE_FILE(*libm.a: *libc.a:*lib_a-mem*.o *libgcc.a:) .rodata*)
  .rodata._bluetooth_test_mainreaction_function_0.str1.4
-                0x00000000100103f8        0x3 CMakeFiles/bluetooth_test.dir/_bluetooth_test_main.c.obj
- *fill*         0x00000000100103fb        0x1 
- .rodata._bluetooth_test_mainreaction_function_1.str1.4
-                0x00000000100103fc        0x2 CMakeFiles/bluetooth_test.dir/_bluetooth_test_main.c.obj
- *fill*         0x00000000100103fe        0x2 
+                0x00000000100103d0        0x9 CMakeFiles/bluetooth_test.dir/_bluetooth_test_main.c.obj
+ *fill*         0x00000000100103d9        0x3 
  .rodata.new__bluetooth_test_main.str1.4
-                0x0000000010010400        0x2 CMakeFiles/bluetooth_test.dir/_bluetooth_test_main.c.obj
- *fill*         0x0000000010010402        0x2 
+                0x00000000100103dc        0x2 CMakeFiles/bluetooth_test.dir/_bluetooth_test_main.c.obj
+ *fill*         0x00000000100103de        0x2 
  .rodata._robotblereaction_function_1.str1.4
-                0x0000000010010404       0x19 CMakeFiles/bluetooth_test.dir/_robotble.c.obj
- *fill*         0x000000001001041d        0x3 
+                0x00000000100103e0       0x18 CMakeFiles/bluetooth_test.dir/_robotble.c.obj
  .rodata._robotblereaction_function_2.str1.4
-                0x0000000010010420        0x7 CMakeFiles/bluetooth_test.dir/_robotble.c.obj
+                0x00000000100103f8        0x7 CMakeFiles/bluetooth_test.dir/_robotble.c.obj
  .rodata.new__robotble.str1.4
-                0x0000000010010427        0x2 CMakeFiles/bluetooth_test.dir/_robotble.c.obj
+                0x00000000100103ff        0x2 CMakeFiles/bluetooth_test.dir/_robotble.c.obj
  .rodata.new__display.str1.4
-                0x0000000010010427        0x2 CMakeFiles/bluetooth_test.dir/_display.c.obj
- *fill*         0x0000000010010427        0x1 
+                0x00000000100103ff        0x2 CMakeFiles/bluetooth_test.dir/_display.c.obj
+ *fill*         0x00000000100103ff        0x1 
  .rodata.spin_lock_claim_unused.str1.4
-                0x0000000010010428       0x1b CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj
- *fill*         0x0000000010010443        0x1 
+                0x0000000010010400       0x1b CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj
+ *fill*         0x000000001001041b        0x1 
  .rodata.user_irq_claim_unused.str1.4
-                0x0000000010010444       0x1b CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
- *fill*         0x000000001001045f        0x1 
+                0x000000001001041c       0x1b CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+ *fill*         0x0000000010010437        0x1 
  .rodata.at_the_end_of_time
-                0x0000000010010460        0x8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
-                0x0000000010010460                at_the_end_of_time
+                0x0000000010010438        0x8 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/common/pico_time/time.c.obj
+                0x0000000010010438                at_the_end_of_time
  .rodata.hardware_alarm_claim.str1.4
-                0x0000000010010468       0x22 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
- *fill*         0x000000001001048a        0x2 
+                0x0000000010010440       0x22 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+ *fill*         0x0000000010010462        0x2 
  .rodata.__assert_func.str1.4
-                0x000000001001048c       0x3f CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
+                0x0000000010010464       0x3f CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
                                          0x43 (size before relaxing)
- *fill*         0x00000000100104cb        0x1 
+ *fill*         0x00000000100104a3        0x1 
  .rodata.panic.str1.4
-                0x00000000100104cc       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
+                0x00000000100104a4       0x10 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
                                          0x12 (size before relaxing)
  .rodata.hard_assertion_failure.str1.4
-                0x00000000100104dc        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
+                0x00000000100104b4        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
  .rodata._ftoa.str1.4
-                0x00000000100104e8       0x15 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
- *fill*         0x00000000100104fd        0x3 
+                0x00000000100104c0       0x15 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+ *fill*         0x00000000100104d5        0x3 
  .rodata._vsnprintf
-                0x0000000010010500      0x1e0 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+                0x00000000100104d8      0x1e0 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
  .rodata.pow10.0
-                0x00000000100106e0       0x50 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
+                0x00000000100106b8       0x50 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_printf/printf.c.obj
  .rodata.missing_double_func_shim.str1.4
-                0x0000000010010730       0x18 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.obj
+                0x0000000010010708       0x18 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.obj
  .rodata.missing_float_func_shim.str1.4
-                0x0000000010010748        0x1 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.obj
+                0x0000000010010720        0x1 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.obj
  .rodata.__wrap_malloc.str1.4
-                0x0000000010010748        0xe CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj
- *fill*         0x0000000010010756        0x2 
+                0x0000000010010720        0xe CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_malloc/pico_malloc.c.obj
+ *fill*         0x000000001001072e        0x2 
  .rodata.str1.4
-                0x0000000010010758       0x54 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+                0x0000000010010730       0x54 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
  .rodata.__bi_44
-                0x00000000100107ac        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+                0x0000000010010784        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
  .rodata.__bi_75
-                0x00000000100107b8        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+                0x0000000010010790        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
  .rodata.__bi_81
-                0x00000000100107c4        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+                0x000000001001079c        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
  .rodata.crlf_str.0
-                0x00000000100107d0        0x2 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
- *fill*         0x00000000100107d2        0x2 
+                0x00000000100107a8        0x2 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+ *fill*         0x00000000100107aa        0x2 
  .rodata._resetd_driver
-                0x00000000100107d4       0x18 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
+                0x00000000100107ac       0x18 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/reset_interface.c.obj
  .rodata.str1.4
-                0x00000000100107ec       0x13 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
- *fill*         0x00000000100107ff        0x1 
+                0x00000000100107c4       0x13 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+ *fill*         0x00000000100107d7        0x1 
  .rodata.__bi_182.0
-                0x0000000010010800        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+                0x00000000100107d8        0xc CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
  .rodata.str1.4
-                0x000000001001080c       0x2a CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
- *fill*         0x0000000010010836        0x2 
+                0x00000000100107e4       0x2a CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
+ *fill*         0x000000001001080e        0x2 
  .rodata.usbd_desc_cfg
-                0x0000000010010838       0x54 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
+                0x0000000010010810       0x54 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
  .rodata.usbd_desc_device
-                0x000000001001088c       0x12 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
- *fill*         0x000000001001089e        0x2 
+                0x0000000010010864       0x12 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
+ *fill*         0x0000000010010876        0x2 
  .rodata.usbd_desc_str
-                0x00000000100108a0       0x18 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
+                0x0000000010010878       0x18 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb_descriptors.c.obj
  .rodata.str1.4
-                0x00000000100108b8       0x14 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x0000000010010890       0x14 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
  .rodata.str1.4
-                0x00000000100108cc       0x50 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj
+                0x00000000100108a4       0x50 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj
                                          0x53 (size before relaxing)
  .rodata.tud_task_ext
-                0x000000001001091c       0x8c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x00000000100108f4       0x8c CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
  .rodata._usbd_driver
-                0x00000000100109a8       0x18 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x0000000010010980       0x18 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
  .rodata._lf_physical_time.str1.4
-                0x00000000100109c0       0x23 core/libcore.a(tag.c.obj)
- *fill*         0x00000000100109e3        0x1 
+                0x0000000010010998       0x23 core/libcore.a(tag.c.obj)
+ *fill*         0x00000000100109bb        0x1 
  .rodata.lf_comma_separated_time.str1.4
-                0x00000000100109e4       0x14 core/libcore.a(tag.c.obj)
+                0x00000000100109bc       0x14 core/libcore.a(tag.c.obj)
                                          0x18 (size before relaxing)
  .rodata._lf_allocate.str1.4
-                0x00000000100109f8        0xf core/libcore.a(reactor_common.c.obj)
- *fill*         0x0000000010010a07        0x1 
+                0x00000000100109d0        0xf core/libcore.a(reactor_common.c.obj)
+ *fill*         0x00000000100109df        0x1 
  .rodata._lf_schedule.str1.4
-                0x0000000010010a08       0x6f core/libcore.a(reactor_common.c.obj)
- *fill*         0x0000000010010a77        0x1 
+                0x00000000100109e0       0x6f core/libcore.a(reactor_common.c.obj)
+ *fill*         0x0000000010010a4f        0x1 
  .rodata._lf_advance_logical_time.str1.4
-                0x0000000010010a78       0x40 core/libcore.a(reactor_common.c.obj)
+                0x0000000010010a50       0x40 core/libcore.a(reactor_common.c.obj)
  .rodata.usage.str1.4
-                0x0000000010010ab8      0x248 core/libcore.a(reactor_common.c.obj)
+                0x0000000010010a90      0x248 core/libcore.a(reactor_common.c.obj)
                                         0x24a (size before relaxing)
  .rodata.process_args.str1.4
-                0x0000000010010d00      0x1c3 core/libcore.a(reactor_common.c.obj)
- *fill*         0x0000000010010ec3        0x1 
+                0x0000000010010cd8      0x1c3 core/libcore.a(reactor_common.c.obj)
+ *fill*         0x0000000010010e9b        0x1 
  .rodata.termination.str1.4
-                0x0000000010010ec4      0x1ce core/libcore.a(reactor_common.c.obj)
- *fill*         0x0000000010011092        0x2 
+                0x0000000010010e9c      0x1ce core/libcore.a(reactor_common.c.obj)
+ *fill*         0x000000001001106a        0x2 
  .rodata._lf_free_token.part.0.str1.4
-                0x0000000010011094       0xbd core/libcore.a(lf_token.c.obj)
- *fill*         0x0000000010011151        0x3 
+                0x000000001001106c       0xbd core/libcore.a(lf_token.c.obj)
+ *fill*         0x0000000010011129        0x3 
  .rodata._lf_get_token.str1.4
-                0x0000000010011154       0x32 core/libcore.a(lf_token.c.obj)
+                0x000000001001112c       0x32 core/libcore.a(lf_token.c.obj)
  .rodata.environment_init.str1.4
-                0x0000000010011186        0xe core/libcore.a(environment.c.obj)
- *fill*         0x0000000010011186        0x2 
- .rodata        0x0000000010011188       0x10 core/libcore.a(environment.c.obj)
+                0x000000001001115e        0xe core/libcore.a(environment.c.obj)
+ *fill*         0x000000001001115e        0x2 
+ .rodata        0x0000000010011160       0x10 core/libcore.a(environment.c.obj)
  .rodata._lf_trigger_reaction.str1.4
-                0x0000000010011198       0x2a core/libcore.a(reactor.c.obj)
+                0x0000000010011170       0x2a core/libcore.a(reactor.c.obj)
  .rodata.next.str1.4
-                0x00000000100111c2       0x45 core/libcore.a(reactor.c.obj)
- *fill*         0x00000000100111c2        0x2 
+                0x000000001001119a       0x45 core/libcore.a(reactor.c.obj)
+ *fill*         0x000000001001119a        0x2 
  .rodata.lf_reactor_c_main.str1.4
-                0x00000000100111c4       0x72 core/libcore.a(reactor.c.obj)
- *fill*         0x0000000010011236        0x2 
- .rodata        0x0000000010011238       0x10 core/libcore.a(reactor.c.obj)
+                0x000000001001119c       0x72 core/libcore.a(reactor.c.obj)
+ *fill*         0x000000001001120e        0x2 
+ .rodata        0x0000000010011210       0x10 core/libcore.a(reactor.c.obj)
  .rodata.find_equal_same_priority.str1.4
-                0x0000000010011248       0x3d core/libcore.a(pqueue.c.obj)
- *fill*         0x0000000010011285        0x3 
+                0x0000000010011220       0x3d core/libcore.a(pqueue.c.obj)
+ *fill*         0x000000001001125d        0x3 
  .rodata._lf_message_print.str1.4
-                0x0000000010011288       0x1b core/libcore.a(util.c.obj)
+                0x0000000010011260       0x1b core/libcore.a(util.c.obj)
  .rodata.lf_print.str1.4
-                0x00000000100112a3        0x1 core/libcore.a(util.c.obj)
- *fill*         0x00000000100112a3        0x1 
+                0x000000001001127b        0x1 core/libcore.a(util.c.obj)
+ *fill*         0x000000001001127b        0x1 
  .rodata.lf_print_error.str1.4
-                0x00000000100112a4        0x8 core/libcore.a(util.c.obj)
+                0x000000001001127c        0x8 core/libcore.a(util.c.obj)
  .rodata.lf_print_warning.str1.4
-                0x00000000100112ac        0xa core/libcore.a(util.c.obj)
- *fill*         0x00000000100112b6        0x2 
+                0x0000000010011284        0xa core/libcore.a(util.c.obj)
+ *fill*         0x000000001001128e        0x2 
  .rodata.lf_print_error_and_exit.str1.4
-                0x00000000100112b8        0xe core/libcore.a(util.c.obj)
- *fill*         0x00000000100112c6        0x2 
+                0x0000000010011290        0xe core/libcore.a(util.c.obj)
+ *fill*         0x000000001001129e        0x2 
  .rodata.checkerboard
-                0x00000000100112c8       0x10 robot/librobot.a(display.c.obj)
-                0x00000000100112c8                checkerboard
+                0x00000000100112a0       0x10 robot/librobot.a(display.c.obj)
+                0x00000000100112a0                checkerboard
  .rodata.font_8x8
-                0x00000000100112d8     0x10a8 robot/librobot.a(font_8x8.c.obj)
-                0x00000000100112d8                font_8x8
+                0x00000000100112b0     0x10a8 robot/librobot.a(font_8x8.c.obj)
+                0x00000000100112b0                font_8x8
  .rodata.font_8x16
-                0x0000000010012380     0x1bb8 robot/librobot.a(font_8x16.c.obj)
-                0x0000000010012380                font_8x16
+                0x0000000010012358     0x1bb8 robot/librobot.a(font_8x16.c.obj)
+                0x0000000010012358                font_8x16
  .rodata.sh1106_configure_default.str1.4
-                0x0000000010013f38        0x7 robot/librobot.a(sh1106.c.obj)
- *fill*         0x0000000010013f3f        0x1 
- .rodata        0x0000000010013f40        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-impure.o)
-                0x0000000010013f40                _global_impure_ptr
+                0x0000000010013f10        0x7 robot/librobot.a(sh1106.c.obj)
+ *fill*         0x0000000010013f17        0x1 
+ .rodata        0x0000000010013f18        0x4 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-impure.o)
+                0x0000000010013f18                _global_impure_ptr
  .rodata.str1.4
-                0x0000000010013f44       0x3b /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-vfprintf.o)
+                0x0000000010013f1c       0x3b /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-vfprintf.o)
                                          0x42 (size before relaxing)
- *fill*         0x0000000010013f7f        0x1 
- .rodata        0x0000000010013f80      0x184 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-vfprintf.o)
- .rodata        0x0000000010014104      0x101 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-ctype_.o)
-                0x0000000010014104                _ctype_
- *fill*         0x0000000010014205        0x3 
+ *fill*         0x0000000010013f57        0x1 
+ .rodata        0x0000000010013f58      0x184 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-vfprintf.o)
+ .rodata        0x00000000100140dc      0x101 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-ctype_.o)
+                0x00000000100140dc                _ctype_
+ *fill*         0x00000000100141dd        0x3 
  .rodata.str1.4
-                0x0000000010014208       0x56 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-dtoa.o)
+                0x00000000100141e0       0x56 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-dtoa.o)
                                          0x5a (size before relaxing)
- *fill*         0x000000001001425e        0x2 
+ *fill*         0x0000000010014236        0x2 
  .rodata.str1.4
-                0x0000000010014260       0x33 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-mprec.o)
+                0x0000000010014238       0x33 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-mprec.o)
                                          0x47 (size before relaxing)
- *fill*         0x0000000010014293        0x5 
- .rodata        0x0000000010014298      0x128 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-mprec.o)
-                0x00000000100142a8                __mprec_tinytens
-                0x00000000100142d0                __mprec_bigtens
-                0x00000000100142f8                __mprec_tens
+ *fill*         0x000000001001426b        0x5 
+ .rodata        0x0000000010014270      0x128 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-mprec.o)
+                0x0000000010014280                __mprec_tinytens
+                0x00000000100142a8                __mprec_bigtens
+                0x00000000100142d0                __mprec_tens
  .rodata.str1.4
-                0x00000000100143c0       0x2f /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-vfiprintf.o)
- .rodata        0x00000000100143c0      0x184 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-vfiprintf.o)
+                0x0000000010014398       0x2f /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-vfiprintf.o)
+ .rodata        0x0000000010014398      0x184 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-vfiprintf.o)
  .rodata.str1.4
-                0x0000000010014544        0x6 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-locale.o)
+                0x000000001001451c        0x6 /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libc.a(lib_a-locale.o)
                                          0x12 (size before relaxing)
-                0x000000001001454c                . = ALIGN (0x4)
- *fill*         0x000000001001454a        0x2 
+                0x0000000010014524                . = ALIGN (0x4)
+ *fill*         0x0000000010014522        0x2 
  *(SORT_BY_ALIGNMENT(SORT_BY_NAME(.flashdata*)))
-                0x000000001001454c                . = ALIGN (0x4)
+                0x0000000010014524                . = ALIGN (0x4)
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x000000001001454c                __exidx_start = .
+                0x0000000010014524                __exidx_start = .
 
 .ARM.exidx
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-                0x000000001001454c                __exidx_end = .
-                0x000000001001454c                . = ALIGN (0x4)
-                0x000000001001454c                __binary_info_start = .
+                0x0000000010014524                __exidx_end = .
+                0x0000000010014524                . = ALIGN (0x4)
+                0x0000000010014524                __binary_info_start = .
 
-.binary_info    0x000000001001454c       0x20
+.binary_info    0x0000000010014524       0x20
  *(.binary_info.keep.*)
  .binary_info.keep.__bi_ptr22
-                0x000000001001454c        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+                0x0000000010014524        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
  .binary_info.keep.__bi_ptr30
-                0x0000000010014550        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+                0x0000000010014528        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
  .binary_info.keep.__bi_ptr38
-                0x0000000010014554        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+                0x000000001001452c        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
  .binary_info.keep.__bi_ptr44
-                0x0000000010014558        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+                0x0000000010014530        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
  .binary_info.keep.__bi_ptr50
-                0x000000001001455c        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+                0x0000000010014534        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
  .binary_info.keep.__bi_ptr75
-                0x0000000010014560        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+                0x0000000010014538        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
  .binary_info.keep.__bi_ptr81
-                0x0000000010014564        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
+                0x000000001001453c        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/binary_info.c.obj
  *(.binary_info.*)
  .binary_info.__bi_ptr182
-                0x0000000010014568        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
-                0x000000001001456c                __binary_info_end = .
+                0x0000000010014540        0x4 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_stdio_usb/stdio_usb.c.obj
+                0x0000000010014544                __binary_info_end = .
 
-.rel.dyn        0x000000001001456c        0x0
- .rel.iplt      0x000000001001456c        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
-                0x000000001001456c                . = ALIGN (0x4)
+.rel.dyn        0x0000000010014544        0x0
+ .rel.iplt      0x0000000010014544        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
+                0x0000000010014544                . = ALIGN (0x4)
 
 .ram_vector_table
                 0x0000000020000000       0xc0
@@ -3176,7 +3170,7 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nof
                 0x0000000020000000       0xc0 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_runtime/runtime.c.obj
                 0x0000000020000000                ram_vector_table
 
-.data           0x00000000200000c0     0x1acc load address 0x000000001001456c
+.data           0x00000000200000c0     0x1acc load address 0x0000000010014544
                 0x00000000200000c0                __data_start__ = .
  *(vtable)
  *(.time_critical*)
@@ -3359,36 +3353,36 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nof
  *(.jcr)
                 0x0000000020001b8c                . = ALIGN (0x4)
                 0x0000000020001b8c                __data_end__ = .
-                0x000000001001456c                __etext = LOADADDR (.data)
+                0x0000000010014544                __etext = LOADADDR (.data)
 
 .tm_clone_table
-                0x0000000020001b8c        0x0 load address 0x0000000010016038
+                0x0000000020001b8c        0x0 load address 0x0000000010016010
  .tm_clone_table
                 0x0000000020001b8c        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
  .tm_clone_table
                 0x0000000020001b8c        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtend.o
 
-.igot.plt       0x0000000020001b8c        0x0 load address 0x0000000010016038
+.igot.plt       0x0000000020001b8c        0x0 load address 0x0000000010016010
  .igot.plt      0x0000000020001b8c        0x0 /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/crtbegin.o
 
 .uninitialized_data
-                0x0000000020001b8c        0x0 load address 0x0000000010016038
+                0x0000000020001b8c        0x0 load address 0x0000000010016010
                 0x0000000020001b8c                . = ALIGN (0x4)
  *(.uninitialized_data*)
 
-.scratch_x      0x0000000020040000        0x0 load address 0x0000000010016038
+.scratch_x      0x0000000020040000        0x0 load address 0x0000000010016010
                 0x0000000020040000                __scratch_x_start__ = .
  *(.scratch_x.*)
                 0x0000000020040000                . = ALIGN (0x4)
                 0x0000000020040000                __scratch_x_end__ = .
-                0x0000000010016038                __scratch_x_source__ = LOADADDR (.scratch_x)
+                0x0000000010016010                __scratch_x_source__ = LOADADDR (.scratch_x)
 
-.scratch_y      0x0000000020041000        0x0 load address 0x0000000010016038
+.scratch_y      0x0000000020041000        0x0 load address 0x0000000010016010
                 0x0000000020041000                __scratch_y_start__ = .
  *(.scratch_y.*)
                 0x0000000020041000                . = ALIGN (0x4)
                 0x0000000020041000                __scratch_y_end__ = .
-                0x0000000010016038                __scratch_y_source__ = LOADADDR (.scratch_y)
+                0x0000000010016010                __scratch_y_source__ = LOADADDR (.scratch_y)
 
 .bss            0x0000000020001b90     0x12c0
                 0x0000000020001b90                . = ALIGN (0x4)
@@ -3582,8 +3576,8 @@ LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nof
  *(.stack*)
  .stack         0x0000000020041000      0x800 CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/pico_standard_link/crt0.S.obj
 
-.flash_end      0x0000000010016038        0x0
-                0x0000000010016038                PROVIDE (__flash_binary_end = .)
+.flash_end      0x0000000010016010        0x0
+                0x0000000010016010                PROVIDE (__flash_binary_end = .)
                 0x0000000020040000                __StackLimit = (ORIGIN (RAM) + LENGTH (RAM))
                 0x0000000020041000                __StackOneTop = (ORIGIN (SCRATCH_X) + LENGTH (SCRATCH_X))
                 0x0000000020042000                __StackTop = (ORIGIN (SCRATCH_Y) + LENGTH (SCRATCH_Y))
@@ -3673,7 +3667,7 @@ LOAD CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_
 LOAD CMakeFiles/bluetooth_test.dir/home/foobar/pico-sdk/src/rp2_common/hardware_i2c/i2c.c.obj
 LOAD core/libcore.a
 LOAD robot/librobot.a
-LOAD /tmp/ccoWgpLW.o
+LOAD /tmp/ccR3B5X5.o
 LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libstdc++.a
 LOAD /usr/lib/gcc/arm-none-eabi/10.3.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a
 START GROUP
@@ -3833,7 +3827,7 @@ LOAD linker stubs
  .ARM.attributes
                 0x0000000000000b86       0x2c robot/librobot.a(sh1106.c.obj)
  .ARM.attributes
-                0x0000000000000bb2       0x22 /tmp/ccoWgpLW.o
+                0x0000000000000bb2       0x22 /tmp/ccR3B5X5.o
  .ARM.attributes
                 0x0000000000000bd4       0x1e /usr/lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp/libgcc.a(_dvmd_tls.o)
  .ARM.attributes

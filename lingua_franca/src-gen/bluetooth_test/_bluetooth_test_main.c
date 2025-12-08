@@ -16,9 +16,9 @@ void _bluetooth_test_mainreaction_function_0(void* instance_args) {
     } disp;
     ble.rx_char = self->_lf_ble.rx_char;
     disp.line0 = &(self->_lf_disp.line0);
-    #line 55 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 56 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     static char buf[17];
-    sprintf(buf, 17, "%c", ble.rx_char->value);
+    snprintf(buf, 17, "Read: %c", ble.rx_char->value);
     lf_set(disp.line0, buf);
 }
 #include "include/api/set_undef.h"
@@ -30,8 +30,8 @@ void _bluetooth_test_mainreaction_function_1(void* instance_args) {
     
     } ble;
     ble.tx_char = &(self->_lf_ble.tx_char);
-    #line 60 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
-    lf_set(ble.tx_char, "H");
+    #line 61 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    lf_set(ble.tx_char, 'H');
 }
 #include "include/api/set_undef.h"
 _bluetooth_test_main_main_self_t* new__bluetooth_test_main() {
@@ -62,54 +62,54 @@ _bluetooth_test_main_main_self_t* new__bluetooth_test_main() {
     self->_lf_ble.rx_char_trigger.physical_time_of_arrival = NEVER;
     #line 20 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     #endif // FEDERATED
-    #line 54 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 55 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__reaction_0.number = 0;
-    #line 54 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 55 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__reaction_0.function = _bluetooth_test_mainreaction_function_0;
-    #line 54 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 55 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__reaction_0.self = self;
-    #line 54 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 55 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__reaction_0.deadline_violation_handler = NULL;
-    #line 54 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 55 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__reaction_0.STP_handler = NULL;
-    #line 54 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 55 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__reaction_0.name = "?";
-    #line 54 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 55 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__reaction_0.mode = NULL;
-    #line 59 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 60 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__reaction_1.number = 1;
-    #line 59 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 60 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__reaction_1.function = _bluetooth_test_mainreaction_function_1;
-    #line 59 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 60 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__reaction_1.self = self;
-    #line 59 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 60 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__reaction_1.deadline_violation_handler = NULL;
-    #line 59 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 60 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__reaction_1.STP_handler = NULL;
-    #line 59 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 60 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__reaction_1.name = "?";
-    #line 59 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 60 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__reaction_1.mode = NULL;
-    #line 53 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 54 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__t.last = NULL;
-    #line 53 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 54 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     #ifdef FEDERATED_DECENTRALIZED
-    #line 53 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 54 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__t.intended_tag = (tag_t) { .time = NEVER, .microstep = 0u};
-    #line 53 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 54 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     #endif // FEDERATED_DECENTRALIZED
-    #line 53 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
-    #line 53 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 54 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 54 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__t_reactions[0] = &self->_lf__reaction_1;
-    #line 53 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 54 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__t.reactions = &self->_lf__t_reactions[0];
-    #line 53 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 54 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__t.number_of_reactions = 1;
-    #line 53 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 54 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     #ifdef FEDERATED
-    #line 53 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 54 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__t.physical_time_of_arrival = NEVER;
-    #line 53 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 54 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     #endif // FEDERATED
     self->_lf__t.is_timer = true;
     #ifdef FEDERATED_DECENTRALIZED

@@ -32,16 +32,17 @@ reactor RobotBLE {
         if (uart_is_readable(uart0)) {
             char c = uart_getc(uart0);
             printf("Reading: %c\n", c);
-            lf_set(rx_char, c);
-        } else {
-            printf("Nothing.\n");
-            // lf_set(rx_char, '\0');
+
+            if (c != '0') {
+                printf("HEY, %c", c);
+                lf_set(rx_char, c);
+            }
         }
     =}
 
     reaction(tx_char) {=
         uart_puts(uart0, "ECHO: ");
-        uart_putc(uart0, tx_char);
+        uart_putc(uart0, tx_char->value);
         uart_puts(uart0, "\n");
     =}
 }
@@ -53,10 +54,10 @@ main reactor bluetooth_test {
     timer t(0, 1 s)
     reaction(ble.rx_char) -> disp.line0 {=
         static char buf[17];
-        sprintf(buf, 17, "%c", ble.rx_char->value);
+        snprintf(buf, 17, "Read: %c", ble.rx_char->value);
         lf_set(disp.line0, buf);
     =}
     reaction(t) -> ble.tx_char {=
-        lf_set(ble.tx_char, "H");    
+        lf_set(ble.tx_char, 'H');    
     =}
 }

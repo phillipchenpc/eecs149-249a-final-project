@@ -23,10 +23,11 @@ void _robotblereaction_function_1(void* instance_args) {
     if (uart_is_readable(uart0)) {
         char c = uart_getc(uart0);
         printf("Reading: %c\n", c);
-        lf_set(rx_char, c);
-    } else {
-        printf("Nothing.\n");
-        // lf_set(rx_char, '\0');
+    
+        if (c != '0') {
+            printf("HEY, %c", c);
+            lf_set(rx_char, c);
+        }
     }
 }
 #include "include/api/set_undef.h"
@@ -35,9 +36,9 @@ void _robotblereaction_function_2(void* instance_args) {
     _robotble_self_t* self = (_robotble_self_t*)instance_args; SUPPRESS_UNUSED_WARNING(self);
     _robotble_tx_char_t* tx_char = self->_lf_tx_char;
     int tx_char_width = self->_lf_tx_char_width; SUPPRESS_UNUSED_WARNING(tx_char_width);
-    #line 43 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 44 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     uart_puts(uart0, "ECHO: ");
-    uart_putc(uart0, tx_char);
+    uart_putc(uart0, tx_char->value);
     uart_puts(uart0, "\n");
 }
 #include "include/api/set_undef.h"
@@ -79,19 +80,19 @@ _robotble_self_t* new__robotble() {
     self->_lf__reaction_1.name = "?";
     #line 31 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__reaction_1.mode = NULL;
-    #line 42 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 43 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__reaction_2.number = 2;
-    #line 42 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 43 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__reaction_2.function = _robotblereaction_function_2;
-    #line 42 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 43 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__reaction_2.self = self;
-    #line 42 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 43 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__reaction_2.deadline_violation_handler = NULL;
-    #line 42 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 43 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__reaction_2.STP_handler = NULL;
-    #line 42 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 43 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__reaction_2.name = "?";
-    #line 42 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
+    #line 43 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__reaction_2.mode = NULL;
     #line 19 "/home/foobar/final/lingua_franca/src/bluetooth_test.lf"
     self->_lf__check_uart.last = NULL;
