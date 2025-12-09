@@ -1,2 +1,10 @@
 .vscode/*
-lingua_franca/src-gen/*
+lingua_franca/test/node_modules/
+lingua_franca/bin/
+lingua_franca/target/
+lingua_franca/src-gen/
+lingua_franca/include/
+lingua_franca/build/
+
+# MacOS junk
+.DS_Store
