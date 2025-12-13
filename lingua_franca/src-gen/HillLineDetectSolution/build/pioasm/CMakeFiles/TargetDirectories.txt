@@ -1,3 +1,0 @@
-/home/foobar/final/lingua_franca/src-gen/HillLineDetectSolution/build/pioasm/CMakeFiles/pioasm.dir
-/home/foobar/final/lingua_franca/src-gen/HillLineDetectSolution/build/pioasm/CMakeFiles/edit_cache.dir
-/home/foobar/final/lingua_franca/src-gen/HillLineDetectSolution/build/pioasm/CMakeFiles/rebuild_cache.dir
