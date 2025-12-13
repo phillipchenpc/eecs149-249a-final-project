@@ -1,26 +1,26 @@
 
 
 
-# #############################################
-# # scanner for bluetooth to get the address 
-# ##############################################
+#############################################
+# scanner for bluetooth to get the address 
+##############################################
 
-# import asyncio
-# from bleak import BleakScanner
+import asyncio
+from bleak import BleakScanner
 
-# async def main():
-#     print("🔍 Scanning for BLE devices...")
-#     devices = await BleakScanner.discover()
+async def main():
+    print("🔍 Scanning for BLE devices...")
+    devices = await BleakScanner.discover()
 
-#     if not devices:
-#         print("❌ No BLE devices found.")
-#         return
+    if not devices:
+        print("❌ No BLE devices found.")
+        return
 
-#     print("\n📡 Found BLE devices:")
-#     for d in devices:
-#         print(f"- Name: {d.name}, Address: {d.address}")
+    print("\n📡 Found BLE devices:")
+    for d in devices:
+        print(f"- Name: {d.name}, Address: {d.address}")
 
-# asyncio.run(main())
+asyncio.run(main())
 
 
 # import asyncio
@@ -80,7 +80,7 @@ from bleak import BleakClient
 UUID = "0000ffe1-0000-1000-8000-00805f9b34fb"
 
 HM10_A = "E128559E-6F91-E6B3-FD39-BE28507ED666"
-HM10_B = None    
+HM10_B = "77F101C0-5D65-0C2D-23CC-728BCD3C06F4"    
 
 
 async def main():
