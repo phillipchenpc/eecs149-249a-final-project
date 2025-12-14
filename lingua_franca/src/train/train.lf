@@ -267,7 +267,7 @@ main reactor(calibration_time: time = 5 s, sample_period: time = 100 ms, end_tim
 
   reaction(t) -> line.trigger, ble.check_uart {=
     lf_set(line.trigger, true);
-    // lf_set(ble.check_uart, true); // Check for messages
+    lf_set(ble.check_uart, true); // Check for messages
   =}
 
   reaction(ble.rx_char) -> robot.stop, robot.cont, disp.line0 {=
