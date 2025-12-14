@@ -267,7 +267,7 @@ main reactor(calibration_time: time = 5 s, sample_period: time = 100 ms, end_tim
 
   reaction(t) -> line.trigger, ble.check_uart {=
     lf_set(line.trigger, true);
-    lf_set(ble.check_uart, true); // Check for messages
+    // lf_set(ble.check_uart, true); // Check for messages
   =}
 
   reaction(ble.rx_char) -> robot.stop, robot.cont, disp.line0 {=
@@ -275,11 +275,9 @@ main reactor(calibration_time: time = 5 s, sample_period: time = 100 ms, end_tim
     static char buf[17];
     
     if (c == 'S' || c == 's') {
-      // 0 == stop
       lf_set(robot.stop, true);
       snprintf(buf, 17, "Stopping.");
     } else if (c == 'D' || c == 'd') {
-      // 1 == start
       lf_set(robot.cont, true);
       snprintf(buf, 17, "Driving.");
     }
