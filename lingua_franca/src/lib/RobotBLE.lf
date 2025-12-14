@@ -20,7 +20,7 @@ reactor RobotBLE {
     // input tx_string: string // For longer inputs
 
     reaction(startup) {=
-        stdio_init_all();
+        // stdio_init_all();
 
         uart_init(uart0, 9600);
         gpio_set_function(28, GPIO_FUNC_UART); // 28 = transmit
