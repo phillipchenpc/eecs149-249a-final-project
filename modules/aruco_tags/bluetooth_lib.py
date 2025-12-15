@@ -6,8 +6,9 @@ from bleak import BleakClient
 
 UUID = "0000ffe1-0000-1000-8000-00805f9b34fb"
 
-HM10_A = "77F101C0-5D65-0C2D-23CC-728BCD3C06F4"
-HM10_B = None # "E128559E-6F91-E6B3-FD39-BE28507ED666"
+HM10_A = "38:AB:41:F8:B1:63" # Windows
+# "E128559E-6F91-E6B3-FD39-BE28507ED666" 
+HM10_B = None # "77F101C0-5D65-0C2D-23CC-728BCD3C06F4"
 
 
 async def main():
@@ -17,16 +18,16 @@ async def main():
     # Connect to HM10_A
     client1 = BleakClient(HM10_A)
     await client1.connect()
-    print("✓ Connected to HM10_A")
+    print("Connected to HM10_A")
 
     # Connect to HM10_B only if address is provided
     client2 = None
     if HM10_B is not None:
         client2 = BleakClient(HM10_B)
         await client2.connect()
-        print("✓ Connected to HM10_B")
+        print("Connected to HM10_B")
     else:
-        print("⚠ HM10_B address is None — skipping second device.")
+        print("HM10_B address is None - skipping second device.")
 
     # Callbacks
     def cb1(sender, data):
@@ -43,11 +44,15 @@ async def main():
 
     # INPUT LOOP — DIFFERENT MESSAGE FOR EACH DEVICE
     while True:
-        msg1 = input("Send to A: ")
+        msg1 = input("Send to A (press q to quit): ")
+        if msg1 == "q":
+            break
         await client1.write_gatt_char(UUID, (msg1 + "\n").encode(), response=False)
 
         if client2:
-            msg2 = input("Send to B: ")
+            msg2 = input("Send to B (press q to quit): ")
+            if msg2 == "q":
+                break
             await client2.write_gatt_char(UUID, (msg2 + "\n").encode(), response=False)
 
 
