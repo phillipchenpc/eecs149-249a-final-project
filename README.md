@@ -14,13 +14,12 @@ Activate with
 conda activate train_intersect_149-249a
 ```
 
-### Without (on bare metal machines)
-
 ## Directory
 ```
 .
-|-- train // Controls for the light-rail tram Pololu
-|-- em_vh // Controls for the Emergency Vehicle/First Responder Pololu
-|-- intersection // Logic for the intersection
-|-- modules // Contains the necessary modules used by the above 3 actors
+|-- lingua_franca // All lingua franca scripts. Built off of Lab template
+  |--train // Controls for the light-rail tram Pololu
+  |-- ev // Controls for the Emergency Vehicle/First Responder Pololu
+|-- intersection.py // Logic for the intersection
+|-- modules // Contains code testing the components needed for the intersection
 ```
