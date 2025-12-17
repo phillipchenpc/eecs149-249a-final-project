@@ -38,13 +38,16 @@ reactor Robot {
 
   m = new MotorsWithFeedback();
   state target_speed: float = 13.33 // in m/s
-  state decceleration: float = 3.5 // in m/s**2
-  state acceleration: float = 0.63 // in m/s**2
+  state decceleration: float = 1.576 // in m/s**2
+  state acceleration: float = 0.6389 // in m/s**2
   
   state scale: float = 2 // How many meters in 1 cm
   state target_speed_scaled: float // Will be calculated on initialization
   state target_deccel_scaled: float
   state target_accel_scaled: float
+
+  state curr_speed: float = 0 // Current speed of robot
+  state last_speed: float // Last speed of robot in the previous mode
   
   state motor_calibrate: float = 1 // Scale the right motor input to match the left motors
   input start: bool // True if the line calibrators are done with calibration and robot can start driving
@@ -104,6 +107,67 @@ reactor Robot {
     lf_set(m.right, e.right->value);
   =}  
 
+  // Feedback control
+  // Line Following
+  reaction(line_left, line_center, line_right) -> m.left_speed, m.right_speed {=
+    // Do feedback control. Higher penalty if center is decreasing
+    // Find diffence
+    int32_t left_diff = self->last_left - (int32_t) line_left->value;
+    int32_t center_diff = self->last_center - (int32_t) line_center->value; // Should always be maxed out
+    int32_t right_diff = self->last_right - (int32_t) line_right->value;
+
+    // If the difference is less than tolerance, then set to 0
+    left_diff = left_diff > self->diff_tolerance ? left_diff : 0;
+    center_diff = center_diff > self->diff_tolerance ? center_diff : 0;
+    right_diff = right_diff > self->diff_tolerance ? right_diff : 0;
+
+    // Get the feedback for all 3. A negative difference will reduce power of the respective motor
+    float left_gain = left_diff * self->side_detect_gain + 
+      ((left_diff > 0) - (left_diff < 0)) * center_diff * self->center_detect_gain * (center_diff > self->diff_tolerance);
+    float right_gain = right_diff * self->side_detect_gain + 
+      ((right_diff > 0) - (right_diff < 0)) * center_diff * self->center_detect_gain * (center_diff > self->diff_tolerance);
+
+    // Want to stay on the line at the very least.
+    float line_keep_perc = 1.67 * self->curr_speed; // BOO Hardcoding, but don't want to clog state
+    if (line_left->value < self->min_detect) {
+      left_gain += (self->min_detect - line_left->value) * self->side_detect_gain * line_keep_perc;
+    } else if (line_left->value > self->max_detect) {
+      left_gain += (self->max_detect - line_left->value) * self->side_detect_gain * line_keep_perc;
+    }
+    if (line_right->value < self->min_detect) {
+      right_gain += (self->min_detect - line_right->value) * self->side_detect_gain * line_keep_perc;
+    } else if (line_right->value > self->max_detect) {
+      right_gain += (self->max_detect - line_right->value) * self->side_detect_gain * line_keep_perc;
+    }
+
+    // printf("LastL: %d, LastC: %d, LastR: %d\nL: %u, C: %u, R: %u\nLd: %d, Cd: %d, Rd: %d\nLg: %f, Rg: %f\nSpeed: %f, LA: %d, RA: %d\n\n", 
+    //   self->last_left, self->last_center, self->last_right,
+    //   line_left->value, line_center->value, line_right->value,
+    //   left_diff, center_diff, right_diff, left_gain, right_gain, self->target_speed_scaled * self->max_feedback_perc,
+    //   (fabsf(left_gain) < (self->target_speed_scaled * self->max_feedback_perc)), (fabsf(right_gain) < (self->target_speed_scaled * self->max_feedback_perc)));
+
+    // Update the motor speeds. If left_diff is non-zero by a large margin, update that first
+    // Won't allow feedback to be too large: clip the output
+    float max_feedback = (self->curr_speed * self->max_feedback_perc);
+    bool allow_left_fd = (fabsf(left_gain) < max_feedback);
+    bool allow_right_fd = (fabsf(right_gain) < max_feedback);
+
+    if (!allow_left_fd) {
+      left_gain = left_gain > 0 ? max_feedback : -max_feedback;
+    }
+    if (!allow_right_fd) {
+      right_gain = right_gain > 0 ? max_feedback: -max_feedback;
+    }
+
+    lf_set(m.left_speed, self->curr_speed + left_gain);
+    lf_set(m.right_speed, self->curr_speed * self->motor_calibrate + right_gain);
+    
+    // Update last seen values
+    self->last_left = (int32_t) line_left->value;
+    self->last_center = (int32_t) line_center->value;
+    self->last_right = (int32_t) line_right->value;
+  =}
+
   initial mode CALIBRATING {
     // Robot waits for calibration before switching to driving mode
     // Starts off stopped
@@ -112,8 +176,8 @@ reactor Robot {
       self->target_speed_scaled = scale_values_exp(self->target_speed, self->scale);
       self->target_deccel_scaled = scale_values_exp(self->decceleration, self->scale);
       self->target_accel_scaled = scale_values_exp(self->acceleration, self->scale);
-      lf_set(m.left_speed, 0);
-      lf_set(m.right_speed, 0);
+      lf_set(m.left_speed, self->curr_speed);
+      lf_set(m.right_speed, self->curr_speed);
     =}
   }
 
@@ -124,69 +188,10 @@ reactor Robot {
       lf_set(m.right_speed, self->target_speed_scaled * self->motor_calibrate);
     =}
 
-    // Line Following
-    reaction(line_left, line_center, line_right) -> m.left_speed, m.right_speed {=
-      // Do feedback control. Higher penalty if center is decreasing
-      // Find diffence
-      int32_t left_diff = self->last_left - (int32_t) line_left->value;
-      int32_t center_diff = self->last_center - (int32_t) line_center->value; // Should always be maxed out
-      int32_t right_diff = self->last_right - (int32_t) line_right->value;
-
-      // If the difference is less than tolerance, then set to 0
-      left_diff = left_diff > self->diff_tolerance ? left_diff : 0;
-      center_diff = center_diff > self->diff_tolerance ? center_diff : 0;
-      right_diff = right_diff > self->diff_tolerance ? right_diff : 0;
-
-      // Get the feedback for all 3. A negative difference will reduce power of the respective motor
-      float left_gain = left_diff * self->side_detect_gain + 
-        ((left_diff > 0) - (left_diff < 0)) * center_diff * self->center_detect_gain * (center_diff > self->diff_tolerance);
-      float right_gain = right_diff * self->side_detect_gain + 
-        ((right_diff > 0) - (right_diff < 0)) * center_diff * self->center_detect_gain * (center_diff > self->diff_tolerance);
-
-      // Want to stay on the line at the very least.
-      float line_keep_perc = 0.1; // BOO Hardcoding, but don't want to clog state
-      if (line_left->value < self->min_detect) {
-        left_gain += (self->min_detect - line_left->value) * self->side_detect_gain * line_keep_perc;
-      } else if (line_left->value > self->max_detect) {
-        left_gain += (self->max_detect - line_left->value) * self->side_detect_gain * line_keep_perc;
-      }
-      if (line_right->value < self->min_detect) {
-        right_gain += (self->min_detect - line_right->value) * self->side_detect_gain * line_keep_perc;
-      } else if (line_right->value > self->max_detect) {
-        right_gain += (self->max_detect - line_right->value) * self->side_detect_gain * line_keep_perc;
-      }
-
-      // printf("LastL: %d, LastC: %d, LastR: %d\nL: %u, C: %u, R: %u\nLd: %d, Cd: %d, Rd: %d\nLg: %f, Rg: %f\nSpeed: %f, LA: %d, RA: %d\n\n", 
-      //   self->last_left, self->last_center, self->last_right,
-      //   line_left->value, line_center->value, line_right->value,
-      //   left_diff, center_diff, right_diff, left_gain, right_gain, self->target_speed_scaled * self->max_feedback_perc,
-      //   (fabsf(left_gain) < (self->target_speed_scaled * self->max_feedback_perc)), (fabsf(right_gain) < (self->target_speed_scaled * self->max_feedback_perc)));
-
-      // Update the motor speeds. If left_diff is non-zero by a large margin, update that first
-      // Won't allow feedback to be too large: clip the output
-      float max_feedback = (self->target_speed_scaled * self->max_feedback_perc);
-      bool allow_left_fd = (fabsf(left_gain) < max_feedback);
-      bool allow_right_fd = (fabsf(right_gain) < max_feedback);
-
-      if (!allow_left_fd) {
-        left_gain = left_gain > 0 ? max_feedback : -max_feedback;
-      }
-      if (!allow_right_fd) {
-        right_gain = right_gain > 0 ? max_feedback: -max_feedback;
-      }
-
-      lf_set(m.left_speed, self->target_speed_scaled + left_gain);
-      lf_set(m.right_speed, self->target_speed_scaled * self->motor_calibrate + right_gain);
-      
-      // Update last seen values
-      self->last_left = (int32_t) line_left->value;
-      self->last_center = (int32_t) line_center->value;
-      self->last_right = (int32_t) line_right->value;
-    =}
-
     // Changing mode
     reaction(stop) -> reset(STOPPING) {=
       lf_set_mode(STOPPING);
+      self->last_speed = self->target_speed_scaled;
       self->start_time = lf_time_logical_elapsed() / (pow(10, 9));
     =}
   }
@@ -197,15 +202,23 @@ reactor Robot {
       reaction(update) -> m.left_speed, m.right_speed, reset(STOPPED) {=
           float curr_time = lf_time_logical_elapsed() / (pow(10, 9));
           // v - at
-          float new_speed = self->target_speed_scaled - self->target_deccel_scaled * (curr_time - self->start_time);
-          if (new_speed > 0) {
+          self->curr_speed = self->last_speed - self->target_deccel_scaled * (curr_time - self->start_time);
+          if (self->curr_speed > 0) {
             // Set new target speed IF speed is not 0
-            lf_set(m.left_speed, new_speed);
-            lf_set(m.right_speed, new_speed * self->motor_calibrate);
+            lf_set(m.left_speed, self->curr_speed);
+            lf_set(m.right_speed, self->curr_speed * self->motor_calibrate);
           } else {
             // If fully stopped, no longer need to do this update
             lf_set_mode(STOPPED);
+            self->last_speed = 0;
           }
+      =}
+      
+      // Start driving again
+      reaction(cont) -> reset(ACCELERATING) {=
+        lf_set_mode(ACCELERATING);
+        self->last_speed = self->curr_speed;
+        self->start_time = lf_time_logical_elapsed() / (pow(10, 9));  
       =}
   }
 
@@ -214,6 +227,8 @@ reactor Robot {
         if (self->initial_start) {
             // Just start driving
             lf_set_mode(DRIVING);
+            self->last_speed = self->target_speed_scaled;
+            self->curr_speed = self->target_speed_scaled;
             lf_set(m.left_speed, self->target_speed_scaled);
             lf_set(m.right_speed, self->target_speed_scaled * self->motor_calibrate);
 
@@ -221,6 +236,8 @@ reactor Robot {
         } else {
             // Accelerate
             lf_set_mode(ACCELERATING);
+            self->last_speed = 0;
+            self->curr_speed = 0;
             self->start_time = lf_time_logical_elapsed() / (pow(10, 9));
         }
     =}
@@ -232,22 +249,25 @@ reactor Robot {
     reaction(update2) -> m.left_speed, m.right_speed, reset(DRIVING) {=
         float curr_time = lf_time_logical_elapsed() / (pow(10, 9));
         // v - at
-        float new_speed = self->target_accel_scaled * (curr_time - self->start_time);
-        if (new_speed < self->target_speed_scaled) {
+        self->curr_speed = self->last_speed + self->target_accel_scaled * (curr_time - self->start_time);
+        if (self->curr_speed < self->target_speed_scaled) {
             // Set new target speed IF speed is not greater than target speed
-            lf_set(m.left_speed, new_speed);
-            lf_set(m.right_speed, new_speed * self->motor_calibrate);
+            lf_set(m.left_speed, self->curr_speed);
+            lf_set(m.right_speed, self->curr_speed * self->motor_calibrate);
         } else {
             // If fully stopped, no longer need to do this update
             lf_set_mode(DRIVING);
+            self->curr_speed = self->target_speed_scaled;
+            self->last_speed = self->curr_speed;
             lf_set(m.left_speed, self->target_speed_scaled);
             lf_set(m.right_speed, self->target_speed_scaled * self->motor_calibrate);
         }
     =}
-    
+
     // Changing mode
     reaction(stop) -> reset(STOPPING) {=
       lf_set_mode(STOPPING);
+      self->last_speed = self->curr_speed;
       self->start_time = lf_time_logical_elapsed() / (pow(10, 9));
     =}
   }

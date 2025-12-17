@@ -1,5 +1,6 @@
 """
 Main intersection logic containing: 1) Camera connection, 2) Bluetooth commands
+Naive solution 
 
 Dec. 2025
 """
@@ -115,6 +116,7 @@ CAM_ID = 2 # Usually the camera id for phone
 SCENE_CALIBRATION_TIME = 20 # number of seconds to calibrate program to find intersection and distances
 
 # Aruco Tags
+DIST_TO_FRONT = 4 # 
 TRAIN_ID = 0
 EV_ID = 1
 INTERSECTION_IDS = (2, 3) # The Aruco Tag IDs for the 
@@ -240,6 +242,19 @@ async def main():
             )
         # Start recording the time it takes for both vehicles to cross the intersection
         metric_start_time = time.time()
+        
+        # Inner loop to start video detection
+        # Holds the past few points of the 
+        train_pos_history, ev_pos_history = [], []
+
+        while True:
+            ret, rame = cam.read()
+            if not ret:
+                continue
+
+            frame_gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+            corners, ids, rejected = detector.detectMarkers(frame_gray)
+
 
 
         # End time recording and report the time it took for the vehicles to pass the intersection
