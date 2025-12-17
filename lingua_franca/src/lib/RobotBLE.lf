@@ -17,10 +17,10 @@ reactor RobotBLE {
     input check_uart: bool // Has to be turned on to read
     output rx_char: char
     input tx_char: char
-    input tx_string: string // For longer inputs
+    // input tx_string: string // For longer inputs
 
     reaction(startup) {=
-        stdio_init_all();
+        // stdio_init_all(); // Doesn't work on WSL
 
         uart_init(uart0, 9600);
         gpio_set_function(28, GPIO_FUNC_UART); // 28 = transmit
@@ -30,7 +30,6 @@ reactor RobotBLE {
     reaction(check_uart) -> rx_char {=
         if (uart_is_readable(uart0)) {
             char c = uart_getc(uart0);
-            printf("%c\n", c);
             lf_set(rx_char, c);
         }
     =}
@@ -39,7 +38,7 @@ reactor RobotBLE {
         uart_putc(uart0, tx_char->value);
     =}
 
-    reaction(tx_string) {=
-        uart_puts(uart0, "AT");    
-    =}
+    // reaction(tx_string) {=
+    //     uart_puts(uart0, tx_string->value);    
+    // =}
 }

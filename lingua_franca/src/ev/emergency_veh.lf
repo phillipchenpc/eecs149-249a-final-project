@@ -1,6 +1,6 @@
 /**
  * Taken from Lab 4 (Hill Climb).
- * Gets Train to move on a line at a set speed
+ * Gets EV to move on a line at a set speed
  */
  target C {
   platform: {
@@ -37,9 +37,9 @@ reactor Robot {
   =}
 
   m = new MotorsWithFeedback();
-  state target_speed: float = 11.67 // in m/s
-  state decceleration: float = 1.6 // in m/s**2
-  state acceleration: float = 1.3 // in m/s**2
+  state target_speed: float = 13.33 // in m/s
+  state decceleration: float = 1.576 // in m/s**2
+  state acceleration: float = 0.6389 // in m/s**2
   
   state scale: float = 2 // How many meters in 1 cm
   state target_speed_scaled: float // Will be calculated on initialization
