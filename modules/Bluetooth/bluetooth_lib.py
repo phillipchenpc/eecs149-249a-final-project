@@ -6,10 +6,11 @@ from bleak import BleakClient
 
 UUID = "0000ffe1-0000-1000-8000-00805f9b34fb"
 
-HM10_A = "38:AB:41:F8:B1:63" # Windows
-# "E128559E-6F91-E6B3-FD39-BE28507ED666" # Macbook
-HM10_B = "6C:79:B8:0E:2C:31" # Windows
-# "77F101C0-5D65-0C2D-23CC-728BCD3C06F4" # Macbook
+HM10_A = "E128559E-6F91-E6B3-FD39-BE28507ED666" # Macbook
+# "38:AB:41:F8:B1:63" # Windows
+HM10_B = "77F101C0-5D65-0C2D-23CC-728BCD3C06F4" # Macbook
+# "6C:79:B8:0E:2C:31" # Windows
+
 
 
 async def main():

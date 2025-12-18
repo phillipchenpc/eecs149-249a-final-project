@@ -25,32 +25,32 @@ import math
 ## Find Bluetooth Devices ##
 ############################
 async def ble_scan():
-    print("Scanning for BLE devices...")
-    devices = await BleakScanner.discover()
+    # print("Scanning for BLE devices...")
+    # devices = await BleakScanner.discover()
 
-    if not devices:
-        print("No BLE devices found.")
-        return
+    # if not devices:
+    #     print("No BLE devices found.")
+    #     return
 
-    print("\nFound BLE devices:")
-    # Construct a dictionary of device name to address
-    device_dict = {}
-    for d in devices:
-        device_dict[d.name] = d.address
-        print(f"- Name: {d.name}, Address: {d.address}")
+    # print("\nFound BLE devices:")
+    # # Construct a dictionary of device name to address
+    # device_dict = {}
+    # for d in devices:
+    #     device_dict[d.name] = d.address
+    #     # print(f"- Name: {d.name}, Address: {d.address}")
 
     #############################
     ## Select Bluetooth Device ##
     #############################
-    train_addr, ev_addr = "", ""
-    train_name, ev_name = "", ""
-    while train_name not in device_dict.keys():
-        train_name = input("Type the exact name of the device to use for the light-rail train.")
-    while ev_name not in device_dict.keys():
-        ev_name = input("Type the exact name of the device to use for the Emergency Vehicle.")
+    train_addr, ev_addr = "E128559E-6F91-E6B3-FD39-BE28507ED666", "77F101C0-5D65-0C2D-23CC-728BCD3C06F4"
+    train_name, ev_name = "149_G14_Train", "149_G14_EV"
+    # while train_name not in device_dict.keys():
+    #     train_name = input("Type the exact name of the device to use for the light-rail train: ")
+    # while ev_name not in device_dict.keys():
+    #     ev_name = input("Type the exact name of the device to use for the Emergency Vehicle: ")
     # Match the names to the addresses
-    train_addr = device_dict[train_name]
-    ev_addr = device_dict[ev_name]
+    # train_addr = device_dict[train_name]
+    # ev_addr = device_dict[ev_name]
 
     return train_addr, ev_addr
 
@@ -82,8 +82,8 @@ INTERSECTION_SIZE = 9 # in cm. A square box around the intersection
 VELOCITY_UPDATE_FREQ = 10 # The number of times to update velocity. Affects window used to measure velocity
 
 # Camera selection
-CAM_ID = 2 # Usually the camera id for phone
-SCENE_CALIBRATION_TIME = 20 # number of seconds to calibrate program to find intersection and distances
+CAM_ID = 0 # Usually the camera id for phone
+SCENE_CALIBRATION_TIME = 10 # number of seconds to calibrate program to find intersection and distances
 
 # Aruco Tags
 VERT_TOLERANCE = 10 # The tolerance for the point at which two points are are on the same line
@@ -119,15 +119,15 @@ def action_generator(train_time, train_time_brake, train_state,
         # Experiment ended
         return []
     elif train_state == 2 and ev_state != 2:
-        # Check if EV is moving or slowing
-        if (ev_state == 4) or (ev_state == 5):
+        # Check if EV is moving or slowing or in intersection
+        if (ev_state in [1, 4, 5]):
             # EV is not moving or is slowing, tell it to move
             return ["ev", "d\n"]
         # Do nothing since EV is moving and train has passed
         return []
     elif ev_state == 2 and train_state != 2:
          # Check if Train is moving or not
-        if (train_state == 4) or (train_state == 5):
+        if train_state in [1, 4, 5]:
             # Train is not moving or is slowing, tell it to move
             return ["train", "d\n"]
         # Do nothing since Train is moving and train has passed
@@ -147,29 +147,30 @@ def action_generator(train_time, train_time_brake, train_state,
         if train_time < 20:
             # Stop the EV if possible
             if ev_time_brake == -1:
-                return ["ev", "s\n"]
-            else:
-                # Let the EV cross, stop the train
-                return ["train", "s\n"]
+                return ["ev", "s\n", "train", "d\n"]
+            elif train_state != 1 and ev_finish_time < train_time_brake:
+                # Let the EV cross, stop the train if the train can stop in time
+                return ["train", "s\n", "ev", "d\n"]
         else:
             # Stop the train otherwise
-            return ["train", "s\n"]
+            return ["train", "s\n", "ev", "d\n"]
 
     # First check if the train can cross before the EV without blocking it
     if train_finish_time + SAFETY_TIME < ev_time:
         # Train can make it through, do nothing
         return []
     else:
-        # Check if train can stop for the EV of if EV can cross before train if the train brakes
+        # Check if train can stop for the EV or if EV can cross before train if the train brakes
         if train_time_brake == -1 or ev_finish_time < train_time_brake:
-            if ev_finish_time  + SAFETY_TIME < train_time:
+            if ev_finish_time + SAFETY_TIME < train_time:
                 # EV Can cross before the train gets there, so do nothing
-                return []
-            # Stop the train
-            return ["train", "s\n"]
+                # Ensure EV is crossing
+                return ["ev", "d\n"]
+            # Stop the train, ensure EV is crossing
+            return ["train", "s\n", "ev", "d\n"]
         else:
             # Train can't stop, have to slow the EV (since we know it will arrive at the intersection too close to when the train is there)
-            return ["ev", "s\n"]
+            return ["train", "d\n", "ev", "s\n"]
 
 def time_to_intersection(position, velocity, intersection, orientation, veh_state, type):
     """
@@ -206,11 +207,11 @@ def time_to_intersection(position, velocity, intersection, orientation, veh_stat
     veh_length = TRAIN_LENGTH if type == "train" else EV_LENGTH
     if orientation == 1:
         # Check bottom edge of intersection to current y-position of vehicle
-        dist_to_intersect = intersection[2] - position[1]
+        dist_to_intersect = -(intersection[2] - position[1]) # Origin of camera pixel is top left
     else:
         # Check left edge of intersection to current x-position of vehicle
         dist_to_intersect = intersection[0] - position[0]
-
+    print(f"Distance {dist_to_intersect}, Length: {veh_length}")
     if dist_to_intersect < 0:
         # Check if the vehicle is past the intersection
         if abs(dist_to_intersect) > INTERSECTION_SIZE + veh_length:
@@ -230,6 +231,7 @@ def time_to_intersection(position, velocity, intersection, orientation, veh_stat
         veh_arrival_t_brake = -1
     
     return veh_arrival_t, veh_arrival_t_brake, 0
+
 def calibrate_intersection(tag_positions):
     """
     Returns the coordinates of the intersection and the scale cm / px
@@ -243,16 +245,16 @@ def calibrate_intersection(tag_positions):
     # MAJOR ASSUMPTION - CAMERA IS PERPENDICULAR + PARALLEL TO THE INTERSECTION
     # Tags are on the bottom, with 2 on the left, 3 on the right
     # Grab the top-left corner of tag 2 and top-right corner of tag 3
-    x1 = tag_positions[INTERSECTION_IDS[0]][0]
-    x2 = tag_positions[INTERSECTION_IDS[1]][0]
-    y1 = (tag_positions[INTERSECTION_IDS[0]][1] + tag_positions[INTERSECTION_IDS[1]][1]) / 2
+    x1 = tag_positions[INTERSECTION_IDS[0]][0][0]
+    x2 = tag_positions[INTERSECTION_IDS[1]][1][0]
+    y1 = (tag_positions[INTERSECTION_IDS[0]][0][1] + tag_positions[INTERSECTION_IDS[1]][1][1]) / 2
 
     # Find scale, then update all values
-    cm_per_pixel = (x2 - x1) / INTERSECTION_SIZE # The two tags are intersection size apart
+    cm_per_pixel = INTERSECTION_SIZE / (x2 - x1) # The two tags are intersection size apart
     x1 *= cm_per_pixel
     x2 *= cm_per_pixel
     y1 *= cm_per_pixel
-    y2 = y1 + INTERSECTION_SIZE
+    y2 = y1 - INTERSECTION_SIZE
 
     return [x1, x2, y1, y2], cm_per_pixel
 
@@ -261,7 +263,7 @@ def calibrate_intersection(tag_positions):
 ###############
 async def main():
     # Find the bluetooth devices first
-    train_addr, ev_addr = ble_scan()
+    train_addr, ev_addr = await ble_scan()
     # Connect to the devices
     print("Connecting...")
     train = BleakClient(train_addr)
@@ -291,33 +293,38 @@ async def main():
     
     print("Calibrating")
     # Get number of frames needed to update velocity
-    framerate = cam.get(cv.CV_CAP_PROP_FPS)
+    framerate = cam.get(cv.CAP_PROP_FPS)
     VELOCITY_WINDOW = framerate // VELOCITY_UPDATE_FREQ
     # Finding position of the intersection
     start = time.time()
     end = time.time()
     # Stores the average coordinates for the two corners of the tag facing the other tag (the top-left and top-right)
     intersection_tag_positions = {i: [[0, 0], [0, 0]] for i in INTERSECTION_IDS}
-    n = 0
+    n = [0, 0]
     while (end - start) < SCENE_CALIBRATION_TIME:
         ret, frame = cam.read()
         if not ret:
             print("Failed to read frame")
+            continue
         
         # Gray out the frame for tag detection
         frame_gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
         corners, ids, rejected = detector.detectMarkers(frame_gray)
+        if ids is None:
+            continue
         # Assuming the intersection tags will be visible
         for i, id in enumerate(ids):
-            if id in INTERSECTION_IDS:
+            tag_id = int(id[0])
+            if tag_id in INTERSECTION_IDS:
                 # Compute a moving average
-                n += 1
+                idx = INTERSECTION_IDS.index(tag_id)
+                n[idx] += 1
                 # Top left corner
-                intersection_tag_positions[id][0][0] += (corners[i][0][0] - intersection_tag_positions[id][0][0]) / n
-                intersection_tag_positions[id][0][1] += (corners[i][0][1] - intersection_tag_positions[id][0][1]) / n
+                intersection_tag_positions[tag_id][0][0] += (corners[i][0, 0, 0] - intersection_tag_positions[tag_id][0][0]) / n[idx]
+                intersection_tag_positions[tag_id][0][1] += (corners[i][0, 0, 1] - intersection_tag_positions[tag_id][0][1]) / n[idx]
                 # Top right corner
-                intersection_tag_positions[id][1][0] += (corners[i][1][0] - intersection_tag_positions[id][1][0]) / n
-                intersection_tag_positions[id][1][1] += (corners[i][1][1] - intersection_tag_positions[id][1][1]) / n
+                intersection_tag_positions[tag_id][1][0] += (corners[i][0, 1, 0] - intersection_tag_positions[tag_id][1][0]) / n[idx]
+                intersection_tag_positions[tag_id][1][1] += (corners[i][0, 1, 1] - intersection_tag_positions[tag_id][1][1]) / n[idx]
 
             else:
                 # If the detected tag isn't the intersection tags, skip
@@ -327,11 +334,14 @@ async def main():
         if ids is not None:
             cv.aruco.drawDetectedMarkers(frame, corners, ids)
         cv.imshow("Intersection Birds-Eye-View (type \"quit\" in the terminal to close)", frame)
+        if cv.waitKey(1) & 0xFF == ord('q'):
+            break
         
         end = time.time()
     del n # Clean up variable
     # Find the conversion and position of the intersection
     intersection_pos, cm_per_px = calibrate_intersection(intersection_tag_positions)
+    print(f"Intersection {intersection_pos}, CM Conversion {cm_per_px}")
     print("Finished Calibration. DO NOT MOVE THE CAMERA")
 
     #######################
@@ -345,178 +355,201 @@ async def main():
     # Defining vehicle commands
     start_veh = "d\n"
     stop_veh = "s\n"
+    inst_start_veh = "i\n"
 
     # Main Loop
-    while True:
-        # Read input
-        select_option = input("Input Option (start, end, quit): ").lower()
-        while select_option not in ["start", "end", "quit"]:
-            print("Didn't recognize input.")
-            select_option = input("Input Option (start, end, quit): ").lower()
-        if select_option == "quit":
-            break
-        elif select_option == "end":
-            print("Stopping vehicles")
-            # Sending stop commands
-            await asyncio.gather(
-                train.write_gatt_char(UUID, stop_veh.encode(), response=False),
-                ev.write_gatt_char(UUID, stop_veh.encode(), response=False)
-            )
-            continue # Skip everything else and wait for input
-        
-        ##############################
-        ## Main Intersection Logict ##
-        ##############################
-        # Select naive or advanced algorithm
-        alg_select = input("Select an algorithm to use (naive or smart): ").lower()
-        while alg_select not in ["naive", "smart"]:
-            print("Input not recognized")
-            alg_select = input("Select an algorithm to use (naive or smart): ").lower()
-        
-        ############
-        ## States ##
-        ############
-        """
-        0 if nothing of note
-        1 if the vehicle is currently in the intersection
-        2 if the vehicle has passed the intersection
-        3 if vehicle not seen and hasn't been before
-        4 if the vehicle is not moving
-        5 if the vehicle is slowing down
-        """
-        train_state = 3
-        ev_state = 3 # Same as above
-
-        # Start the vehicles
-        await asyncio.gather(
-                train.write_gatt_char(UUID, start_veh.encode(), response=False),
-                ev.write_gatt_char(UUID, start_veh.encode(), response=False)
-            )
-        # Start recording the time it takes for both vehicles to cross the intersection
-        metric_start_time = time.time()
-        
-        # Inner loop to start video detection
-        # Each element is a tuple ((pos_x, pos_y), time)
-        train_pos_history, ev_pos_history = [], []
-        # Position is the frontmost point of the EV
-        train_orient, ev_orient = -1, -1 # 0: Horizontal, 1: Vertical, -1: not set
+    try:
         while True:
-            ret, frame = cam.read()
-            if not ret:
-                continue
+            # Read input
+            select_option = input("Input Option (start, end, quit): ").lower()
+            while select_option not in ["start", "end", "quit"]:
+                print("Didn't recognize input.")
+                select_option = input("Input Option (start, end, quit): ").lower()
+            if select_option == "quit":
+                break
+            elif select_option == "end":
+                print("Stopping vehicles")
+                # Sending stop commands
+                await asyncio.gather(
+                    train.write_gatt_char(UUID, stop_veh.encode(), response=False),
+                    ev.write_gatt_char(UUID, stop_veh.encode(), response=False)
+                )
+                continue # Skip everything else and wait for input
+            
+            ##############################
+            ## Main Intersection Logict ##
+            ##############################
+            # Select naive or advanced algorithm
+            alg_select = input("Select an algorithm to use (naive or smart): ").lower()
+            while alg_select not in ["naive", "smart"]:
+                print("Input not recognized")
+                alg_select = input("Select an algorithm to use (naive or smart): ").lower()
+            
+            ############
+            ## States ##
+            ############
+            """
+            0 if nothing of note
+            1 if the vehicle is currently in the intersection
+            2 if the vehicle has passed the intersection
+            3 if vehicle not seen and hasn't been before
+            4 if the vehicle is not moving
+            5 if the vehicle is slowing down
+            """
+            train_state = 3
+            ev_state = 3 # Same as above
 
-            frame_gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-            corners, ids, rejected = detector.detectMarkers(frame_gray)
-            # Find the position of the train and EV in cm
-            seen_train, seen_ev = False, False
-            for i, id in enumerate(ids): 
-                if id == TRAIN_ID:
-                    seen_train = True
-                    mid_point = [corners[i][0][0] + corners[i][1][0] / 2, corners[i][0][1] + corners[i][1][1]]
-                    # Find direction train is pointing (if it hasn't been dicovered already)
-                    if train_orient == -1:
-                        if corners[i][0][0] - corners[i][1][0] < VERT_TOLERANCE:
-                            train_orient = 1
-                        else:
-                            train_orient = 0
-                    # Translate to cm
-                    mid_point[0] *= cm_per_px
-                    mid_point[1] *= cm_per_px
-                    # Find the position
-                    mid_point[train_orient] += DIST_TO_FRONT
-                    train_pos_history.append((mid_point, time.time()))
-                elif id == EV_ID:
-                    seen_ev = True
-                    mid_point = [corners[i][0][0] + corners[i][1][0] / 2, corners[i][0][1] + corners[i][1][1]]
-                    # Find direction train is pointing (if it hasn't been dicovered already)
-                    if ev_orient == -1:
-                        if corners[i][0][0] - corners[i][1][0] < VERT_TOLERANCE:
-                            ev_orient = 1
-                        else:
-                            ev_orient = 0
-                    # Translate to cm
-                    mid_point[0] *= cm_per_px
-                    mid_point[1] *= cm_per_px
-                    # Find the position
-                    mid_point[ev_orient] += DIST_TO_FRONT
-                    ev_pos_history.append((mid_point, time.time()))
+            # Start the vehicles
+            await asyncio.gather(
+                    train.write_gatt_char(UUID, start_veh.encode(), response=False),
+                    ev.write_gatt_char(UUID, start_veh.encode(), response=False)
+                )
+            # Start recording the time it takes for both vehicles to cross the intersection
+            metric_start_time = time.time()
+            
+            # Inner loop to start video detection
+            # Each element is a tuple ((pos_x, pos_y), time)
+            train_pos_history, ev_pos_history = [], []
+            # Position is the frontmost point of the EV
+            train_orient, ev_orient = -1, -1 # 0: Horizontal, 1: Vertical, -1: not set
+            while True:
+                ret, frame = cam.read()
+                if not ret:
+                    continue
 
-            # Update speed and calculate needed action based on state
-            # Assumes velocity hasn't changed in this window
-            train_vel, ev_vel = 0, 0
-            if len(train_pos_history) >= VELOCITY_WINDOW or len(ev_pos_history) >= VELOCITY_WINDOW:
-                for i in range(len(train_pos_history) - 1):
-                    n = i + 1
-                    pos_prev, t_prev = train_pos_history[i]
-                    pos_curr, t_curr = train_pos_history[i + 1]
-                    distance = np.sqrt((pos_prev[0] - pos_curr[0])**2 + (pos_prev[1] - pos_curr[1])**2)
-                    dt = t_curr - t_prev
-                    v = distance / dt
+                frame_gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+                corners, ids, rejected = detector.detectMarkers(frame_gray)
+                # Find the position of the train and EV in cm
+                seen_train, seen_ev = False, False
+                if ids is None:
+                    continue
+                for i, id in enumerate(ids): 
+                    id = int(id[0])
+                    if id == TRAIN_ID:
+                        seen_train = True
+                        mid_point = [(corners[i][0, 0, 0] + corners[i][0, 1, 0]) / 2, (corners[i][0, 0, 1] + corners[i][0, 1, 1]) / 2]
+                        # Find direction train is pointing (if it hasn't been dicovered already)
+                        if train_orient == -1:
+                            if abs(corners[i][0, 0, 0] - corners[i][0, 1, 0]) < VERT_TOLERANCE:
+                                train_orient = 0
+                            else:
+                                train_orient = 1
+                        # Translate to cm
+                        mid_point[0] *= cm_per_px
+                        mid_point[1] *= cm_per_px
+                        # Find the position
+                        mid_point[train_orient] += DIST_TO_FRONT
+                        train_pos_history.append((mid_point, time.time()))
+                    elif id == EV_ID:
+                        seen_ev = True
+                        mid_point = [(corners[i][0, 0, 0] + corners[i][0, 1, 0]) / 2, (corners[i][0, 0, 1] + corners[i][0, 1, 1]) / 2]
+                        # Find direction train is pointing (if it hasn't been dicovered already)
+                        if ev_orient == -1:
+                            if abs(corners[i][0, 0, 0] - corners[i][0, 1, 0]) < VERT_TOLERANCE:
+                                ev_orient = 0
+                            else:
+                                ev_orient = 1
+                        # Translate to cm
+                        mid_point[0] *= cm_per_px
+                        mid_point[1] *= cm_per_px
+                        # Find the position
+                        mid_point[ev_orient] += DIST_TO_FRONT
+                        ev_pos_history.append((mid_point, time.time()))
 
-                    train_vel += (v - train_vel) / n
-                for i in range(len(ev_pos_history) - 1):
-                    n = i + 1
-                    pos_prev, t_prev = ev_pos_history[i]
-                    pos_curr, t_curr = ev_pos_history[i + 1]
-                    distance = np.sqrt((pos_prev[0] - pos_curr[0])**2 + (pos_prev[1] - pos_curr[1])**2)
-                    dt = t_curr - t_prev
-                    v = distance / dt
+                # Update speed and calculate needed action based on state
+                # Assumes velocity hasn't changed in this window
+                train_vel, ev_vel = 0, 0
+                if len(train_pos_history) >= VELOCITY_WINDOW or len(ev_pos_history) >= VELOCITY_WINDOW:
+                    for i in range(len(train_pos_history) - 1):
+                        n = i + 1
+                        pos_prev, t_prev = train_pos_history[i]
+                        pos_curr, t_curr = train_pos_history[i + 1]
+                        distance = np.sqrt((pos_prev[0] - pos_curr[0])**2 + (pos_prev[1] - pos_curr[1])**2)
+                        dt = t_curr - t_prev
+                        v = distance / dt
 
-                    ev_vel += (v - ev_vel) / n
-                # Find last seen position
-                if seen_train:
-                    train_pos = train_pos_history[-1][0]
-                else:
-                    train_pos = -1
-                if seen_ev:
-                    ev_pos = ev_pos_history[-1][0]
-                else:
-                    ev_pos = -1
-                # Empty positions
-                train_pos_history = []
-                ev_pos_history = []
-                # Find time to intersection
-                train_arrival_t, train_arrival_t_brake, train_state = time_to_intersection(train_pos, train_vel, intersection_pos, train_orient, train_state)
-                ev_arrival_t, ev_arrival_t_brake, ev_state = time_to_intersection(ev_pos, ev_vel, intersection_pos, ev_state, train_orient)
+                        train_vel += (v - train_vel) / n
+                    for i in range(len(ev_pos_history) - 1):
+                        n = i + 1
+                        pos_prev, t_prev = ev_pos_history[i]
+                        pos_curr, t_curr = ev_pos_history[i + 1]
+                        distance = np.sqrt((pos_prev[0] - pos_curr[0])**2 + (pos_prev[1] - pos_curr[1])**2)
+                        dt = t_curr - t_prev
+                        v = distance / dt
 
-                # Generate action decision
-                action= action_generator(train_arrival_t, train_arrival_t_brake, train_state,
-                                        ev_arrival_t, ev_arrival_t_brake, ev_state,
-                                        alg_select)
-                # Extra edge case: if the vehicles are traveling in parallel, do nothing.
-                if len(action) != 0 and (train_orient != ev_orient):
-                    # Do an action
-                    if action[0] == "train":
-                        if action[1] == "s\n":
-                            train_state = 5 # Let system know train is slowing
-                        # Send command to train
-                        await train.write_gatt_char(UUID, action[1].encode(), response=False)
+                        ev_vel += (v - ev_vel) / n
+                    # Find last seen position
+                    if seen_train:
+                        train_pos = train_pos_history[-1][0]
                     else:
-                        if action[1] == "s\n":
-                            ev_state = 5
-                        # Send command to EV
-                        await ev.write_gatt_char(UUID, action[1].encode(), response=False)
-                if train_state == 2 and ev_state == 2:
-                    # Experiment has finished: stop vehicles and exit
-                    await asyncio.gather(
-                        train.write_gatt_char(UUID, stop_veh.encode(), response=False),
-                        ev.write_gatt_char(UUID, stop_veh.encode(), response=False)
-                    )
+                        train_pos = -1
+                    if seen_ev:
+                        ev_pos = ev_pos_history[-1][0]
+                    else:
+                        ev_pos = -1
+                    # Empty positions
+                    train_pos_history = []
+                    ev_pos_history = []
+                    # Find time to intersection
+                    print(f"Train Pos: {train_pos}, Train Vel: {train_vel}, Orient: {train_orient}")
+                    print(f"EV Pos: {ev_pos}, EV Vel: {ev_vel}, Orient: {ev_orient}")
+                    train_arrival_t, train_arrival_t_brake, train_state = time_to_intersection(train_pos, train_vel, intersection_pos, train_orient, train_state, "train")
+                    ev_arrival_t, ev_arrival_t_brake, ev_state = time_to_intersection(ev_pos, ev_vel, intersection_pos, ev_orient, ev_state, "ev")
+
+                    # Debugging 
+                    print(f"Train arrival: {train_arrival_t}, Brake: {train_arrival_t_brake}, State: {train_state}")
+                    print(f"EV arrival: {ev_arrival_t}, Brake: {ev_arrival_t_brake}, State: {ev_state}")
+
+                    # Generate action decision
+                    action= action_generator(train_arrival_t, train_arrival_t_brake, train_state,
+                                            ev_arrival_t, ev_arrival_t_brake, ev_state,
+                                            alg_select)
+                    print(f"Action: {action}")
+                    print("#" * 50 + "\n\n")
+                    # Extra edge case: if the vehicles are traveling in parallel, do nothing.
+                    if len(action) != 0 and (train_orient != ev_orient):
+                        # Do an action
+                        if action[0] == "train":
+                            if action[1] == "s\n":
+                                train_state = 5 # Let system know train is slowing
+                            # Send command to train
+                            await train.write_gatt_char(UUID, action[1].encode(), response=False)
+                        else:
+                            if action[1] == "s\n":
+                                ev_state = 5
+                            # Send command to EV
+                            await ev.write_gatt_char(UUID, action[1].encode(), response=False)
+                    if train_state == 2 and ev_state == 2:
+                        # Experiment has finished: stop vehicles and exit
+                        await asyncio.gather(
+                            train.write_gatt_char(UUID, stop_veh.encode(), response=False),
+                            ev.write_gatt_char(UUID, stop_veh.encode(), response=False)
+                        )
+                        break
+
+                # Draw the Tags onto the frame
+                cv.aruco.drawDetectedMarkers(frame, corners, ids)
+                # Show the image
+                cv.imshow("", frame)
+                if cv.waitKey(1) & 0xFF == ord('q'):
                     break
+        
 
-            # Draw the Tags onto the frame
-            cv.aruco.drawDetectedMarkers(frame, corners, ids)
-            # Show the image
-            cv.imshow("", frame)
-
-
-        # End time recording and report the time it took for the vehicles to pass the intersection
-        metric_end_time = time.time()
-        print(f"The {alg_select} algorithm took {round(metric_end_time - metric_start_time, 3)}s to complete.")
-
+            # End time recording and report the time it took for the vehicles to pass the intersection
+            # Reset the state
+            train_state, ev_state = 3, 3
+            metric_end_time = time.time()
+            print(f"The {alg_select} algorithm took {round(metric_end_time - metric_start_time, 3)}s to complete.")
+    except Exception as e:
+        print("Error: ", e)
 
     # Closing everything
     print("== Cleaning up ==")
+    print("Stopping vehicles")
+    await asyncio.gather(
+                train.write_gatt_char(UUID, stop_veh.encode(), response=False),
+                ev.write_gatt_char(UUID, stop_veh.encode(), response=False)
+            )
     print("Releasing Camera...")
     cam.release()
     print("Destorying OpenCV windows...")

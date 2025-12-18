@@ -51,6 +51,7 @@ reactor Robot {
   
   state motor_calibrate: float = 1 // Scale the right motor input to match the left motors
   input start: bool // True if the line calibrators are done with calibration and robot can start driving
+  input inst_start: bool // True if the vehicle should start instantly
   state initial_start: bool = true // Just for instantaneous starting at the start of the experiment
   
   state prev_left: float = 0 // Previous left encoder reading 
@@ -241,6 +242,17 @@ reactor Robot {
             self->start_time = lf_time_logical_elapsed() / (pow(10, 9));
         }
     =}
+
+    reaction(inst_start) -> m.left_speed, m.right_speed, reset(DRIVING) {=
+      // Just start driving
+      lf_set_mode(DRIVING);
+      self->last_speed = self->target_speed_scaled;
+      self->curr_speed = self->target_speed_scaled;
+      lf_set(m.left_speed, self->target_speed_scaled);
+      lf_set(m.right_speed, self->target_speed_scaled * self->motor_calibrate);
+
+      self->initial_start = false;
+    =}
   }
 
   mode ACCELERATING {
@@ -335,7 +347,7 @@ main reactor(calibration_time: time = 5 s, sample_period: time = 100 ms, end_tim
     lf_set(ble.check_uart, true); // Check for messages
   =}
 
-  reaction(ble.rx_char) -> robot.stop, robot.cont, disp.line0 {=
+  reaction(ble.rx_char) -> robot.stop, robot.cont, robot.inst_start, disp.line0 {=
     char c = ble.rx_char->value;
     static char buf[17];
     
@@ -344,6 +356,9 @@ main reactor(calibration_time: time = 5 s, sample_period: time = 100 ms, end_tim
       snprintf(buf, 17, "Stopping.");
     } else if (c == 'D' || c == 'd') {
       lf_set(robot.cont, true);
+      snprintf(buf, 17, "Driving.");
+    } else if (c == 'I' || c == 'i') {
+      lf_set(robot.inst_start, true);
       snprintf(buf, 17, "Driving.");
     }
 
