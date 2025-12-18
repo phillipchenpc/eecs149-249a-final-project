@@ -79,7 +79,7 @@ SAFETY_TIME = 1 # in seconds, the amount of clearance time you need between vehi
 INTERSECTION_SIZE = 9 # in cm. A square box around the intersection
 
 # Velocity measurements
-VELOCITY_UPDATE_FREQ = 10 # The number of times to update velocity. Affects window used to measure velocity
+VELOCITY_UPDATE_FREQ = 2 # The number of times to update velocity. Affects window used to measure velocity
 
 # Camera selection
 CAM_ID = 0 # Usually the camera id for phone
@@ -136,6 +136,12 @@ def action_generator(train_time, train_time_brake, train_state,
         (ev_state == 1 and train_state == 4):
         # If one vehicle is currently crossing and the other has stopped
         return []
+    elif train_state == 3 or ev_state == 3:
+        # If we haven't seen either, start both instantly
+        return ["train", "i\n", "ev", "i\n"]
+    elif train_state == 4 and ev_state == 4:
+        # If both are stopped, EV should have priority
+        return ["ev", "d\n"]
     
     # Main logic if both haven't crossed
     train_finish_time = train_time + TRAIN_INTERSECT_TIME
@@ -157,8 +163,8 @@ def action_generator(train_time, train_time_brake, train_state,
 
     # First check if the train can cross before the EV without blocking it
     if train_finish_time + SAFETY_TIME < ev_time:
-        # Train can make it through, do nothing
-        return []
+        # Train can make it through without blocking EV
+        return ["ev", "s\n"]
     else:
         # Check if train can stop for the EV or if EV can cross before train if the train brakes
         if train_time_brake == -1 or ev_finish_time < train_time_brake:
@@ -195,8 +201,8 @@ def time_to_intersection(position, velocity, intersection, orientation, veh_stat
     """
     # Edge case - don't see the vehicle
     if position == -1:
-        if veh_state == 2:
-            # Vehicle has already previously passed and is no longer vivisble
+        if veh_state == 2 or veh_state == 1:
+            # Vehicle has already previously passed or going through the intersection and is no longer vivisble
             return 0, 0, 2
         else:
             # Vehicle has not been seen or passed yet
@@ -211,7 +217,7 @@ def time_to_intersection(position, velocity, intersection, orientation, veh_stat
     else:
         # Check left edge of intersection to current x-position of vehicle
         dist_to_intersect = intersection[0] - position[0]
-    print(f"Distance {dist_to_intersect}, Length: {veh_length}")
+    print(f"{type} Distance: {dist_to_intersect}, Length: {veh_length}")
     if dist_to_intersect < 0:
         # Check if the vehicle is past the intersection
         if abs(dist_to_intersect) > INTERSECTION_SIZE + veh_length:
@@ -221,7 +227,7 @@ def time_to_intersection(position, velocity, intersection, orientation, veh_stat
             # Assuming constant speed for entire crossing
             return -abs(dist_to_intersect) / velocity, 0, 1 # Still crossing the intersection
     # Find time to intersection
-    if velocity == 0:
+    if velocity <= 0.05:
         # Vehicle is stopped
         return 0, 0, 4
     veh_arrival_t = dist_to_intersect / velocity
@@ -284,10 +290,8 @@ async def main():
     start = time.time()
     cam = cv.VideoCapture(CAM_ID) # Change to whichever camera you use
     # Adjusting resolution to maximum
-    max_res = 10000
-    cam.set(cv.CAP_PROP_FRAME_WIDTH, max_res)
-    cam.set(cv.CAP_PROP_FRAME_HEIGHT, max_res)
-    del max_res
+    cam.set(cv.CAP_PROP_FRAME_WIDTH, 10000)
+    cam.set(cv.CAP_PROP_FRAME_HEIGHT, 10000)
     end = time.time()
     print(f"Camera opened in {end - start} s")
     
@@ -401,8 +405,8 @@ async def main():
 
             # Start the vehicles
             await asyncio.gather(
-                    train.write_gatt_char(UUID, start_veh.encode(), response=False),
-                    ev.write_gatt_char(UUID, start_veh.encode(), response=False)
+                    train.write_gatt_char(UUID, inst_start_veh.encode(), response=False),
+                    ev.write_gatt_char(UUID, inst_start_veh.encode(), response=False)
                 )
             # Start recording the time it takes for both vehicles to cross the intersection
             metric_start_time = time.time()
@@ -464,16 +468,25 @@ async def main():
                         n = i + 1
                         pos_prev, t_prev = train_pos_history[i]
                         pos_curr, t_curr = train_pos_history[i + 1]
-                        distance = np.sqrt((pos_prev[0] - pos_curr[0])**2 + (pos_prev[1] - pos_curr[1])**2)
+                        if train_orient == 0:
+                            distance = abs((pos_prev[0] - pos_curr[0]))
+                        else: 
+                            distance = abs(pos_prev[1] - pos_curr[1])
+                        distance = 0 if distance < 0.05 else distance # Clip small variations
                         dt = t_curr - t_prev
                         v = distance / dt
 
                         train_vel += (v - train_vel) / n
                     for i in range(len(ev_pos_history) - 1):
+                        # Only get distance in the direction of movement
                         n = i + 1
                         pos_prev, t_prev = ev_pos_history[i]
                         pos_curr, t_curr = ev_pos_history[i + 1]
-                        distance = np.sqrt((pos_prev[0] - pos_curr[0])**2 + (pos_prev[1] - pos_curr[1])**2)
+                        if ev_orient == 0:
+                            distance = abs((pos_prev[0] - pos_curr[0]))
+                        else: 
+                            distance = abs(pos_prev[1] - pos_curr[1])
+                        distance = 0 if distance < 0.05 else distance
                         dt = t_curr - t_prev
                         v = distance / dt
 
@@ -491,6 +504,7 @@ async def main():
                     train_pos_history = []
                     ev_pos_history = []
                     # Find time to intersection
+                    print("#" * 50)
                     print(f"Train Pos: {train_pos}, Train Vel: {train_vel}, Orient: {train_orient}")
                     print(f"EV Pos: {ev_pos}, EV Vel: {ev_vel}, Orient: {ev_orient}")
                     train_arrival_t, train_arrival_t_brake, train_state = time_to_intersection(train_pos, train_vel, intersection_pos, train_orient, train_state, "train")
@@ -508,17 +522,18 @@ async def main():
                     print("#" * 50 + "\n\n")
                     # Extra edge case: if the vehicles are traveling in parallel, do nothing.
                     if len(action) != 0 and (train_orient != ev_orient):
-                        # Do an action
-                        if action[0] == "train":
-                            if action[1] == "s\n":
-                                train_state = 5 # Let system know train is slowing
-                            # Send command to train
-                            await train.write_gatt_char(UUID, action[1].encode(), response=False)
-                        else:
-                            if action[1] == "s\n":
-                                ev_state = 5
-                            # Send command to EV
-                            await ev.write_gatt_char(UUID, action[1].encode(), response=False)
+                        for i in range(0, len(action), 2):
+                            # Do an action
+                            if action[i] == "train":
+                                if action[i + 1] == "s\n":
+                                    train_state = 5 # Let system know train is slowing
+                                # Send command to train
+                                await train.write_gatt_char(UUID, action[i + 1].encode(), response=False)
+                            else:
+                                if action[i + 1] == "s\n":
+                                    ev_state = 5
+                                # Send command to EV
+                                await ev.write_gatt_char(UUID, action[i + 1].encode(), response=False)
                     if train_state == 2 and ev_state == 2:
                         # Experiment has finished: stop vehicles and exit
                         await asyncio.gather(
