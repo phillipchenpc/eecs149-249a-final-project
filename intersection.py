@@ -164,7 +164,7 @@ def action_generator(train_time, train_time_brake, train_state,
     # First check if the train can cross before the EV without blocking it
     if train_finish_time + SAFETY_TIME < ev_time:
         # Train can make it through without blocking EV
-        return ["ev", "s\n"]
+        return ["ev", "d\n"]
     else:
         # Check if train can stop for the EV or if EV can cross before train if the train brakes
         if train_time_brake == -1 or ev_finish_time < train_time_brake:
@@ -388,7 +388,13 @@ async def main():
             while alg_select not in ["naive", "smart"]:
                 print("Input not recognized")
                 alg_select = input("Select an algorithm to use (naive or smart): ").lower()
-            
+
+            print()
+            print("=" * 80)
+            print("=" * 30 + " START OF EXPERIMENT " + "=" * 30)
+            print("=" * 80)
+            print()
+
             ############
             ## States ##
             ############
@@ -442,7 +448,10 @@ async def main():
                         mid_point[0] *= cm_per_px
                         mid_point[1] *= cm_per_px
                         # Find the position
-                        mid_point[train_orient] += DIST_TO_FRONT
+                        if train_orient == 1:
+                            mid_point[train_orient] -= DIST_TO_FRONT # Y-axis reversed
+                        else:
+                            mid_point[train_orient] += DIST_TO_FRONT
                         train_pos_history.append((mid_point, time.time()))
                     elif id == EV_ID:
                         seen_ev = True
@@ -457,7 +466,10 @@ async def main():
                         mid_point[0] *= cm_per_px
                         mid_point[1] *= cm_per_px
                         # Find the position
-                        mid_point[ev_orient] += DIST_TO_FRONT
+                        if ev_orient == 1:
+                            mid_point[ev_orient] -= DIST_TO_FRONT # Y-axis reversed
+                        else:
+                            mid_point[ev_orient] += DIST_TO_FRONT
                         ev_pos_history.append((mid_point, time.time()))
 
                 # Update speed and calculate needed action based on state
