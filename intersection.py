@@ -64,12 +64,16 @@ TRAIN_ACCEL = 0.65 # in cm / s**2
 TRAIN_DECEL = 0.8 # in cm / s**2
 TRAIN_STOP_DIST = 21.2674 # in cm
 TRAIN_LENGTH = 40.95 # cm
+TRAIN_INTERSECT_TIME = 8.56285 # in seconds. TIme it takes for train to cross intersection
 
 EV_SPEED = 6.6667 # in cm/s
 EV_ACCEL = 0.3194 # in cm / s**2
 EV_DECEL = 0.7882 # in cm / s**2
 EV_STOP_DIST = 28.194 # in cm
 EV_LENGTH = 9 # Actual size is less, but Pololu itself is 9 cm
+EV_INTERSECT_TIME = 2.7 # in seconds. Time it takes for EV to cross intersection
+
+SAFETY_TIME = 1 # in seconds, the amount of clearance time you need between vehicles crossing
 
 # Intersection
 INTERSECTION_SIZE = 9 # in cm. A square box around the intersection
@@ -95,24 +99,137 @@ detector = cv.aruco.ArucoDetector(aruco_dict, parameters)
 ## Helper Functions ##
 ######################
 
-def action_generator(train_time, ev_time, state, train_state, ev_state, alg="naive"):
+def action_generator(train_time, train_time_brake, train_state,
+                     ev_time, ev_time_brake, ev_state, 
+                     alg="naive"):
     """
     Given the time it takes for the train and ev to reach the intersection and the current states, decide what action to take
 
+    Params:
+        train_time, train_time_brake, ev_time, ev_time_brake (float) : Time it takes for vehicle to reach the intersection at full speed or at full brakes
+        train_state, ev_state, state (int) : state variables of the system
+        alg (str) : Which approach to use
     Ret:
         command (List): If empty, do nothing. 
             Else, command[0] = "train" or "ev" (which vehicle to stop or start), command[1] = "s\n" or "d\n" (stop, start)
     """
-    pass
+    # Edge cases
+    # Do nothing if 1) One of the vehicles has already passed the intersection, and 2) The other vehicle has started to move
+    if train_state == 2 and ev_state == 2:
+        # Experiment ended
+        return []
+    elif train_state == 2 and ev_state != 2:
+        # Check if EV is moving or slowing
+        if (ev_state == 4) or (ev_state == 5):
+            # EV is not moving or is slowing, tell it to move
+            return ["ev", "d\n"]
+        # Do nothing since EV is moving and train has passed
+        return []
+    elif ev_state == 2 and train_state != 2:
+         # Check if Train is moving or not
+        if (train_state == 4) or (train_state == 5):
+            # Train is not moving or is slowing, tell it to move
+            return ["train", "d\n"]
+        # Do nothing since Train is moving and train has passed
+        return []
+    elif (train_state == 1 and ev_state == 4) or \
+        (ev_state == 1 and train_state == 4):
+        # If one vehicle is currently crossing and the other has stopped
+        return []
+    
+    # Main logic if both haven't crossed
+    train_finish_time = train_time + TRAIN_INTERSECT_TIME
+    ev_finish_time = ev_time + EV_INTERSECT_TIME
 
-def time_to_intersection(position, velocity, intersection):
+    # Naive Algorithm
+    if alg == "naive":
+        # Stop the EV if train is within 20 seconds of the intersection
+        if train_time < 20:
+            # Stop the EV if possible
+            if ev_time_brake == -1:
+                return ["ev", "s\n"]
+            else:
+                # Let the EV cross, stop the train
+                return ["train", "s\n"]
+        else:
+            # Stop the train otherwise
+            return ["train", "s\n"]
+
+    # First check if the train can cross before the EV without blocking it
+    if train_finish_time + SAFETY_TIME < ev_time:
+        # Train can make it through, do nothing
+        return []
+    else:
+        # Check if train can stop for the EV of if EV can cross before train if the train brakes
+        if train_time_brake == -1 or ev_finish_time < train_time_brake:
+            if ev_finish_time  + SAFETY_TIME < train_time:
+                # EV Can cross before the train gets there, so do nothing
+                return []
+            # Stop the train
+            return ["train", "s\n"]
+        else:
+            # Train can't stop, have to slow the EV (since we know it will arrive at the intersection too close to when the train is there)
+            return ["ev", "s\n"]
+
+def time_to_intersection(position, velocity, intersection, orientation, veh_state, type):
     """
     Returns the time it takes for vehicle to reach the intersection given position and intersection
-    Returns -1 if the vehicle is currently in the intersection
-    Returns -2 if the vehicle has passed the intersection
-    """
-    pass
 
+    Params:
+        position (List) : current (x, y) position of vehicle in cm
+        velocity (float) : speed of vehicle
+        intersection (List) : position of the intersection (x1, x2, y1, y2) where x1 < x2, y1 < y2
+        orientation (int): which direction the vehicle is heading in 
+        veh_state (int) : state variable: 0 = haven't seen, 1 = haven't crossed, 2 = fully crossed
+        type (str) : "train" or "ev"
+    Ret:
+        veh_arrival_t (float) : Time it takes for vehicle to reach intersection at full speed
+        veh_arrival_t_brake (float) : Time it takes for vehicle to reach intersection by braking. -1 if it can stop before reaching
+        veh_moving_state (int) : 
+            Returns 0 if nothing of note
+            Returns 1 if the vehicle is currently in the intersection
+            Returns 2 if the vehicle has passed the intersection
+            Returns 3 if vehicle not seen and hasn't been before
+            Returns 4 if the vehicle is not moving
+    """
+    # Edge case - don't see the vehicle
+    if position == -1:
+        if veh_state == 2:
+            # Vehicle has already previously passed and is no longer vivisble
+            return 0, 0, 2
+        else:
+            # Vehicle has not been seen or passed yet
+            return 0, 0, 3
+    
+    # Find distance from intersection
+    decel = TRAIN_DECEL if type == "train" else EV_DECEL
+    veh_length = TRAIN_LENGTH if type == "train" else EV_LENGTH
+    if orientation == 1:
+        # Check bottom edge of intersection to current y-position of vehicle
+        dist_to_intersect = intersection[2] - position[1]
+    else:
+        # Check left edge of intersection to current x-position of vehicle
+        dist_to_intersect = intersection[0] - position[0]
+
+    if dist_to_intersect < 0:
+        # Check if the vehicle is past the intersection
+        if abs(dist_to_intersect) > INTERSECTION_SIZE + veh_length:
+            return 0, 0, 2 # Now past the intersection
+        else:
+            # Return the time the vehicle has already spent crossing the intersection
+            # Assuming constant speed for entire crossing
+            return -abs(dist_to_intersect) / velocity, 0, 1 # Still crossing the intersection
+    # Find time to intersection
+    if velocity == 0:
+        # Vehicle is stopped
+        return 0, 0, 4
+    veh_arrival_t = dist_to_intersect / velocity
+    veh_arrival_t_brake = min((-velocity + np.sqrt(velocity**2 - 2*decel*dist_to_intersect)) / (-decel), 
+                                    (-velocity - np.sqrt(velocity**2 - 2*decel*dist_to_intersect)) / (-decel))
+    if np.isnan(veh_arrival_t_brake):
+        veh_arrival_t_brake = -1
+    
+    return veh_arrival_t, veh_arrival_t_brake, 0
 def calibrate_intersection(tag_positions):
     """
     Returns the coordinates of the intersection and the scale cm / px
@@ -259,9 +376,16 @@ async def main():
         ############
         ## States ##
         ############
-        state = 0 # 0: Observe, 1: Train Cross, 2: EV Cross
-        train_state = 0 # 0: Haven't seen, 1: Seen but haven't crossed, 2: crossed
-        ev_state = 0 # Same as above
+        """
+        0 if nothing of note
+        1 if the vehicle is currently in the intersection
+        2 if the vehicle has passed the intersection
+        3 if vehicle not seen and hasn't been before
+        4 if the vehicle is not moving
+        5 if the vehicle is slowing down
+        """
+        train_state = 3
+        ev_state = 3 # Same as above
 
         # Start the vehicles
         await asyncio.gather(
@@ -352,29 +476,24 @@ async def main():
                 train_pos_history = []
                 ev_pos_history = []
                 # Find time to intersection
-                train_arrival_t, train_arrival_t_brake = time_to_intersection(train_pos, train_vel, intersection_pos, train_state)
-                ev_arrival_t, ev_arrival_t_brake = time_to_intersection(ev_pos, ev_vel, intersection_pos, ev_state)
-                
-                # Setting states
-                if train_arrival_t == -1:
-                    train_state = 1 # Seen, but haven't crossed
-                elif train_arrival_t == -2:
-                    train_state = 2 # Passed the intersection
-                if ev_arrival_t == -1:
-                    ev_state = 1 # Seen, but haven't crossed
-                elif ev_arrival_t == -2:
-                    ev_state = 2 # Passed the intersection
+                train_arrival_t, train_arrival_t_brake, train_state = time_to_intersection(train_pos, train_vel, intersection_pos, train_orient, train_state)
+                ev_arrival_t, ev_arrival_t_brake, ev_state = time_to_intersection(ev_pos, ev_vel, intersection_pos, ev_state, train_orient)
 
                 # Generate action decision
-                action, state = action_generator(train_arrival_t, train_arrival_t_brake, train_state,
+                action= action_generator(train_arrival_t, train_arrival_t_brake, train_state,
                                         ev_arrival_t, ev_arrival_t_brake, ev_state,
-                                        state, alg_select)
-                if len(action) != 0:
+                                        alg_select)
+                # Extra edge case: if the vehicles are traveling in parallel, do nothing.
+                if len(action) != 0 and (train_orient != ev_orient):
                     # Do an action
                     if action[0] == "train":
+                        if action[1] == "s\n":
+                            train_state = 5 # Let system know train is slowing
                         # Send command to train
                         await train.write_gatt_char(UUID, action[1].encode(), response=False)
                     else:
+                        if action[1] == "s\n":
+                            ev_state = 5
                         # Send command to EV
                         await ev.write_gatt_char(UUID, action[1].encode(), response=False)
                 if train_state == 2 and ev_state == 2:
